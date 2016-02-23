@@ -6,10 +6,18 @@ block title
 block titleSection
 	p Actividades
 
+block modal
+	section#confirmActivityWindow.modal.modal-hide(data-rol-modal="modal" data-contentModal data-referenceModal="#modal")
+		section.contentModal
+			article.titleModal
+			article.bodyModal
+			article.modalFooter
+				button.btn.btnError(data-closeModal="#modal" data-rol-modal="close" data-referenceModal="#modal") Volver
+
 block content
 	section.activities
 		each activity in activities
-			article.activity(data-date="#{activity.hour}" data-speech="#{activity.text}")
+			article.activity(data-date="#{activity.hour}" data-speech="#{activity.textSpeech}")
 				p.titleActivity #{activity.text}
 				img.imgActivity(src=" #{activity.img}", alt="")
 				article.reminder.inprocess
@@ -17,4 +25,6 @@ block content
 						p
 					article.date
 						p(rol="time")
-	script(src="/js/app.js")
+	include ../templates/confirmActivityWindow.jade
+block script
+	script(src="/js/activities.js")

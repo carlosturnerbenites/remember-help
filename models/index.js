@@ -15,6 +15,7 @@ const childrenSchema = new Mongoose.Schema({
 		hour : {type:Date},
 		dateMax : {type:Date},
 		text : {type:String, default:''},
+		textSpeech : {type:String, default:''},
 		img : {type:String, default:''}
 	}),
 	messageSchema = new Mongoose.Schema({

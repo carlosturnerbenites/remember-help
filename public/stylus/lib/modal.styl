@@ -1,0 +1,47 @@
+.modal
+	position fixed
+	width 0%
+	height 100%
+	overflow scroll
+	z-index 10
+	color white
+	transition 1s all linear
+	right 0
+	opacity 0
+	&[modalActive]
+		overflow-x hidden
+		display flex
+		justify-content flex-end
+	.contentModal
+		transition all 2s linear
+		z-index 100
+		padding 20px
+		width 100%
+		background-color rgba(0,0,0,.9)
+		overflow auto
+		.titleModal
+			border-bottom 1px solid gray
+			text-align right
+		.bodyModal
+			border none
+			padding 10px 0
+		.footerModal
+			position fixed
+			bottom: 20px;
+			.backPage
+				font-size 50px
+				cursor pointer
+
+.sectionInactive
+	overflow hidden
+	pointer-events none
+	opacity .5 !important
+
+.effectHideModal
+	width 50%
+	opacity 0
+.effectShowModal
+	width 100%
+	opacity 1
+.overflowHidden
+	overflow hidden

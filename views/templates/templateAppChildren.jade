@@ -6,6 +6,7 @@ html(lang='es')
 		block title
 		link(rel='stylesheet', href='/css/styles.css')
 	body
+		block modal
 		section.contentWidth
 			header(class="#{classcss}")
 				nav
@@ -18,3 +19,6 @@ html(lang='es')
 				section.titleSection
 					block titleSection
 			block content
+		script(src="/js/utilities.js")
+		script(src='/js/voice.js')
+		block script

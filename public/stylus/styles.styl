@@ -1,6 +1,8 @@
 @import 'normalize'
-@import 'icomoon/style'
+@import 'lib/modal'
+@import 'lib/buttons'
 
+@import 'icomoon/style'
 @import url(https://fonts.googleapis.com/css?family=Lato)
 
 body
@@ -23,6 +25,9 @@ header
 				display inline-block
 				padding 10px
 				margin 0 10px
+				color white
+				font-size 2rem
+				text-decoration none
 				&:last-child
 					margin-right 0px
 	.titleSection
@@ -140,6 +145,11 @@ header
 		background-image url('/images/messages/incorrect.png')
 		border-bottom 10px solid rgb(171, 12, 31)
 
-
-
-
+/*Modal de confirmacion de Actividad*/
+.templateConfirmActivityWindow
+	display flex
+	justify-content space-around
+	align-items center
+	font-size 10rem
+	.btn
+		width 40%
