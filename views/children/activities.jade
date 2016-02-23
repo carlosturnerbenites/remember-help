@@ -9,7 +9,7 @@ block titleSection
 block content
 	section.activities
 		each activity in activities
-			article.activity(data-date="#{activity.hour}")
+			article.activity(data-date="#{activity.hour}" data-speech="#{activity.text}")
 				p.titleActivity #{activity.text}
 				img.imgActivity(src=" #{activity.img}", alt="")
 				article.reminder.inprocess

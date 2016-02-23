@@ -6,9 +6,10 @@ Date.prototype.getTimeHumanize = function(){
 var activities = document.querySelectorAll('.activity')
 
 for (var activity of Array.from(activities)){
-	var dateString = activity.getAttribute('data-date'),
-		date = new Date(dateString)
+	var date = new Date(activity.getAttribute('data-date'))
+
 	activity.querySelector('[rol=time]').innerHTML = date.getTimeHumanize()
+
 	var span = document.createElement('span')
 	span.classList.add('meridiem')
 

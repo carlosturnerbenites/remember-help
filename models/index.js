@@ -18,7 +18,7 @@ const childrenSchema = new Mongoose.Schema({
 		img : {type:String, default:''}
 	}),
 	messageSchema = new Mongoose.Schema({
-		type: {type:Number, min:5},
+		type: {type:Number},
 		text : {type:String, default:''}
 	}),
 	historySchema = new Mongoose.Schema({

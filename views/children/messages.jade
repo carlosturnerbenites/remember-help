@@ -8,12 +8,13 @@ block titleSection
 
 block content
 	section.messages
-		article.message.correct
-			p.title lorem lorem lorem lorem
-		article.message.correct
-			p.title lorem lorem lorem lorem
-		article.message.warning
-			p.title lorem lorem lorem lorem
-		article.message.incorrect
-			p.title lorem lorem lorem lorem
+		each message in messages
+			if message.type == 0
+				- var classCss = "correct"
+			else if message.type == 1
+				- var classCss = "warning"
+			else if message.type == 2
+				- var classCss = "incorrect"
+			article.message(class="#{classCss}" data-speech="#{message.text}")
+				p.title #{message.text}
 
