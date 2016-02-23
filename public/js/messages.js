@@ -1,7 +1,6 @@
 var messages = document.querySelectorAll('.message'),
 	voice = new voice()
 
-
 for (var message of Array.from(messages)){
 	message.addEventListener('click', (e) => {
 		e.stopPropagation()

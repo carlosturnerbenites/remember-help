@@ -6,9 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint  ./public/**/*.js ./*.js ./**/*.js",
-    "start": "npm run eslint && node server",
+    "start": "node server.js",
     "dev": "npm run eslint && supervisor server"
   },
+  "engines": {
+  "node": "4.2.4",
+  "npm": "2.14.12"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/carlosturnerbenites/rememberHelp.git"
@@ -20,7 +24,8 @@
   },
   "homepage": "https://github.com/carlosturnerbenites/rememberHelp#readme",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "mongoose": "^4.4.4"
   },
   "devDependencies": {
     "colors": "^1.1.2",
@@ -29,7 +34,6 @@
     "gulp-plumber": "^1.1.0",
     "gulp-stylus": "^2.3.0",
     "gulp-uglify": "^1.5.2",
-    "mongoose": "^4.4.4",
     "nib": "^1.1.0"
   }
 }

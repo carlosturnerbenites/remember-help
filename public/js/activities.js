@@ -1,7 +1,6 @@
 var voice = new voice(),
 	Modal = Modal
 
-
 Date.prototype.getTimeHumanize = function(){
 	var time = this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds()
 	return time
