@@ -1,18 +1,20 @@
 @import 'normalize'
-@import 'icomoon/style.styl'
+@import 'icomoon/style'
 
-@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Lato)
 
 body
-	font-family: 'Lato' sans-serif
+	font-family: 'Lato', sans-serif
+
+/*Header: Menu y Titulo de la seccion*/
 header
+	margin-bottom 20px
 	&.reminders
-		background-color rgb(52, 168, 83)
+		background-color rgb(156,39,176)
 	&.messages
-		background-color rgb(251, 188, 5)
+		background-color rgb(103,58,183)
 	&.activities
 		background-color rgb(66, 133, 244)
-	margin-bottom 20px
 	nav
 		align-items center
 		color white
@@ -25,7 +27,6 @@ header
 				margin 0 10px
 				&:last-child
 					margin-right 0px
-
 	.titleSection
 		box-shadow 0 10px 30px rgba(0,0,0,0.3)
 		color white
@@ -35,7 +36,7 @@ header
 		> *
 			margin 0
 
-
+/*Acvtividades*/
 .activities
 	.activity
 		cursor pointer
@@ -43,8 +44,6 @@ header
 		width 100%
 		margin 0 auto
 		transition all 2s linear
-		&:hover
-			box-shadow inset 0 10px 30px rgba(0,0,0,0.3)
 		.img
 			width 100%
 		.title
@@ -60,6 +59,7 @@ header
 		&:last-child
 			border-bottom 0
 
+/*Mensajes*/
 .messages
 	color white
 	.message
@@ -72,6 +72,9 @@ header
 		align-items center
 		background-position center
 		background-repeat no-repeat
+		&:last-child
+			border-bottom 0
+
 		.title
 			font-size 3rem
 			text-align center
@@ -87,4 +90,60 @@ header
 		background-color rgb(236, 69, 89)
 		background-image url('/images/messages/incorrect.png')
 		border-bottom 10px solid rgb(171, 12, 31)
+
+.reminders
+	color white
+	.reminder
+		font-size 2rem
+		display flex
+		justify-content center
+		margin-bottom 10px
+		.title
+			display: flex;
+			justify-content center
+			align-items center
+			width 40%
+			margin 0
+			background-position center
+			background-repeat no-repeat
+			background-size 110px
+			transition all 1s linear
+			&:hover
+				border-bottom 1px solid transparent
+		.date
+			background-color rgba(0,0,0,0.7)
+			width 60%
+			text-align right
+			font-size 3rem
+			background-position right
+			background-repeat no-repeat
+			background-size 174px
+			.meridiem
+				font-size 1rem
+				margin-left 10px
+		.morning
+			background-color rgb(255, 188, 0)
+			border-bottom 10px solid rgb(255, 203, 57)
+			background-image url('/images/reminders/sun.png')
+		.nigth
+			background-color rgb(69,90,100)
+			border-bottom 10px solid rgb(27, 51, 62)
+			background-image url('/images/reminders/moon.png')
+	.complete
+		.title
+			background-color rgb(52, 168, 83)
+			border-bottom 10px solid rgba(0,0,0,0.3)
+			background-image url('/images/reminders/complete.png')
+
+	.incomplete
+		.title
+			background-color rgb(236, 69, 89)
+			border-bottom 10px solid rgba(0,0,0,0.3)
+			background-image url('/images/reminders/incomplete.png')
+	.inprocess
+		.title
+			background-color rgba(0,0,0,0.3)
+			border-bottom 10px solid rgba(0,0,0,0.3)
+			background-image url('/images/reminders/clock.png')
+
 
