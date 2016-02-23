@@ -1,0 +1,19 @@
+doctype html
+html(lang='es')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport' content="width=width-device, user-scalable=no, initial-scale=1.0")
+		block title
+		link(rel='stylesheet', href='/css/styles.css')
+	body
+		section.contentWidth
+			nav
+				h3 rememberHelp
+				article.itemsNavs
+					a.item(href="/management/statistics")
+						span.icon-statistics(tooltip="Estadisticas")
+					a.item(href="/management/line-evolution")
+						span.icon-linetime(tooltip="Evolucion")
+			section.titleSection
+				block titleSection
+			block content

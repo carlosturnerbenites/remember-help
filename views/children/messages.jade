@@ -1,4 +1,18 @@
-extends ../templates/template.jade
+extends ../templates/templateAppChildren.jade
 block title
 	title Mensajes
+
+block titleSection
+	p Mensajes
+
+block content
+	section.messages
+		article.message.correct
+			p.title lorem lorem lorem lorem
+		article.message.correct
+			p.title lorem lorem lorem lorem
+		article.message.warning
+			p.title lorem lorem lorem lorem
+		article.message.incorrect
+			p.title lorem lorem lorem lorem
 

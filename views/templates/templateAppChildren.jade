@@ -1,0 +1,22 @@
+doctype html
+html(lang='es')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport' content="width=width-device, user-scalable=no, initial-scale=1.0" )
+		block title
+		link(rel='stylesheet', href='/css/styles.css')
+	body
+		section.contentWidth
+			header(class="#{classcss}")
+				nav
+					h3 rememberHelp
+					article.itemsNavs
+						a.item(href="/children/activities")
+							span.icon-activities(tooltip="Actividades")
+						a.item(href="/children/reminders")
+							span.icon-reminders(tooltip="Recordatorios")
+						a.item(href="/children/messages")
+							span.icon-messages(tooltip="Mensajes")
+				section.titleSection
+					block titleSection
+			block content

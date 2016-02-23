@@ -1,1 +1,90 @@
-@import "normalize"
+@import 'normalize'
+@import 'icomoon/style.styl'
+
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+body
+	font-family: 'Lato' sans-serif
+header
+	&.reminders
+		background-color rgb(52, 168, 83)
+	&.messages
+		background-color rgb(251, 188, 5)
+	&.activities
+		background-color rgb(66, 133, 244)
+	margin-bottom 20px
+	nav
+		align-items center
+		color white
+		display flex
+		justify-content space-between
+		.itemsNavs
+			.item
+				display inline-block
+				padding 10px
+				margin 0 10px
+				&:last-child
+					margin-right 0px
+
+	.titleSection
+		box-shadow 0 10px 30px rgba(0,0,0,0.3)
+		color white
+		font-size 4rem
+		padding 30px 0
+		padding-left 20px
+		> *
+			margin 0
+
+
+.activities
+	.activity
+		cursor pointer
+		position relative
+		width 100%
+		margin 0 auto
+		transition all 2s linear
+		&:hover
+			box-shadow inset 0 10px 30px rgba(0,0,0,0.3)
+		.img
+			width 100%
+		.title
+			margin 0
+			width 100%
+			position absolute
+			top 0px
+			font-size 2rem
+			&:first-letter
+				font-size 3rem
+				font-weight bold
+				color red
+		&:last-child
+			border-bottom 0
+
+.messages
+	color white
+	.message
+		width 100%
+		transition all 2s linear
+		padding 50px 0
+		height 300px
+		display: flex
+		justify-content center
+		align-items center
+		background-position center
+		background-repeat no-repeat
+		.title
+			font-size 3rem
+			text-align center
+	.correct
+		background-color rgb(52, 168, 83)
+		background-image url('/images/messages/correct.png')
+		border-bottom 10px solid rgb(9, 118, 38)
+	.warning
+		background-color rgb(255, 188, 0)
+		background-image url('/images/messages/warning.png')
+		border-bottom 10px solid rgb(255, 203, 57)
+	.incorrect
+		background-color rgb(236, 69, 89)
+		background-image url('/images/messages/incorrect.png')
+		border-bottom 10px solid rgb(171, 12, 31)
+
