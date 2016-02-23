@@ -8,15 +8,13 @@ block titleSection
 
 block content
 	section.activities
-		article.activity
-			img.img(src="/images/activities/activity.png", alt="")
-			p.title lorem lorem lorem lorem
-		article.activity
-			img.img(src="/images/activities/activity.png", alt="")
-			p.title lorem lorem lorem lorem
-		article.activity
-			img.img(src="/images/activities/activity.png", alt="")
-			p.title lorem lorem lorem lorem
-		article.activity
-			img.img(src="/images/activities/activity.png", alt="")
-			p.title lorem lorem lorem lorem
+		each activity in activities
+			article.activity(data-date="#{activity.hour}")
+				p.titleActivity #{activity.text}
+				img.imgActivity(src=" #{activity.img}", alt="")
+				article.reminder.inprocess
+					article.titleReminder
+						p
+					article.date
+						p(rol="time")
+	script(src="/js/app.js")

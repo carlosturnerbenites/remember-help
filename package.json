@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint ./server/**/*.js ./client/**/*.js ./*.js ./**/*.js",
+    "eslint": "eslint  ./public/**/*.js ./*.js ./**/*.js",
     "start": "npm run eslint && node server",
     "dev": "npm run eslint && supervisor server"
   },
@@ -29,6 +29,7 @@
     "gulp-plumber": "^1.1.0",
     "gulp-stylus": "^2.3.0",
     "gulp-uglify": "^1.5.2",
+    "mongoose": "^4.4.4",
     "nib": "^1.1.0"
   }
 }

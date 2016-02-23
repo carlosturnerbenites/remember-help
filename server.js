@@ -4,6 +4,7 @@ else if(process.env.NODE_ENV == 'prod') urlConfig = './config/configProd.json'
 else process.exit()
 
 const config = require(urlConfig),
+	mongoose = require('mongoose'),
 	express = require('express'),
 	app = express(),
 	http = require('http'),
@@ -12,6 +13,8 @@ const config = require(urlConfig),
 	urlGeneral = require('./urls/general'),
 	urlChildren = require('./urls/children'),
 	urlManagement = require('./urls/management')
+
+mongoose.connect(config.URIMongo)
 
 app.use('',urlGeneral)
 app.use('/children',urlChildren)

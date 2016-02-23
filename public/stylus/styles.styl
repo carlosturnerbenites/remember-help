@@ -9,12 +9,10 @@ body
 /*Header: Menu y Titulo de la seccion*/
 header
 	margin-bottom 20px
-	&.reminders
-		background-color rgb(156,39,176)
 	&.messages
 		background-color rgb(103,58,183)
 	&.activities
-		background-color rgb(66, 133, 244)
+		background-color rgb(156,39,176)
 	nav
 		align-items center
 		color white
@@ -40,24 +38,75 @@ header
 .activities
 	.activity
 		cursor pointer
-		position relative
 		width 100%
-		margin 0 auto
+		margin-bottom 40px
 		transition all 2s linear
-		.img
+		position relative
+		.imgActivity
 			width 100%
-		.title
+		.titleActivity
+			position absolute
+			top 0
 			margin 0
 			width 100%
-			position absolute
-			top 0px
 			font-size 2rem
 			&:first-letter
-				font-size 3rem
+				font-size 4rem
 				font-weight bold
-				color red
 		&:last-child
 			border-bottom 0
+		.reminder
+			color white
+			font-size 2rem
+			display flex
+			justify-content center
+			margin-bottom 10px
+			.titleReminder
+				display: flex;
+				justify-content center
+				align-items center
+				width 40%
+				margin 0
+				background-position center
+				background-repeat no-repeat
+				background-size 110px
+				transition all 1s linear
+				&:hover
+					border-bottom 1px solid transparent
+			.date
+				background-color rgba(0,0,0,0.7)
+				width 60%
+				text-align right
+				font-size 3rem
+				background-position right
+				background-repeat no-repeat
+				background-size 174px
+				.meridiem
+					font-size 1rem
+					margin-left 10px
+			.morning
+				background-color rgb(255, 188, 0)
+				border-bottom 10px solid rgb(255, 203, 57)
+				background-image url('/images/reminders/sun.png')
+			.nigth
+				background-color rgb(69,90,100)
+				border-bottom 10px solid rgb(27, 51, 62)
+				background-image url('/images/reminders/moon.png')
+		.complete
+			.titleReminder
+				background-color rgb(52, 168, 83)
+				border-bottom 10px solid rgba(0,0,0,0.3)
+				background-image url('/images/reminders/complete.png')
+		.incomplete
+			.titleReminder
+				background-color rgb(236, 69, 89)
+				border-bottom 10px solid rgba(0,0,0,0.3)
+				background-image url('/images/reminders/incomplete.png')
+		.inprocess
+			.titleReminder
+				background-color rgba(0,0,0,0.3)
+				border-bottom 10px solid rgba(0,0,0,0.3)
+				background-image url('/images/reminders/clock.png')
 
 /*Mensajes*/
 .messages
@@ -91,59 +140,6 @@ header
 		background-image url('/images/messages/incorrect.png')
 		border-bottom 10px solid rgb(171, 12, 31)
 
-.reminders
-	color white
-	.reminder
-		font-size 2rem
-		display flex
-		justify-content center
-		margin-bottom 10px
-		.title
-			display: flex;
-			justify-content center
-			align-items center
-			width 40%
-			margin 0
-			background-position center
-			background-repeat no-repeat
-			background-size 110px
-			transition all 1s linear
-			&:hover
-				border-bottom 1px solid transparent
-		.date
-			background-color rgba(0,0,0,0.7)
-			width 60%
-			text-align right
-			font-size 3rem
-			background-position right
-			background-repeat no-repeat
-			background-size 174px
-			.meridiem
-				font-size 1rem
-				margin-left 10px
-		.morning
-			background-color rgb(255, 188, 0)
-			border-bottom 10px solid rgb(255, 203, 57)
-			background-image url('/images/reminders/sun.png')
-		.nigth
-			background-color rgb(69,90,100)
-			border-bottom 10px solid rgb(27, 51, 62)
-			background-image url('/images/reminders/moon.png')
-	.complete
-		.title
-			background-color rgb(52, 168, 83)
-			border-bottom 10px solid rgba(0,0,0,0.3)
-			background-image url('/images/reminders/complete.png')
 
-	.incomplete
-		.title
-			background-color rgb(236, 69, 89)
-			border-bottom 10px solid rgba(0,0,0,0.3)
-			background-image url('/images/reminders/incomplete.png')
-	.inprocess
-		.title
-			background-color rgba(0,0,0,0.3)
-			border-bottom 10px solid rgba(0,0,0,0.3)
-			background-image url('/images/reminders/clock.png')
 
 
