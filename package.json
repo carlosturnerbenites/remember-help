@@ -1,29 +1,32 @@
 {
-  "name": "remember-help",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/carlosturnerbenites/rememberHelp.git"
-  },
-  "author": "Carlos Alonso Turner Benites",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/carlosturnerbenites/rememberHelp/issues"
-  },
-  "homepage": "https://github.com/carlosturnerbenites/rememberHelp#readme",
-  "dependencies": {
-    "express": "^4.13.4"
-  },
-  "devDependencies": {
-    "colors": "^1.1.2",
-    "gulp-notify": "^2.2.0",
-    "gulp-stylus": "^2.3.0",
-    "gulp-uglify": "^1.5.2",
-    "nib": "^1.1.0"
-  }
+	"name": "remember-help",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"eslint": "eslint ./server/**/*.js ./client/**/*.js ./*.js",
+		"start": "npm run eslint && node server"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/carlosturnerbenites/rememberHelp.git"
+	},
+	"author": "Carlos Alonso Turner Benites",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/carlosturnerbenites/rememberHelp/issues"
+	},
+	"homepage": "https://github.com/carlosturnerbenites/rememberHelp#readme",
+	"dependencies": {
+		"express": "^4.13.4"
+	},
+	"devDependencies": {
+		"colors": "^1.1.2",
+		"gulp-eslint": "^2.0.0",
+		"gulp-notify": "^2.2.0",
+		"gulp-stylus": "^2.3.0",
+		"gulp-uglify": "^1.5.2",
+		"nib": "^1.1.0"
+	}
 }
