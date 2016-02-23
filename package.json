@@ -1,0 +1,19 @@
+{
+  "name": "remember-help",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlosturnerbenites/rememberHelp.git"
+  },
+  "author": "Carlos Alonso Turner Benites",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carlosturnerbenites/rememberHelp/issues"
+  },
+  "homepage": "https://github.com/carlosturnerbenites/rememberHelp#readme"
+}
