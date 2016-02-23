@@ -1,0 +1,9 @@
+{
+	"statics" : "public",
+	"gulp":{
+		"srcStyle": "public/stylus/styles.styl",
+		"srcStylus": "public/stylus/**/*.styl",
+		"dest": "public/css/",
+		"env" : "Developed"
+	}
+}

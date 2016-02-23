@@ -18,5 +18,12 @@
   "homepage": "https://github.com/carlosturnerbenites/rememberHelp#readme",
   "dependencies": {
     "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "colors": "^1.1.2",
+    "gulp-notify": "^2.2.0",
+    "gulp-stylus": "^2.3.0",
+    "gulp-uglify": "^1.5.2",
+    "nib": "^1.1.0"
   }
 }
