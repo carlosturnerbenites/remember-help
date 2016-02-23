@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/carlosturnerbenites/rememberHelp/issues"
   },
-  "homepage": "https://github.com/carlosturnerbenites/rememberHelp#readme"
+  "homepage": "https://github.com/carlosturnerbenites/rememberHelp#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
 }
