@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint ./server/**/*.js ./client/**/*.js ./*.js",
+    "eslint": "eslint ./server/**/*.js ./client/**/*.js ./*.js ./**/*.js",
     "start": "npm run eslint && node server",
     "dev": "npm run eslint && supervisor server"
   },
