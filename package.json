@@ -1,12 +1,13 @@
 {
 	"name": "remember-help",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Aplicación para la estimulación cognitiva de los niños a través del apoyo en el recordatorio de rutinas diarias",
 	"main": "server.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"eslint": "eslint ./server/**/*.js ./client/**/*.js ./*.js",
-		"start": "npm run eslint && node server"
+		"start": "npm run eslint && node server",
+		"dev": "npm run eslint && supervisor server"
 	},
 	"repository": {
 		"type": "git",

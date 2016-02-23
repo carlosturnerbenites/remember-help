@@ -2,7 +2,7 @@ const gulp = require('gulp'),
 	notify = require('gulp-notify'),
 	stylus = require('gulp-stylus'),
 	nib = require('nib'),
-	config = require('./server/config/configDev.json')
+	config = require('./config/configDev.json')
 
 function compileStyl() {
 	gulp
