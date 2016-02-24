@@ -1,4 +1,4 @@
-Date.prototype.getTimeHumanize = function(){
+Date.prototype.getTimeHumanize = function (){
 	var time = this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds()
 	return time
 }

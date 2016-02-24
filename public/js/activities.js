@@ -1,16 +1,14 @@
-var voice = new voice(),
-	Modal = Modal
-
-Date.prototype.getTimeHumanize = function(){
+Date.prototype.getTimeHumanize = function () {
 	var time = this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds()
 	return time
 }
+var text = new Text()
 
 var activities = document.querySelectorAll('.activity'),
 	confirmActivityWindow = new Modal('confirmActivityWindow','.contentWidth')
 
 for (var activity of Array.from(activities)){
-	var date = new Date(activity.getAttribute('data-date'))
+	var date = new Date(activity.dataset.date)
 
 	activity.querySelector('[rol=time]').innerHTML = date.getTimeHumanize()
 
@@ -30,8 +28,8 @@ for (var activity of Array.from(activities)){
 	activity.addEventListener('click', confirmActivity)
 }
 
-function confirmActivity() {
-	voice.speak(this.getAttribute("data-speech"))
+function confirmActivity () {
+	text.toVoice(this.dataset.speech)
 
 	var template = document.querySelector('#templateConfirmActivityWindow'),
 		clone = document.importNode(template.content,true)
@@ -40,3 +38,4 @@ function confirmActivity() {
 	confirmActivityWindow.addContent(clone)
 	confirmActivityWindow.show()
 }
+

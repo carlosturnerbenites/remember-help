@@ -1,4 +1,4 @@
-function Modal(modalReference,parentElement){
+function Modal (modalReference,parentElement){
 	var body = document.body
 	this.modal = document.getElementById(modalReference)
 	this.contentModal = this.modal.querySelector('.contentModal')
@@ -7,31 +7,31 @@ function Modal(modalReference,parentElement){
 	var thisModal = this
 
 	this.parentElement = document.querySelector(parentElement)
-	this.show = function() {
+	this.show = function (){
 		this.modal.classList.add('effectShowModal')
 		this.modal.setAttribute('modalActive','true')
 		this.parentElement.classList.add('sectionInactive')
 		body.classList.add('overflowHidden')
 
 	}
-	this.hide = function() {
+	this.hide = function (){
 		this.modal.classList.remove('effectShowModal')
 		this.modal.classList.add('effectHideModal')
 		this.bodyModal.innerHTML = ''
 
 		window.setTimeout(
-			function(){
+			function (){
 				thisModal.modal.classList.remove('effectHideModal')
 				thisModal.modal.removeAttribute('modalActive')
 				thisModal.parentElement.classList.remove('sectionInactive')
 				body.classList.remove('overflowHidden')
 			},1000)
 	}
-	this.addContent = function(element) {
+	this.addContent = function (element){
 		this.bodyModal.innerHTML = ''
 		this.bodyModal.appendChild(element)
 	}
-	this.setTitle = function(title) {
+	this.setTitle = function (title){
 		this.bodyTitle = this.modal.querySelector('.titleModal')
 		this.bodyTitle.innerHTML = ''
 		var titleContent = document.createElement('h2')
@@ -41,17 +41,17 @@ function Modal(modalReference,parentElement){
 	this.close = this.modal.querySelector('[data-closemodal]')
 	this.close.addEventListener('click',this.hide.bind(this))
 }
-function Message(data){
+function Message (data){
 	this.contenedorPrincipal = document.body
 
-	this.createMessage = function(){
+	this.createMessage = function (){
 		this.contenedorMSG = document.createElement('article')
 		this.contenedorMSG.classList.add('contenedorMensaje')
 		var mensaje = document.createElement('p')
-		var contenedorIcon = document.createElement('article')
-		var contenedorMensaje = document.createElement('article')
+		// var contenedorIcon = document.createElement('article')
+		// var contenedorMensaje = document.createElement('article')
 		mensaje.innerHTML= data.msg
-		var icono = document.createElement('span')
+		// var icono = document.createElement('span')
 		this.contenedorMSG.classList.add('MSG')
 		var icon = document.createElement('img')
 
@@ -70,14 +70,14 @@ function Message(data){
 		icon.classList.add('contenedorIcon')
 		mensaje.classList.add('contenedorMensaje')
 	}
-	this.show = function(){
+	this.show = function (){
 		this.createMessage()
 		var top = window.window.scrollY
 		this.contenedorMSG.setAttribute('style', 'top:' + top + 'px')
 		this.contenedorPrincipal.appendChild(this.contenedorMSG)
 		setTimeout(this.hide.bind(this), data.time)
 	}
-	this.hide = function(){
+	this.hide = function (){
 		this.contenedorPrincipal.removeChild(this.contenedorPrincipal.lastChild)
 	}
 }

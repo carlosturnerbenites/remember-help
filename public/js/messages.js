@@ -1,11 +1,9 @@
 var messages = document.querySelectorAll('.message'),
-	voice = new voice()
+	text = new Text()
 
 for (var message of Array.from(messages)){
-	message.addEventListener('click', (e) => {
+	message.addEventListener('click', function (e){
 		e.stopPropagation()
-		var text = e.target.getAttribute('data-speech')
-		console.log(text)
-		voice.speak(text)
-	},true)
+		text.toVoice(this.dataset.speech)
+	})
 }

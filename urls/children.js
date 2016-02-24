@@ -2,8 +2,8 @@ const express = require('express'),
 	router = express.Router(),
 	models = require('./../models/')
 
-//models.activitie.create({date:Date.now(), hour:Date.now(), dateMax:Date.now(), text:"Dormir", img:"/images/activities/dormir.png"},(err, activity) => {console.log(err)})
-//models.message.create({"type":0,"text":"Bien hecho"},(err, activity) => {console.log(err)})
+// models.activitie.create({date:Date.now(), hour:Date.now(), dateMax:Date.now(), text:"Dormir", img:"/images/activities/dormir.png"},(err, activity) => {console.log(err)})
+// models.message.create({"type":0,"text":"Bien hecho"},(err, activity) => {console.log(err)})
 
 var activities = {},
 	messages = {}

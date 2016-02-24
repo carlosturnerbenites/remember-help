@@ -4,14 +4,31 @@
         "commonjs": true,
         "es6": true
     },
+    "globals" :{
+        "response": true,
+        "listen": true,
+        "voice": true
+        },
     "extends": "eslint:recommended",
     "rules": {
         "no-console": 1,
         "arrow-spacing": 1,
-        "no-unused-vars": 1,
         "no-multi-spaces": 1,
+        "no-unused-vars": 1,
         "no-extra-parens": 1,
+        "no-spaced-func": 1,
+        "no-trailing-spaces": 1,
+        "no-whitespace-before-property": 1,
+        "space-before-function-paren": 2,
         "no-empty": 1,
+        "space-in-parens": [
+            2,
+            "never"
+        ],
+        "spaced-comment": [
+            2,
+            "always"
+        ],
         "no-multiple-empty-lines": [
             1,
             {"max": 1}

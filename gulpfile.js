@@ -5,7 +5,7 @@ const gulp = require('gulp'),
 	plumber = require('gulp-plumber'),
 	config = require('./config/configDev.json')
 
-function compileStyl() {
+function compileStyl () {
 	gulp
 	.src(config.gulp.srcStyle)
 	.pipe(plumber())

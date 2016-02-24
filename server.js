@@ -12,13 +12,15 @@ const config = require(urlConfig),
 	port = process.env.PORT || 8000,
 	urlGeneral = require('./urls/general'),
 	urlChildren = require('./urls/children'),
-	urlManagement = require('./urls/management')
+	urlManagement = require('./urls/management'),
+	api = require('./urls/api')
 
 mongoose.connect(config.URIMongo)
 
 app.use('',urlGeneral)
 app.use('/children',urlChildren)
 app.use('/management',urlManagement)
+app.use('/api',api)
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
