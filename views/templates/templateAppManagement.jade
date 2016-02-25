@@ -2,18 +2,26 @@ doctype html
 html(lang='es')
 	head
 		meta(charset='UTF-8')
-		meta(name='viewport' content="width=width-device, user-scalable=no, initial-scale=1.0")
+		meta(name='viewport' content="width=width-device, user-scalable=no, initial-scale=1.0" )
 		block title
 		link(rel='stylesheet', href='/css/styles.css')
 	body
+		block modal
 		section.contentWidth
-			nav
-				h3 rememberHelp
-				article.itemsNavs
-					a.item(href="/management/statistics")
-						span.icon-statistics(tooltip="Estadisticas")
-					a.item(href="/management/line-evolution")
-						span.icon-linetime(tooltip="Evolucion")
-			section.titleSection
-				block titleSection
+			header(class="#{classcss}")
+				nav
+					h3 rememberHelp
+					article.itemsNavs
+						a.item(href="/management/statistics")
+							span.icon-statistics(tooltip="Estadisticas")
+						a.item(href="/management/line-evolution")
+							span.icon-timeline(tooltip="Linea De Evolucion")
+						a.item(href="/management/collections")
+							span.icon-(tooltip="Collecione") Collections
+				section.titleSection
+					block titleSection
 			block content
+		script(src="/js/utilities.js")
+		script(src='/js/textToSpeech.js')
+		script(src='/js/speechToText.js')
+		block script
