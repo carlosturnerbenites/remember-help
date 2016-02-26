@@ -1,44 +1,38 @@
-colorBtnConfirmarBackground = #87BC5E
-colorBtnConfirmarBorder = #3C7113
-
-colorBtnCancelarBackground = #D46A6A
-colorBtnCancelarBorder = #801515
-
-colorBtnEnviarBackground = #4D658D
-colorBtnEnviarBorder = #152D54
-
-colorBtnAyudaBackground = #D4886A
-colorBtnAyudaBorder = #803315
-
 .btn
-	border none
+	border none !important
 	border-radius 5px
 	color #fff
-	padding 5px
-	font-size 1em
-	letter-spacing 3px
 	cursor pointer
 	display inline-block
-	margin-top 10px !important
+	font-size 1em
+	font-weight bold
+	letter-spacing 3px
 	margin-bottom 10px !important
+	margin-top 10px !important
+	outline none
+	padding 10px !important
 	&:active
-		transition .1s box-shadow
 		box-shadow 0px 0px transparent
+		transition .1s box-shadow
 	&Success
-		background-color colorBtnConfirmarBackground
-		box-shadow 0px 6px colorBtnConfirmarBorder
+		background-color baseGreen
+		box-shadow 0px 6px #097626
 	&Error
-		background-color colorBtnCancelarBackground
-		box-shadow 0px 6px colorBtnCancelarBorder
+		background-color baseRed
+		box-shadow 0px 6px #9F0E03
 	&Info
-		background-color colorBtnEnviarBackground
-		box-shadow 0px 6px colorBtnEnviarBorder
+		background-color baseBlue
+		box-shadow 0px 6px #0759E4
 	&Help
-		box-shadow 0px 6px colorBtnAyudaBorder
-		background-color colorBtnAyudaBackground
+		background-color baseYellow
+		box-shadow 0px 6px #9A7200
 		cursor help
 		margin-top 0 !important
+	&Round
+		border-radius 50%
+		height 300px !important
+		width 300px !important
 	&:disabled
-		cursor not-allowed
-		box-shadow 0px 6px colorBtnDiabledBorder
 		background-color colorBtnDiabledBackground
+		box-shadow 0px 6px colorBtnDiabledBorder
+		cursor not-allowed

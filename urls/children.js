@@ -1,6 +1,7 @@
 const express = require('express'),
 	router = express.Router(),
-	models = require('./../models/')
+	models = require('./../models/'),
+	utils = require('./../utils')
 
 // models.activitie.create({date:Date.now(), hour:Date.now(), dateMax:Date.now(), text:"Dormir", img:"/images/activities/dormir.png"},(err, activity) => {console.log(err)})
 // models.message.create({"type":0,"text":"Bien hecho"},(err, activity) => {console.log(err)})
@@ -13,14 +14,14 @@ models.message.find({} , (err,messagesD) => {messages = messagesD})
 
 router.get('/activities',(req,res) => {
 	res.render('children/activities',{
-		classcss:'activities',
+		classcss:utils.stylesPage.getRandom(),
 		activities:activities
 	})
 })
 
 router.get('/messages',(req,res) => {
 	res.render('children/messages',{
-		classcss:'messages',
+		classcss:utils.stylesPage.getRandom(),
 		messages:messages
 	})
 })

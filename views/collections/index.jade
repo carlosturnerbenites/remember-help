@@ -7,18 +7,16 @@ block titleSection
 
 block content
 	form.formRound
-		article
-			label(for="collection") Collecion
+		article.inputContainer
+			label.label(for="collection") Collecion
 			select#collection(name="collection" size="5" required)
 				option(value="fathers") Mama/Padre
 				option(value="childrens") Niños
 				option(value="messages") Mensajes
 				option(value="activities") Actividades
 				option(value="history") Historias
-		article
-			label(for="finished") Refinar por
-			input#finished(type="text" name="finished")
-		article
-			input.btn.btnSuccess(type="submit" value="Buscar")
+		article.alignItemsEnd
+			input.btn.btnInfo(type="submit" value="Buscar")
+			input.btn.btnSuccess(type="submit" value="Agregar")
 
 

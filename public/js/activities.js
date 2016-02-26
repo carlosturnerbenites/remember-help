@@ -2,7 +2,9 @@ Date.prototype.getTimeHumanize = function () {
 	var time = this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds()
 	return time
 }
-var text = new Text()
+
+var text = new Text(),
+	detailActivityActive = null
 
 var activities = document.querySelectorAll('.activity'),
 	confirmActivityWindow = new Modal('confirmActivityWindow','.contentWidth')
@@ -31,11 +33,14 @@ for (var activity of Array.from(activities)){
 function confirmActivity () {
 	text.toVoice(this.dataset.speech)
 
+	detailActivityActive = this.dataset
+
 	var template = document.querySelector('#templateConfirmActivityWindow'),
 		clone = document.importNode(template.content,true)
 
-	confirmActivityWindow.setTitle('Actividad')
-	confirmActivityWindow.addContent(clone)
-	confirmActivityWindow.show()
+	confirmActivityWindow
+	.setTitle(this.dataset.text)
+	.addContent(clone)
+	.show()
 }
 

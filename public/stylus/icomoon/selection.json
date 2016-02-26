@@ -46,12 +46,12 @@
 				"prevSize": 16,
 				"ligatures": "mic, microphone",
 				"name": "voice",
-				"id": 31,
+				"id": 0,
 				"code": 59649
 			},
-			"setIdx": 2,
-			"setId": 0,
-			"iconIdx": 30
+			"setIdx": 1,
+			"setId": 1,
+			"iconIdx": 0
 		},
 		{
 			"icon": {
@@ -75,12 +75,12 @@
 				"prevSize": 16,
 				"ligatures": "stopwatch, time5",
 				"name": "activities",
-				"id": 83,
+				"id": 1,
 				"code": 59650
 			},
-			"setIdx": 2,
-			"setId": 0,
-			"iconIdx": 82
+			"setIdx": 1,
+			"setId": 1,
+			"iconIdx": 1
 		},
 		{
 			"icon": {
@@ -103,12 +103,12 @@
 				"prevSize": 16,
 				"ligatures": "bubble, comment",
 				"name": "messages",
-				"id": 108,
+				"id": 2,
 				"code": 59651
 			},
-			"setIdx": 2,
-			"setId": 0,
-			"iconIdx": 107
+			"setIdx": 1,
+			"setId": 1,
+			"iconIdx": 2
 		},
 		{
 			"icon": {
@@ -131,12 +131,74 @@
 				"prevSize": 16,
 				"ligatures": "pie-chart, stats",
 				"name": "statistics",
-				"id": 155,
+				"id": 3,
 				"code": 59652
+			},
+			"setIdx": 1,
+			"setId": 1,
+			"iconIdx": 3
+		},
+		{
+			"icon": {
+				"paths": [
+					"M512 0c-282.77 0-512 71.634-512 160v128c0 88.366 229.23 160 512 160s512-71.634 512-160v-128c0-88.366-229.23-160-512-160z",
+					"M512 544c-282.77 0-512-71.634-512-160v192c0 88.366 229.23 160 512 160s512-71.634 512-160v-192c0 88.366-229.23 160-512 160z",
+					"M512 832c-282.77 0-512-71.634-512-160v192c0 88.366 229.23 160 512 160s512-71.634 512-160v-192c0 88.366-229.23 160-512 160z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"database",
+					"db",
+					"server",
+					"host",
+					"storage",
+					"save",
+					"datecenter"
+				],
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"order": 1,
+				"prevSize": 16,
+				"ligatures": "database, db",
+				"name": "database",
+				"id": 101,
+				"code": 59653
 			},
 			"setIdx": 2,
 			"setId": 0,
-			"iconIdx": 154
+			"iconIdx": 100
+		},
+		{
+			"icon": {
+				"paths": [
+					"M1024 397.050l-353.78-51.408-158.22-320.582-158.216 320.582-353.784 51.408 256 249.538-60.432 352.352 316.432-166.358 316.432 166.358-60.434-352.352 256.002-249.538z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"star-full",
+					"rate",
+					"star",
+					"favorite",
+					"bookmark"
+				],
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"order": 2,
+				"prevSize": 16,
+				"ligatures": "star-full, rate3",
+				"name": "treasure",
+				"id": 218,
+				"code": 59654
+			},
+			"setIdx": 2,
+			"setId": 0,
+			"iconIdx": 217
 		}
 	],
 	"height": 1024,

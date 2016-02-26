@@ -10,7 +10,8 @@
 		"Text": true,
 		"Modal": true,
 		"webkitSpeechRecognition": true,
-		"confirmActivityWindow": true
+		"confirmActivityWindow": true,
+		"detailActivityActive": true
 		},
 	"extends": "eslint:recommended",
 	"rules": {

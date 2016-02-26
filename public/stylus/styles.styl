@@ -1,4 +1,5 @@
 @import 'normalize'
+@import 'OOCSS'
 @import 'lib/modal'
 @import 'lib/buttons'
 @import 'lib/forms'
@@ -12,10 +13,6 @@ body
 /*Header: Menu y Titulo de la seccion*/
 header
 	margin-bottom 20px
-	&.messages
-		background-color rgb(103,58,183)
-	&.activities
-		background-color rgb(156,39,176)
 	nav
 		align-items center
 		color white
@@ -23,11 +20,11 @@ header
 		justify-content space-between
 		.itemsNavs
 			.item
-				display inline-block
-				padding 10px
-				margin 0 10px
 				color white
+				display inline-block
 				font-size 2rem
+				margin 0 10px
+				padding 10px
 				text-decoration none
 				&:last-child
 					margin-right 0px
@@ -44,18 +41,18 @@ header
 .activities
 	.activity
 		cursor pointer
-		width 100%
 		margin-bottom 40px
-		transition all 2s linear
 		position relative
+		transition all 2s linear
+		width 100%
 		.imgActivity
 			width 100%
 		.titleActivity
+			font-size 2rem
+			margin 0
 			position absolute
 			top 0
-			margin 0
 			width 100%
-			font-size 2rem
 			&:first-letter
 				font-size 4rem
 				font-weight bold
@@ -63,70 +60,70 @@ header
 			border-bottom 0
 		.reminder
 			color white
-			font-size 2rem
 			display flex
+			font-size 2rem
 			justify-content center
 			margin-bottom 10px
 			.titleReminder
-				display: flex;
-				justify-content center
 				align-items center
-				width 40%
-				margin 0
 				background-position center
 				background-repeat no-repeat
 				background-size 110px
+				display: flex;
+				justify-content center
+				margin 0
 				transition all 1s linear
+				width 40%
 				&:hover
 					border-bottom 1px solid transparent
 			.date
 				background-color rgba(0,0,0,0.7)
-				width 60%
-				text-align right
-				font-size 3rem
 				background-position right
 				background-repeat no-repeat
 				background-size 174px
+				font-size 3rem
+				text-align right
+				width 60%
 				.meridiem
 					font-size 1rem
 					margin-left 10px
 			.morning
 				background-color rgb(255, 188, 0)
-				border-bottom 10px solid rgb(255, 203, 57)
 				background-image url('/images/reminders/sun.png')
+				border-bottom 10px solid rgb(255, 203, 57)
 			.nigth
 				background-color rgb(69,90,100)
-				border-bottom 10px solid rgb(27, 51, 62)
 				background-image url('/images/reminders/moon.png')
+				border-bottom 10px solid rgb(27, 51, 62)
 		.complete
 			.titleReminder
 				background-color rgb(52, 168, 83)
-				border-bottom 10px solid rgba(0,0,0,0.3)
 				background-image url('/images/reminders/complete.png')
+				border-bottom 10px solid rgba(0,0,0,0.3)
 		.incomplete
 			.titleReminder
 				background-color rgb(236, 69, 89)
-				border-bottom 10px solid rgba(0,0,0,0.3)
 				background-image url('/images/reminders/incomplete.png')
+				border-bottom 10px solid rgba(0,0,0,0.3)
 		.inprocess
 			.titleReminder
 				background-color rgba(0,0,0,0.3)
-				border-bottom 10px solid rgba(0,0,0,0.3)
 				background-image url('/images/reminders/clock.png')
+				border-bottom 10px solid rgba(0,0,0,0.3)
 
 /*Mensajes*/
 .messages
 	color white
 	.message
-		width 100%
-		transition all 2s linear
-		padding 50px 0
-		height 300px
-		display: flex
-		justify-content center
 		align-items center
 		background-position center
 		background-repeat no-repeat
+		display: flex
+		height 300px
+		justify-content center
+		padding 50px 0
+		transition all 2s linear
+		width 100%
 		&:last-child
 			border-bottom 0
 
@@ -134,35 +131,37 @@ header
 			font-size 3rem
 			text-align center
 	.correct
-		background-color rgb(52, 168, 83)
+		background-color baseGreen
 		background-image url('/images/messages/correct.png')
 		border-bottom 10px solid rgb(9, 118, 38)
 	.warning
-		background-color rgb(255, 188, 0)
+		background-color baseYellow
 		background-image url('/images/messages/warning.png')
 		border-bottom 10px solid rgb(255, 203, 57)
 	.incorrect
-		background-color rgb(236, 69, 89)
+		background-color baseRed
 		background-image url('/images/messages/incorrect.png')
 		border-bottom 10px solid rgb(171, 12, 31)
 
 /*Modal de confirmacion de Actividad*/
 .templateConfirmActivityWindow
-	display flex
-	justify-content space-around
 	align-items center
+	display flex
 	font-size 10rem
+	justify-content space-around
 	.btn
 		width 40%
 
 /*Templates management*/
-.styleRed
-	background-color #EA4335
-.styleYellow
-	background-color #FBBC05
 .styleBlue
-	background-color #4285F4
+	background-color baseBlue
 .styleGreen
-	background-color #34A853
+	background-color baseGreen
 .styleOscure
-	background-color #455A64
+	background-color baseOscure
+.stylePurple
+	background-color basePurple
+.styleRed
+	background-color baseRed
+.styleYellow
+	background-color baseYellow

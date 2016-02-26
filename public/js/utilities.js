@@ -12,7 +12,6 @@ function Modal (modalReference,parentElement){
 		this.modal.setAttribute('modalActive','true')
 		this.parentElement.classList.add('sectionInactive')
 		body.classList.add('overflowHidden')
-
 	}
 	this.hide = function (){
 		this.modal.classList.remove('effectShowModal')
@@ -30,6 +29,7 @@ function Modal (modalReference,parentElement){
 	this.addContent = function (element){
 		this.bodyModal.innerHTML = ''
 		this.bodyModal.appendChild(element)
+		return this
 	}
 	this.setTitle = function (title){
 		this.bodyTitle = this.modal.querySelector('.titleModal')
@@ -37,6 +37,7 @@ function Modal (modalReference,parentElement){
 		var titleContent = document.createElement('h2')
 		titleContent.innerHTML = title
 		this.bodyTitle.appendChild(titleContent)
+		return this
 	}
 	this.close = this.modal.querySelector('[data-closemodal]')
 	this.close.addEventListener('click',this.hide.bind(this))

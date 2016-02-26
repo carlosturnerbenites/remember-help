@@ -18,14 +18,14 @@ function response (resultText){
 				text.toVoice('perfecto, sigue asi.')
 				var xhr = new XMLHttpRequest()
 				xhr.open('POST', '/api/history/add' , true)
-				// xhr.setRequestHeader('Content-Type', 'application/json')
+				xhr.setRequestHeader('Content-Type', 'application/json')
 				xhr.onreadystatechange = function () {
 					if (this.readyState == 4 && this.status == 200) {
 						var data = this.responseText
 					}
 				}
 
-				xhr.send({"hola":"2"})
+				xhr.send(JSON.stringify(detailActivityActive))
 			}else{
 				text.toVoice('No olvides hacerlo.')
 				confirmActivityWindow.hide()
