@@ -17,7 +17,9 @@ const childrenSchema = new Mongoose.Schema({
 		text : {type:String, default:''},
 		textSpeech : {type:String, default:''},
 		img : {type:String, default:''},
-		state : {type:String, default:'inprocess'}
+		state : {type:String, default:'inprocess'},
+		/* la tolerancio se define en minutos*/
+		tolerance : {type:Number, default: 20 }
 	}),
 	messageSchema = new Mongoose.Schema({
 		type: {type:Number},

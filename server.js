@@ -20,7 +20,7 @@ const config = require(urlConfig),
 schedule.scheduleJob({hour: 0, minute: 0, dayOfWeek: new schedule.Range(0, 7)}, () => {
 	models.activitie.update(
 		{ state : { $ne : 'inprocess'}},
-		{ $set : { state : 'complete' }},
+		{ $set : { state : 'inprocess' }},
 		{ multi: true }
 	).exec()
 })

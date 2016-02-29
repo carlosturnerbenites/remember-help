@@ -30,11 +30,31 @@ for (var activity of Array.from(activities)){
 	activity.addEventListener('click', confirmActivity)
 }
 
+function validateRangeTolerance (date,tolerance){
+
+	var currentTime = new Date()
+
+	date.setDate(currentTime.getDate())
+	date.setFullYear(currentTime.getFullYear())
+	date.setMonth(currentTime.getMonth())
+
+	var lowerLimit = new Date(currentTime.setMinutes(currentTime.getMinutes() - tolerance)),
+		upperLimit = new Date(currentTime.setMinutes(currentTime.getMinutes() + tolerance*2))
+
+	if (date >= lowerLimit && date <= upperLimit) return true
+	return false
+}
+
 function confirmActivity () {
 
-	var reminder = this.querySelector('[data-statereminder]')
+	var reminder = this.querySelector('[data-statereminder]'),
+		tolerance = parseInt(this.dataset.tolerance),
+		activityTime = new Date(this.dataset.date)
 
-	if (reminder.getAttribute('data-statereminder') == 'complete') return text.toVoice("Ya has completado esta actiidad.")
+	if (reminder.dataset.statereminder == 'complete') return text.toVoice('Ya has completado esta actiidad.')
+
+	/* Este condicional verifica que la hora de la tarea este en el rango de la tolerancia de la misma*/
+	// if (!validateRangeTolerance(activityTime, tolerance)) return text.toVoice('Aun no es hora de realizar esta actividad.')
 
 	text.toVoice(this.dataset.speech)
 
