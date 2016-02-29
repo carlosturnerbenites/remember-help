@@ -13,24 +13,24 @@ body
 /*Header: Menu y Titulo de la seccion*/
 header
 	margin-bottom 20px
+	color white !important
 	nav
 		align-items center
-		color white
 		display flex
 		justify-content space-between
+		a
+			text-decoration none
+			color inherit
 		.itemsNavs
 			.item
-				color white
 				display inline-block
 				font-size 2rem
 				margin 0 10px
 				padding 10px
-				text-decoration none
 				&:last-child
 					margin-right 0px
 	.titleSection
 		box-shadow 0 10px 30px rgba(0,0,0,0.3)
-		color white
 		font-size 4rem
 		padding 30px 0
 		padding-left 20px
@@ -95,17 +95,18 @@ header
 				background-color rgb(69,90,100)
 				background-image url('/images/reminders/moon.png')
 				border-bottom 10px solid rgb(27, 51, 62)
-		.complete
+
+		[data-statereminder="complete"]
 			.titleReminder
 				background-color rgb(52, 168, 83)
 				background-image url('/images/reminders/complete.png')
 				border-bottom 10px solid rgba(0,0,0,0.3)
-		.incomplete
+		[data-statereminder="incomplete"]
 			.titleReminder
 				background-color rgb(236, 69, 89)
 				background-image url('/images/reminders/incomplete.png')
 				border-bottom 10px solid rgba(0,0,0,0.3)
-		.inprocess
+		[data-statereminder="inprocess"]
 			.titleReminder
 				background-color rgba(0,0,0,0.3)
 				background-image url('/images/reminders/clock.png')

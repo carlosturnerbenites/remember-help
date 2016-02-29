@@ -15,13 +15,21 @@ function response (resultText){
 			text.toVoice('No respondiste la pregunta.')
 		}else{
 			if (resultText.search('si') >= 0) {
-				text.toVoice('perfecto, sigue asi.')
+
 				var xhr = new XMLHttpRequest()
+
 				xhr.open('POST', '/api/history/add' , true)
 				xhr.setRequestHeader('Content-Type', 'application/json')
 				xhr.onreadystatechange = function () {
 					if (this.readyState == 4 && this.status == 200) {
-						var data = this.responseText
+						var data = JSON.parse(this.responseText),
+							selector = '[data-id = "' + data.id +'"]',
+							activity = document.querySelector(selector),
+							reminder = activity.querySelector(".reminder")
+
+						reminder.setAttribute('data-statereminder',data.classcss)
+						text.toVoice(data.message)
+						confirmActivityWindow.hide()
 					}
 				}
 

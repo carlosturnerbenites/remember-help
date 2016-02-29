@@ -16,7 +16,8 @@ const childrenSchema = new Mongoose.Schema({
 		dateMax : {type:Date},
 		text : {type:String, default:''},
 		textSpeech : {type:String, default:''},
-		img : {type:String, default:''}
+		img : {type:String, default:''},
+		state : {type:String, default:'inprocess'}
 	}),
 	messageSchema = new Mongoose.Schema({
 		type: {type:Number},

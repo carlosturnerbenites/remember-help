@@ -31,6 +31,11 @@ for (var activity of Array.from(activities)){
 }
 
 function confirmActivity () {
+
+	var reminder = this.querySelector('[data-statereminder]')
+
+	if (reminder.getAttribute('data-statereminder') == 'complete') return text.toVoice("Ya has completado esta actiidad.")
+
 	text.toVoice(this.dataset.speech)
 
 	detailActivityActive = this.dataset

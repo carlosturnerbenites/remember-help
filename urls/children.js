@@ -3,26 +3,34 @@ const express = require('express'),
 	models = require('./../models/'),
 	utils = require('./../utils')
 
-// models.activitie.create({date:Date.now(), hour:Date.now(), dateMax:Date.now(), text:"Dormir", img:"/images/activities/dormir.png"},(err, activity) => {console.log(err)})
-// models.message.create({"type":0,"text":"Bien hecho"},(err, activity) => {console.log(err)})
-
 var activities = {},
 	messages = {}
 
-models.activitie.find({} , (err,activitiesD) => {activities = activitiesD})
-models.message.find({} , (err,messagesD) => {messages = messagesD})
+router.get('/treasure',(req,res) => {
+	res.render('children/treasure',{
+		classcss:utils.stylesPage.getRandom()
+	})
+})
 
 router.get('/activities',(req,res) => {
-	res.render('children/activities',{
-		classcss:utils.stylesPage.getRandom(),
-		activities:activities
+	models.activitie.find({} , (err,activitiesD) => {
+		activities = activitiesD
+
+		res.render('children/activities',{
+			classcss:utils.stylesPage.getRandom(),
+			activities:activities
+		})
 	})
 })
 
 router.get('/messages',(req,res) => {
-	res.render('children/messages',{
-		classcss:utils.stylesPage.getRandom(),
-		messages:messages
+	models.message.find({} , (err,messagesD) => {
+		messages = messagesD
+
+		res.render('children/messages',{
+			classcss:utils.stylesPage.getRandom(),
+			messages:messages
+		})
 	})
 })
 

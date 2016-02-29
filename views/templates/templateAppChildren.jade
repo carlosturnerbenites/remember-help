@@ -10,7 +10,8 @@ html(lang='es')
 		section.contentWidth
 			header(class="#{classcss}")
 				nav
-					h3 rememberHelp
+					h3
+						a(href = "/") rememberHelp
 					article.itemsNavs
 						a.item(href="/children/activities")
 							span.icon-activities(tooltip="Actividades")
@@ -22,6 +23,5 @@ html(lang='es')
 					block titleSection
 			block content
 		script(src="/js/utilities.js")
-		script(src='/js/textToSpeech.js')
-		script(src='/js/speechToText.js')
+		script(src='/js/speech.js')
 		block script

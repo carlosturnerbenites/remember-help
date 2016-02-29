@@ -19,8 +19,8 @@ block content
 		each activity in activities
 			article.activity(data-date="#{activity.hour}" data-speech="#{activity.textSpeech}" data-id="#{activity._id}" data-text="#{activity.text}")
 				p.titleActivity #{activity.text}
-				img.imgActivity(src=" #{activity.img}", alt="")
-				article.reminder.inprocess
+				img.imgActivity(src="#{activity.img}", alt="")
+				article.reminder(data-statereminder = "#{activity.state}")
 					article.titleReminder
 						p
 					article.date

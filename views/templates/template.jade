@@ -2,9 +2,22 @@ doctype html
 html(lang='es')
 	head
 		meta(charset='UTF-8')
-		meta(name='viewport' content="width=width-device, user-scalable=no, initial-scale=1.0")
+		meta(name='viewport' content="width=width-device, user-scalable=no, initial-scale=1.0" )
 		block title
 		link(rel='stylesheet', href='/css/styles.css')
 	body
+		block modal
 		section.contentWidth
+			header(class="styleBlue")
+				nav
+					h3
+						a(href = "/") rememberHelp
+					article.itemsNavs
+						a.item(href="/children/activities")
+							span.icon-children(tooltip="Niños")
+						a.item(href="/management/statistics")
+							span.icon-family(tooltip="Padres")
+				section.titleSection
+					block titleSection
 			block content
+

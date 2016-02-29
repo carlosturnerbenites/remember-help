@@ -13,7 +13,17 @@ const config = require(urlConfig),
 	urlGeneral = require('./urls/general'),
 	urlChildren = require('./urls/children'),
 	urlManagement = require('./urls/management'),
-	api = require('./urls/api')
+	api = require('./urls/api'),
+	schedule = require('node-schedule'),
+	models = require('./models')
+
+schedule.scheduleJob({hour: 0, minute: 0, dayOfWeek: new schedule.Range(0, 7)}, () => {
+	models.activitie.update(
+		{ state : { $ne : 'inprocess'}},
+		{ $set : { state : 'complete' }},
+		{ multi: true }
+	).exec()
+})
 
 mongoose.connect(config.URIMongo)
 
