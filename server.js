@@ -4,18 +4,74 @@ else if(process.env.NODE_ENV == 'prod') urlConfig = './config/configProd.json'
 else process.exit()
 
 const config = require(urlConfig),
+	port = process.env.PORT || 8000,
+	http = require('http'),
 	mongoose = require('mongoose'),
 	express = require('express'),
+	cookieParser = require('cookie-parser'),
+	bodyParser = require('body-parser'),
+	expressSession = require('express-session'),
+	passport = require('passport'),
+	LocalStrategy = require('passport-local').Strategy,
+	schedule = require('node-schedule'),
+	MongoStore = require('connect-mongo')(expressSession),
+
 	app = express(),
-	http = require('http'),
 	server = http.createServer(app),
-	port = process.env.PORT || 8000,
+
 	urlGeneral = require('./urls/general'),
 	urlChildren = require('./urls/children'),
 	urlManagement = require('./urls/management'),
 	api = require('./urls/api'),
-	schedule = require('node-schedule'),
 	models = require('./models')
+
+app.set('views', __dirname + '/views')
+app.set('view engine', 'jade')
+app.use(express.static(config.statics))
+
+mongoose.connect(config.URIMongo)
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(cookieParser())
+
+app.use(expressSession({
+	secret: 'help',
+	resave: false,
+	saveUninitialized: false ,
+	store: new MongoStore({
+		mongooseConnection: mongoose.connection
+	})
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.use(new LocalStrategy((username, password, done) => {
+	if (username == 'soy' && password == 'yo') {
+		return done(null, { name: 'Yo', lastname: 'Yo' })
+	}
+
+	done(null, false, { message: 'Unknown user' })
+}))
+
+passport.serializeUser((user, done) => done(null, user))
+passport.deserializeUser((user, done) => done(null, user))
+
+app.use('',urlGeneral)
+app.use('/children', ensureAuth , urlChildren)
+app.use('/management', ensureAuth , urlManagement)
+app.use('/api',api)
+
+app.post('/authenticate',
+	passport.authenticate('local',{failureRedirect: '/authenticate', successRedirect: '/children/activities'})
+)
+
+function ensureAuth (req, res, next) {
+	if (req.isAuthenticated()) return next()
+	res.redirect('/authenticate')
+}
 
 schedule.scheduleJob({hour: 0, minute: 0, dayOfWeek: new schedule.Range(0, 7)}, () => {
 	models.activitie.update(
@@ -24,16 +80,5 @@ schedule.scheduleJob({hour: 0, minute: 0, dayOfWeek: new schedule.Range(0, 7)}, 
 		{ multi: true }
 	).exec()
 })
-
-mongoose.connect(config.URIMongo)
-
-app.use('',urlGeneral)
-app.use('/children',urlChildren)
-app.use('/management',urlManagement)
-app.use('/api',api)
-
-app.set('views', __dirname + '/views')
-app.set('view engine', 'jade')
-app.use(express.static(config.statics))
 
 server.listen(port, () => {console.log('Server listen in ' + port)})

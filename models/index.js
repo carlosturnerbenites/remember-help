@@ -10,6 +10,11 @@ const childrenSchema = new Mongoose.Schema({
 		name: {type:String, default:''},
 		children: { type: Schema.ObjectId, ref: 'children' }
 	}),
+	userSchema = new Mongoose.Schema({
+		name: {type:String, default:''},
+		password: {type:String, default:''},
+		type: {type:Number}
+	}),
 	activitySchema = new Mongoose.Schema({
 		date : {type:Date},
 		hour : {type:Date},
@@ -36,5 +41,6 @@ module.exports = {
 	father : Mongoose.model('father', fatherSchema),
 	activitie : Mongoose.model('activitie', activitySchema),
 	message : Mongoose.model('message', messageSchema),
-	history : Mongoose.model('history', historySchema)
+	history : Mongoose.model('history', historySchema),
+	user : Mongoose.model('user', userSchema)
 }
