@@ -11,9 +11,10 @@ const childrenSchema = new Mongoose.Schema({
 		children: { type: Schema.ObjectId, ref: 'children' }
 	}),
 	userSchema = new Mongoose.Schema({
-		name: {type:String, default:''},
-		password: {type:String, default:''},
-		type: {type:Number}
+		name: {type:String, default:'' , required:true},
+		username: {type:String, default:'' , required:true},
+		password: {type:String, default:'' , required:true},
+		type: {type:Number , required:true}
 	}),
 	activitySchema = new Mongoose.Schema({
 		date : {type:Date},

@@ -13,10 +13,18 @@ html(lang='es')
 					h3
 						a(href = "/") rememberHelp
 					article.itemsNavs
-						a.item(href="/children/activities")
-							span.icon-children(tooltip="Niños")
-						a.item(href="/management/statistics")
-							span.icon-family(tooltip="Padres")
+						if user
+							a.item(href="/children/activities")
+								span.icon-children(tooltip="Niños")
+							a.item(href="/management/statistics")
+								span.icon-family(tooltip="Padres")
+							a.item(href="/logout")
+								span.icon-logout(tooltip="Cerrar Sesion")
+						else
+							a.item(href="/authenticate")
+								span.icon-login(tooltip="Iniciar Sesion")
+							a.item(href="/check-in")
+								span.icon-check-in(tooltip="Registrarse")
 				section.titleSection
 					block titleSection
 			block content

@@ -4,6 +4,11 @@ block title
 block content
 	fieldset
 		legend Registro
-		form#formCheckIn(action="" method="POST")
-			button(type='submit')
+		form#formCheckIn(action="/check-in" method="POST")
+			input(type="text" name="nameChildren" id="nameChildren" placeholder="Nombre Niño")
+			input(type="text" name="nameFather" id="nameFather" placeholder="Nombre Padre")
+			input(type="text" name="username" id="username" placeholder="Usuario")
+			input(type="text" name="password" id="password" placeholder="Contraseña")
+			input(type="text" name="confirmPassword" id="confirmPassword" placeholder="confirmar Contraseña")
+			button.btn.btnSuccess(type='submit')
 				span Registro

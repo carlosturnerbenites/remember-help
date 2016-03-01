@@ -49,15 +49,20 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 passport.use(new LocalStrategy((username, password, done) => {
-	if (username == 'soy' && password == 'yo') {
-		return done(null, { name: 'Yo', lastname: 'Yo' })
-	}
-
-	done(null, false, { message: 'Unknown user' })
+	models.user.findOne({username : username},(err,user) => {
+		if(err) return done(null, false, { message: err})
+		if (!user) return done(null, false, { message: 'Unknown user'})
+		if(user.password == password) return done(null,user)
+		done(null, false, { message: 'Unknown password'})
+	})
 }))
 
 passport.serializeUser((user, done) => done(null, user))
-passport.deserializeUser((user, done) => done(null, user))
+passport.deserializeUser((user, done) => {
+	models.user.findById(user._id,(err,user) => {
+		done(err, user)
+	})
+})
 
 app.use('',urlGeneral)
 app.use('/children', ensureAuth , urlChildren)
