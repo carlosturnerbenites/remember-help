@@ -25,7 +25,7 @@ function response (resultText){
 						var data = JSON.parse(this.responseText),
 							selector = '[data-id = "' + data.id +'"]',
 							activity = document.querySelector(selector),
-							reminder = activity.querySelector(".reminder")
+							reminder = activity.querySelector('.reminder')
 
 						reminder.setAttribute('data-statereminder',data.classcss)
 						text.toVoice(data.message)

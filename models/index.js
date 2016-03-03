@@ -14,7 +14,7 @@ const childrenSchema = new Mongoose.Schema({
 		name: {type:String, default:'' , required:true},
 		username: {type:String, default:'' , required:true},
 		password: {type:String, default:'' , required:true},
-		type: {type:Number , required:true}
+		type: {type:Number , emum: [0,1,2],required:true}
 	}),
 	activitySchema = new Mongoose.Schema({
 		date : {type:Date},

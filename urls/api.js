@@ -1,10 +1,19 @@
 const express = require('express'),
 	router = express.Router(),
 	models = require('./../models/'),
-	bodyParser = require('body-parser')
+	bodyParser = require('body-parser'),
+	mongoose = require('mongoose')
 
 router.use(bodyParser.json())
 
+router.post('/collections/:collection',(req, res) => {
+	var collection = req.params.collection,
+		model = mongoose.model(collection)
+
+	model.find({}, (errr,documents) => {
+		res.json(documents)
+	})
+})
 router.post('/history/add',(req, res) => {
 	var data = req.body
 

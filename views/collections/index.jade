@@ -6,17 +6,30 @@ block titleSection
 	p Colecciones
 
 block content
+	template#field
+		article.inputContainer
+			label.label
+			input(readonly).data
+
 	form.formRound
 		article.inputContainer
 			label.label(for="collection") Collecion
 			select#collection(name="collection" size="5" required)
-				option(value="fathers") Mama/Padre
-				option(value="childrens") Niños
-				option(value="messages") Mensajes
-				option(value="activities") Actividades
+				option(value="father") Mama/Padre
+				option(value="children") Niños
+				option(value="user") Usuarios
+				option(value="message") Mensajes
+				option(value="activitie") Actividades
 				option(value="history") Historias
 		article.alignItemsEnd
-			input.btn.btnInfo(type="submit" value="Buscar")
-			input.btn.btnSuccess(type="submit" value="Agregar")
+			input.btn.btnInfo(type="button" id="findInCollection" value="Buscar")
+			input.btn.btnSuccess(type="button" id="AgregateInCollection" value="Agregar")
+
+	section#results
+	block scripts
+		script(src="/js/collections.js")
+
+
+
 
 
