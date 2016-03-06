@@ -7,22 +7,25 @@ buttonCaptureVoice.addEventListener('mousedown', () => {
 	this.addEventListener('mouseup',voice.listen)
 })
 
+var answersAffirmation = ['si', 'sí','ya','efectivamente', 'evidentemente', 'sin duda'],
+	answersNegation = ['no','nones', 'nanai', 'naranjas', 'quia', 'ca'],
+	answers = answersAffirmation.concat(answersNegation)
+
 function response (resultText){
-	console.log(resultText)
+
 	if (resultText) {
-		resultText = resultText.replace('í','i')
-		if (resultText.search('si') < 0 && resultText.search('no') < 0) {
+		if (answers.indexOf(resultText) < 0) {
 			text.toVoice('No respondiste la pregunta.')
 		}else{
-			if (resultText.search('si') >= 0) {
+			if (answersAffirmation.indexOf(resultText) >= 0) {
 
-				var xhr = new XMLHttpRequest()
-
-				xhr.open('POST', '/api/history/add' , true)
-				xhr.setRequestHeader('Content-Type', 'application/json')
-				xhr.onreadystatechange = function () {
-					if (this.readyState == 4 && this.status == 200) {
-						var data = JSON.parse(this.responseText),
+				ajax({
+					type : 'POST',
+					URL : '/api/history/add',
+					async : true,
+					contentType : 'application/json',
+					onSuccess : (result) => {
+						var data = JSON.parse(result),
 							selector = '[data-id = "' + data.id +'"]',
 							activity = document.querySelector(selector),
 							reminder = activity.querySelector('.reminder')
@@ -30,15 +33,14 @@ function response (resultText){
 						reminder.setAttribute('data-statereminder',data.classcss)
 						text.toVoice(data.message)
 						confirmActivityWindow.hide()
-					}
-				}
+					},
+					data : JSON.stringify(detailActivityActive)
+				})
 
-				xhr.send(JSON.stringify(detailActivityActive))
 			}else{
 				text.toVoice('No olvides hacerlo.')
 				confirmActivityWindow.hide()
 			}
 		}
 	}else text.toVoice('No te entendi.')
-	console.log(resultText)
 }

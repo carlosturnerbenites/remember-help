@@ -31,6 +31,7 @@ function Voice (cb){
 		for (var i = event.resultIndex; i < event.results.length; i++){
 			if(event.results[i].isFinal){
 				text = event.results[i][0].transcript
+				console.log(text)
 				cb(text)
 			}
 		}

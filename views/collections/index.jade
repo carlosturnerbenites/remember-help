@@ -9,11 +9,12 @@ block content
 	template#field
 		article.inputContainer
 			label.label
-			input(readonly).data
+			//input(readonly).data
+			input.data
 
-	form.formRound
+	form.form.formLabelInput#formCollections
 		article.inputContainer
-			label.label(for="collection") Collecion
+			label.label(for="collection") Coleccion
 			select#collection(name="collection" size="5" required)
 				option(value="father") Mama/Padre
 				option(value="children") Niños
@@ -25,7 +26,8 @@ block content
 			input.btn.btnInfo(type="button" id="findInCollection" value="Buscar")
 			input.btn.btnSuccess(type="button" id="AgregateInCollection" value="Agregar")
 
-	section#results
+	section.documents#results
+	section#addDocument
 	block scripts
 		script(src="/js/collections.js")
 

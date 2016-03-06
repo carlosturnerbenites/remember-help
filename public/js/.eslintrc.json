@@ -9,6 +9,7 @@
 		"Voice": true,
 		"Text": true,
 		"Modal": true,
+		"ajax": true,
 		"webkitSpeechRecognition": true,
 		"confirmActivityWindow": true,
 		"detailActivityActive": true

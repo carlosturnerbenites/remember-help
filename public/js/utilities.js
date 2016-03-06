@@ -82,3 +82,17 @@ function Message (data){
 		this.contenedorPrincipal.removeChild(this.contenedorPrincipal.lastChild)
 	}
 }
+function ajax (config){
+	var xhr = new XMLHttpRequest()
+
+	xhr.open(config.type, config.URL, config.async)
+	xhr.setRequestHeader('Content-Type', config.contentType)
+
+	xhr.onreadystatechange = function () {
+		if (this.readyState == 4 && this.status == 200) {
+			config.onSuccess(this.responseText)
+		}
+	}
+
+	xhr.send(config.data)
+}

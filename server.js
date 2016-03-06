@@ -58,6 +58,7 @@ passport.use(new LocalStrategy((username, password, done) => {
 }))
 
 passport.serializeUser((user, done) => done(null, user))
+
 passport.deserializeUser((user, done) => {
 	models.user.findById(user._id,(err,user) => {
 		done(err, user)

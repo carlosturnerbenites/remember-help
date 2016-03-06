@@ -12,6 +12,7 @@ router.get('/logout', (req, res) => {
 })
 
 router.post('/check-in', (req, res) => {
+
 	var data = req.body,
 		children = {
 			name: data.nameChildren,
@@ -26,14 +27,12 @@ router.post('/check-in', (req, res) => {
 			type : 0
 		}
 
-	console.log(data)
-
 	models.user.findOne({username : data.username},(err,exists) => {
 		if(err) return res.send(err)
 		if(exists) return res.json({msg:'Usename Duplicate'})
 		models.user.create(children)
 		models.user.create(father)
-		res.json({msg:'User create'})
+		res.redirect('/authenticate')
 	})
 })
 module.exports = router
