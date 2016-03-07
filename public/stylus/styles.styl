@@ -36,6 +36,7 @@ header
 		padding-left 20px
 		> *
 			margin 0
+/*Header: Menu y Titulo de la seccion*/
 
 /*Acvtividades*/
 .activities
@@ -77,6 +78,7 @@ header
 				&:hover
 					border-bottom 1px solid transparent
 			.date
+				padding 30px 0
 				background-color rgba(0,0,0,0.7)
 				background-position right
 				background-repeat no-repeat
@@ -156,10 +158,10 @@ header
 /*Collections */
 .documents
 	.documentDB
-		border: 1px solid gray;
-		padding: 5px;
-		margin: 20px 2px;
 		border-radius: 5px;
+		border: 1px solid gray;
+		margin: 20px 2px;
+		padding: 5px;
 /*Collections */
 
 /*Estadisticas*/
@@ -167,20 +169,21 @@ header
 	display flex
 	flex-wrap wrap
 	.statistic
-		cursor pointer
-		text-align center
-		width 96%
-		margin 1%
-		padding 1%
 		border 1px solid gray
 		border-radius 2px
+		cursor pointer
+		margin 1%
+		padding 1%
+		text-align center
+		width 96%
+
 .containerOptionsStatistic
 	background-color white
-	position fixed
 	bottom 0px
+	box-shadow 0 10px 30px rgba(0,0,0,1)
 	padding 20px 0
+	position fixed
 	width 100%
-	box-shadow 0 10px 30px rgba(0,0,0,0.3)
 /*Estadisticas*/
 
 .styleBlue

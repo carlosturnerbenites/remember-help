@@ -41,11 +41,11 @@ function Voice (cb){
 	recognition.continuous = true
 	recognition.interimResults = true
 
-	recognition.onstart = function (){recognizing = true;console.log("inicio")}
+	recognition.onstart = function (){recognizing = true;console.log('inicio')}
 
 	recognition.onresult = this.toText
 
-	recognition.onerror = function (event){}
+	recognition.onerror = function (){}
 
 	recognition.onend = function (){recognizing = false}
 

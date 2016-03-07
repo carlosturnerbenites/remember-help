@@ -1,47 +1,55 @@
-function Modal (modalReference,parentElement){
-	var body = document.body
+/* exported Modal Message ajax */
+Date.prototype.getTimeHumanize = function () {
+	var time = this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds()
+	return time
+}
+
+function Modal (modalReference,selectorParentElement){
 	this.modal = document.getElementById(modalReference)
-	this.contentModal = this.modal.querySelector('.contentModal')
-	this.bodyModal = this.modal.querySelector('.bodyModal')
 
-	var thisModal = this
+	var body = document.body,
+		bodyModal = this.modal.querySelector('.bodyModal'),
+		close = this.modal.querySelector('[data-closemodal]'),
+		bodyTitle = this.modal.querySelector('.titleModal'),
+		parentElement = document.querySelector(selectorParentElement)
 
-	this.parentElement = document.querySelector(parentElement)
 	this.show = function (){
 		this.modal.classList.add('effectShowModal')
 		this.modal.setAttribute('modalActive','true')
-		this.parentElement.classList.add('sectionInactive')
+		parentElement.classList.add('sectionInactive')
 		body.classList.add('overflowHidden')
 	}
+
 	this.hide = function (){
 		this.modal.classList.remove('effectShowModal')
 		this.modal.classList.add('effectHideModal')
-		this.bodyModal.innerHTML = ''
+		bodyModal.innerHTML = ''
 
-		window.setTimeout(
-			function (){
-				thisModal.modal.classList.remove('effectHideModal')
-				thisModal.modal.removeAttribute('modalActive')
-				thisModal.parentElement.classList.remove('sectionInactive')
-				body.classList.remove('overflowHidden')
-			},1000)
+		window.setTimeout(() => {
+			this.modal.classList.remove('effectHideModal')
+			this.modal.removeAttribute('modalActive')
+			parentElement.classList.remove('sectionInactive')
+			body.classList.remove('overflowHidden')
+		},1000)
 	}
+
 	this.addContent = function (element){
-		this.bodyModal.innerHTML = ''
-		this.bodyModal.appendChild(element)
+		bodyModal.innerHTML = ''
+		bodyModal.appendChild(element)
 		return this
 	}
+
 	this.setTitle = function (title){
-		this.bodyTitle = this.modal.querySelector('.titleModal')
-		this.bodyTitle.innerHTML = ''
+		bodyTitle.innerHTML = ''
 		var titleContent = document.createElement('h2')
 		titleContent.innerHTML = title
-		this.bodyTitle.appendChild(titleContent)
+		bodyTitle.appendChild(titleContent)
 		return this
 	}
-	this.close = this.modal.querySelector('[data-closemodal]')
-	this.close.addEventListener('click',this.hide.bind(this))
+
+	close.addEventListener('click',this.hide.bind(this))
 }
+
 function Message (data){
 	this.contenedorPrincipal = document.body
 
@@ -82,6 +90,7 @@ function Message (data){
 		this.contenedorPrincipal.removeChild(this.contenedorPrincipal.lastChild)
 	}
 }
+
 function ajax (config){
 	var xhr = new XMLHttpRequest()
 
@@ -96,3 +105,4 @@ function ajax (config){
 
 	xhr.send(config.data)
 }
+

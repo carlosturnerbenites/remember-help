@@ -3,19 +3,8 @@ const express = require('express'),
 	models = require('./../models/'),
 	utils = require('./../utils')
 
-var activities = {},
-	messages = {}
-
-router.get('/treasure',(req,res) => {
-	res.render('children/treasure',{
-		classcss:utils.stylesPage.getRandom()
-	})
-})
-
 router.get('/activities',(req,res) => {
-	models.activitie.find({} , (err,activitiesD) => {
-		activities = activitiesD
-
+	models.activity.find({}, (err,activities) => {
 		res.render('children/activities',{
 			classcss:utils.stylesPage.getRandom(),
 			activities:activities
@@ -24,13 +13,17 @@ router.get('/activities',(req,res) => {
 })
 
 router.get('/messages',(req,res) => {
-	models.message.find({} , (err,messagesD) => {
-		messages = messagesD
-
+	models.message.find({} , (err,messages) => {
 		res.render('children/messages',{
 			classcss:utils.stylesPage.getRandom(),
 			messages:messages
 		})
+	})
+})
+
+router.get('/treasure',(req,res) => {
+	res.render('children/treasure',{
+		classcss:utils.stylesPage.getRandom()
 	})
 })
 

@@ -6,25 +6,23 @@ const express = require('express'),
 
 router.use(bodyParser.json())
 
-router.post('/collections/schemas/:collection',(req, res) => {
+router.get('/collections/schemas/:collection',(req, res) => {
 	var collection = req.params.collection,
 		model = mongoose.model(collection),
 		paths = model.schema.paths
-
 	res.json(paths)
 })
-router.post('/collections/add',(req, res) => {
 
-})
+// router.post('/collections/add',(req, res) => {})
 
-router.post('/collections/:collection',(req, res) => {
+router.get('/collections/:collection',(req, res) => {
 	var collection = req.params.collection,
-		model = mongoose.model(collection),
-		schema = model.schema,
-		paths = schema.paths
+		model = mongoose.model(collection)
 
-		console.log(paths)
-	model.find({},{_id : 0, __v : 0}, (errr,documents) => {
+	model.find({},{_id : 0, __v : 0})
+	.populate('activity children')
+	.exec((errr,documents) => {
+		console.log(documents)
 		res.json(documents)
 	})
 })
@@ -32,7 +30,7 @@ router.post('/collections/:collection',(req, res) => {
 router.post('/history/add',(req, res) => {
 	var data = req.body
 
-	models.activitie.findById(data.id, (err, activity) => {
+	models.activity.findById(data.id, (err, activity) => {
 		console.log(activity)
 
 		var currentTime = new Date(),
@@ -46,10 +44,13 @@ router.post('/history/add',(req, res) => {
 			response.classcss = 'complete'
 			activity.update({ $set : { state : 'complete' }}).exec()
 
-			models.history.create({
-				children: req.user,
-				activity: activity,
-				timeCurrent: Date.now()
+			models.children.findOne({user: req.user._id},(err, children) => {
+
+				models.history.create({
+					children: children._id,
+					activity: activity._id,
+					timeCurrent: Date.now()
+				})
 			})
 
 		}else{
@@ -66,7 +67,6 @@ router.post('/history/add',(req, res) => {
 		res.send(response)
 
 	})
-
 })
 
 module.exports = router

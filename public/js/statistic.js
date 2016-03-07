@@ -4,9 +4,9 @@ var statistics = document.querySelectorAll('.statistic'),
 for (var statistic of Array.from(statistics)){
 	statistic.addEventListener('click', showOptionStatistic)
 }
-function showOptionStatistic (evento) {
-	console.log(this)
+function showOptionStatistic () {
 	containerOptionsStatistic.innerHTML = ''
+
 	var tOptionsStatistic = this.querySelector('.optionsStatistic'),
 		cOptionsStatistic = document.importNode(tOptionsStatistic.content, true)
 

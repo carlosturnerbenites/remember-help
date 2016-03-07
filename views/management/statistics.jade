@@ -11,86 +11,19 @@ block content
 			h2 Actividades Completadas
 			p Actividdes completadas en un rango de tiempo determinado
 			template.optionsStatistic
-				form.form.formOnlyInpu
+				form.form.formLabelInput
 					article.inputContainer
-						input(type='date', name='fini', placeholder='Fecha de Inicio', required)
+						label.label(for="fini") Fecha Inicial
+						input(type='date', name='fini' id='fini' placeholder='Fecha de Inicio', required)
 					article.inputContainer
-						input(type='date', name='ffin', placeholder='Fecha Final', required)
+						label.label(for="ffin") Fecha Final
+						input(type='date', name='ffin' id='ffin' placeholder='Fecha Final', required)
 					article.inputContainer
-						input(type="checkbox" name="all" id="all")
-						label(for="all") Desde el Origien
-		article.statistic
-			h2 Actividades Completadas
-			p Actividdes completadas en un rango de tiempo determinado
-			template.optionsStatistic
-				form.form.formOnlyInpu
+						input.check(type="checkbox" name="all" id="all")
+						label.label(for="all") Desde el Origien
 					article.inputContainer
-						input(type='date', name='fini', placeholder='Fecha de Inicio', required)
-					article.inputContainer
-						input(type='date', name='ffin', placeholder='Fecha Final', required)
-					article.inputContainer
-						input(type="checkbox" name="all" id="all")
-						label(for="all") Desde el Origien
-		article.statistic
-			h2 Actividades Completadas
-			p Actividdes completadas en un rango de tiempo determinado
-			template.optionsStatistic
-				form.form.formOnlyInpu
-					article.inputContainer
-						input(type='date', name='fini', placeholder='Fecha de Inicio', required)
-					article.inputContainer
-						input(type='date', name='ffin', placeholder='Fecha Final', required)
-					article.inputContainer
-						input(type="checkbox" name="all" id="all")
-						label(for="all") Desde el Origien
-		article.statistic
-			h2 Actividades Completadas
-			p Actividdes completadas en un rango de tiempo determinado
-			template.optionsStatistic
-				form.form.formOnlyInpu
-					article.inputContainer
-						input(type='date', name='fini', placeholder='Fecha de Inicio', required)
-					article.inputContainer
-						input(type='date', name='ffin', placeholder='Fecha Final', required)
-					article.inputContainer
-						input(type="checkbox" name="all" id="all")
-						label(for="all") Desde el Origien
-		article.statistic
-			h2 Actividades Completadas
-			p Actividdes completadas en un rango de tiempo determinado
-			template.optionsStatistic
-				form.form.formOnlyInpu
-					article.inputContainer
-						input(type='date', name='fini', placeholder='Fecha de Inicio', required)
-					article.inputContainer
-						input(type='date', name='ffin', placeholder='Fecha Final', required)
-					article.inputContainer
-						input(type="checkbox" name="all" id="all")
-						label(for="all") Desde el Origien
-		article.statistic
-			h2 Actividades Completadas
-			p Actividdes completadas en un rango de tiempo determinado
-			template.optionsStatistic
-				form.form.formOnlyInpu
-					article.inputContainer
-						input(type='date', name='fini', placeholder='Fecha de Inicio', required)
-					article.inputContainer
-						input(type='date', name='ffin', placeholder='Fecha Final', required)
-					article.inputContainer
-						input(type="checkbox" name="all" id="all")
-						label(for="all") Desde el Origien
-		article.statistic
-			h2 Actividades Completadas
-			p Actividdes completadas en un rango de tiempo determinado
-			template.optionsStatistic
-				form.form.formOnlyInpu
-					article.inputContainer
-						input(type='date', name='fini', placeholder='Fecha de Inicio', required)
-					article.inputContainer
-						input(type='date', name='ffin', placeholder='Fecha Final', required)
-					article.inputContainer
-						input(type="checkbox" name="all" id="all")
-						label(for="all") Desde el Origien
+						button.btn.btnSuccess(type="submit")
+							span Generar
 	section.containerOptionsStatistic
 block script
 	script(src="/js/statistic.js")

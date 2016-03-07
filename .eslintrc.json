@@ -4,11 +4,7 @@
         "commonjs": true,
         "es6": true
     },
-    "globals" :{
-        "response": true,
-        "listen": true,
-        "voice": true
-        },
+    "globals" :{},
     "extends": "eslint:recommended",
     "rules": {
         "no-console": 1,

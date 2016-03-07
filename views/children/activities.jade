@@ -24,7 +24,13 @@ block content
 					article.titleReminder
 						p
 					article.date
-						p(rol="time")
-	include ../templates/confirmActivityWindow.jade
-	block script
-		script(src="/js/activities.js")
+						span(rol="time")
+						span.meridiem
+	template#templateConfirmActivityWindow
+		section.templateConfirmActivityWindow
+			button.btn.btnSuccess.btnRound#buttonCaptureVoice
+				span.icon-voice
+		script(src="/js/confirmActivity.js")
+
+block script
+	script(src="/js/activities.js")

@@ -1,6 +1,6 @@
-var find = document.querySelector('#findInCollection'),
-	agregate = document.querySelector('#AgregateInCollection'),
-	collection = document.querySelector('#collection')
+var btnAgregate = document.querySelector('#AgregateInCollection'),
+	btnFind = document.querySelector('#findInCollection'),
+	collectionSelected = document.querySelector('#collection')
 
 function renderForm (schema,selector) {
 	var template = document.querySelector('template#field'),
@@ -9,7 +9,7 @@ function renderForm (schema,selector) {
 	container.innerHTML = ''
 
 	var form = document.createElement('form')
-		form.classList.add('formRound', 'documentDB')
+	form.classList.add('form','formLabelInput', 'documentDB')
 
 	for(var field in schema){
 		var templateField = document.importNode(template.content, true)
@@ -18,8 +18,8 @@ function renderForm (schema,selector) {
 		form.appendChild(templateField)
 	}
 	container.appendChild(form)
-
 }
+
 function renderDataModel (documents,selector) {
 	var template = document.querySelector('template#field'),
 		container = document.querySelector(selector)
@@ -28,7 +28,7 @@ function renderDataModel (documents,selector) {
 
 	documents.forEach((documentDB) => {
 		var form = document.createElement('form')
-		form.classList.add('formRound', 'documentDB')
+		form.classList.add('form','formLabelInput','documentDB')
 		for(var field in documentDB){
 			var templateField = document.importNode(template.content, true)
 			templateField.querySelector('.label').innerHTML = field
@@ -37,13 +37,12 @@ function renderDataModel (documents,selector) {
 		}
 		container.appendChild(form)
 	})
-
 }
 
-function findInCollection () {
+btnFind.addEventListener('click', () => {
 	ajax({
-		type : 'POST',
-		URL : '/api/collections/' + collection.value,
+		type : 'GET',
+		URL : '/api/collections/' + collectionSelected.value,
 		async : true,
 		contentType : 'application/json',
 		onSuccess : (result) => {
@@ -52,11 +51,12 @@ function findInCollection () {
 		},
 		data : null
 	})
-}
-function AgregateInCollection () {
+})
+
+btnAgregate.addEventListener('click', () => {
 	ajax({
-		type : 'POST',
-		URL : '/api/collections/schemas/' + collection.value,
+		type : 'GET',
+		URL : '/api/collections/schemas/' + collectionSelected.value,
 		async : true,
 		contentType : 'application/json',
 		onSuccess : (result) => {
@@ -66,8 +66,4 @@ function AgregateInCollection () {
 		},
 		data : null
 	})
-}
-find.addEventListener('click', findInCollection)
-agregate.addEventListener('click', AgregateInCollection)
-
-
+})

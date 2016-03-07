@@ -3,7 +3,9 @@ const express = require('express'),
 	models = require('./../models/')
 
 router.get('/', (req, res) => res.render('index',{user :req.user}))
+
 router.get('/authenticate', (req, res) => res.render('users/authenticate'))
+
 router.get('/check-in', (req, res) => res.render('users/checkIn'))
 
 router.get('/logout', (req, res) => {
@@ -16,13 +18,13 @@ router.post('/check-in', (req, res) => {
 	var data = req.body,
 		children = {
 			name: data.nameChildren,
-			username: data.username,
+			username: 'C' + data.username,
 			password: data.password,
 			type : 1
 		},
 		father = {
 			name: data.nameFather,
-			username: data.username,
+			username: 'P' + data.username,
 			password: data.password,
 			type : 0
 		}
@@ -30,9 +32,19 @@ router.post('/check-in', (req, res) => {
 	models.user.findOne({username : data.username},(err,exists) => {
 		if(err) return res.send(err)
 		if(exists) return res.json({msg:'Usename Duplicate'})
-		models.user.create(children)
-		models.user.create(father)
+
+		models.user.create(children, (err, user) => {
+			children.user = user._id
+			models.children.create(children)
+		})
+
+		models.user.create(father, (err, user) => {
+			father.user = user._id
+			models.father.create(father)
+		})
+
 		res.redirect('/authenticate')
 	})
 })
+
 module.exports = router

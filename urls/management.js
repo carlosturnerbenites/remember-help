@@ -2,8 +2,8 @@ const express = require('express'),
 	router = express.Router(),
 	utils = require('./../utils')
 
-router.get('/statistics',(req,res) => {
-	res.render('management/statistics',{
+router.get('/collections',(req,res) => {
+	res.render('collections/index',{
 		classcss:utils.stylesPage.getRandom()
 	})
 })
@@ -14,8 +14,8 @@ router.get('/line-evolution',(req,res) => {
 	})
 })
 
-router.get('/collections',(req,res) => {
-	res.render('collections/index',{
+router.get('/statistics',(req,res) => {
+	res.render('management/statistics',{
 		classcss:utils.stylesPage.getRandom()
 	})
 })
