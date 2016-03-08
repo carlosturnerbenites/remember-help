@@ -22,16 +22,16 @@ router.get('/collections/:collection',(req, res) => {
 	model.find({},{_id : 0, __v : 0})
 	.populate('activity children')
 	.exec((errr,documents) => {
-		console.log(documents)
 		res.json(documents)
 	})
 })
 
 router.post('/history/add',(req, res) => {
+	if(req.user.type != 1) return res.json({err : 'Solo una niña ó un niño puede completar las actividades'})
+	console.log(req.user)
 	var data = req.body
 
 	models.activity.findById(data.id, (err, activity) => {
-		console.log(activity)
 
 		var currentTime = new Date(),
 			activityTime = new Date(activity.date),
@@ -45,7 +45,7 @@ router.post('/history/add',(req, res) => {
 			activity.update({ $set : { state : 'complete' }}).exec()
 
 			models.children.findOne({user: req.user._id},(err, children) => {
-
+				console.log(err)
 				models.history.create({
 					children: children._id,
 					activity: activity._id,

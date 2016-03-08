@@ -35,15 +35,22 @@ router.post('/check-in', (req, res) => {
 
 		models.user.create(children, (err, user) => {
 			children.user = user._id
-			models.children.create(children)
+			children.age =  data.ageChildren
+
+			models.children.create(children, (err) => {
+				if(err) return res.json(err)
+
+				models.user.create(father, (err, user) => {
+					father.user = user._id
+					models.father.create(father, (err) => {
+						if(err) return res.json(err)
+
+						return res.redirect('/authenticate')
+					})
+				})
+			})
 		})
 
-		models.user.create(father, (err, user) => {
-			father.user = user._id
-			models.father.create(father)
-		})
-
-		res.redirect('/authenticate')
 	})
 })
 

@@ -7,16 +7,24 @@ block titleSection
 
 block content
 	form#formCheckIn.form.formOnlyInput(action="/check-in" method="POST")
-		article.inputContainer
-			input(type="text" name="nameChildren" id="nameChildren" placeholder="Nombre Niño" required)
-		article.inputContainer
-			input(type="text" name="nameFather" id="nameFather" placeholder="Nombre Padre" required)
-		article.inputContainer
-			input(type="text" name="username" id="username" placeholder="Usuario" required)
-		article.inputContainer
-			input(type="password" name="password" id="password" placeholder="Contraseña" required)
-		article.inputContainer
-			input(type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirmar Contraseña" required)
+		fieldset
+			legend Niñ@
+			article.inputContainer
+				input(type="text" name="nameChildren" id="nameChildren" placeholder="Nombre Niño" required)
+			article.inputContainer
+				input(type="number" min="5" name="ageChildren" id="ageChildren" placeholder="Edad Niño" required)
+		fieldset
+			legend Familiar
+			article.inputContainer
+				input(type="text" name="nameFather" id="nameFather" placeholder="Nombre Padre" required)
+		fieldset
+			legend Usuario
+			article.inputContainer
+				input(type="text" name="username" id="username" placeholder="Usuario" required)
+			article.inputContainer
+				input(type="password" name="password" id="password" placeholder="Contraseña" required)
+			article.inputContainer
+				input(type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirmar Contraseña" required)
 		button.btn.btnSuccess(type='submit')
 			span Registro
 	script.

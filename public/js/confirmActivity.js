@@ -25,8 +25,12 @@ function response (resultText){
 					async : true,
 					contentType : 'application/json',
 					onSuccess : (result) => {
-						var data = JSON.parse(result),
-							selector = '[data-id = "' + data.id +'"]',
+						var data = JSON.parse(result)
+						console.log(data)
+						console.log(typeof data)
+						if(data.err) return text.toVoice(data.err)
+
+						var selector = '[data-id = "' + data.id +'"]',
 							activity = document.querySelector(selector),
 							reminder = activity.querySelector('.reminder')
 

@@ -100,4 +100,5 @@ schedule.scheduleJob({hour: 0, minute: 0, dayOfWeek: new schedule.Range(0, 7)}, 
 		{ multi: true }
 	).exec()
 })
+
 server.listen(port, () => {console.log('Server listen in ' + port)})
