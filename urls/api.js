@@ -28,45 +28,50 @@ router.get('/collections/:collection',(req, res) => {
 
 router.post('/history/add',(req, res) => {
 	if(req.user.type != 1) return res.json({err : 'Solo una niña ó un niño puede completar las actividades'})
-	console.log(req.user)
+
 	var data = req.body
+	console.log(data)
 
-	models.activity.findById(data.id, (err, activity) => {
+	models.children.findOne({user: req.user._id},(err, children) => {
+		models.history.findOne({children : children._id, activity: data.id},(err, history) => {
+			if (err) return res.json({err : err})
+			if (history) return res.json({err : 'Ya has completado esta actiidad.'})
 
-		var currentTime = new Date(),
-			activityTime = new Date(activity.date),
-			response = {}
-		response.id = activity._id
+			models.activity.findById(data.id, (err, activity) => {
 
-		if(activityTime < currentTime) {
-			response.message = 'Felicidades, has terminado ha tiempo la actividad'
-			response.type = 1
-			response.classcss = 'complete'
-			activity.update({ $set : { state : 'complete' }}).exec()
+				var currentTime = new Date(),
+					activityTime = new Date(activity.date),
+					response = {}
+				response.id = activity._id
 
-			models.children.findOne({user: req.user._id},(err, children) => {
-				console.log(err)
-				models.history.create({
-					children: children._id,
-					activity: activity._id,
-					timeCurrent: Date.now()
+				if(activityTime < currentTime) {
+					response.message = 'Felicidades, has terminado ha tiempo la actividad'
+					response.type = 1
+					response.classcss = 'complete'
+					activity.update({ $set : { state : 'complete' }}).exec()
+
+					models.history.create({
+						children: children._id,
+						activity: activity._id,
+						timeCurrent: Date.now()
+					})
+
+				}else{
+					response.message = 'Terminaste, pero intenta debes mejorar la proxima'
+					response.type = 2
+					response.classcss = 'incomplete'
+				}
+
+				models.message.create({
+					type: response.type,
+					text: response.message
 				})
+
+				res.send(response)
 			})
-
-		}else{
-			response.message = 'Terminaste, pero intenta debes mejorar la proxima'
-			response.type = 2
-			response.classcss = 'incomplete'
-		}
-
-		models.message.create({
-			type: response.type,
-			text: response.message
 		})
-
-		res.send(response)
-
 	})
+
 })
 
 module.exports = router

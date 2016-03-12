@@ -17,6 +17,7 @@ block modal
 block content
 	section.activities
 		each activity in activities
+			p #{activity.state}
 			article.activity(data-date="#{activity.hour}" data-speech="#{activity.textSpeech}" data-id="#{activity._id}" data-text="#{activity.text}" data-tolerance = "#{activity.tolerance}")
 				p.titleActivity #{activity.text}
 				img.imgActivity(src="#{activity.img}", alt="")

@@ -4,10 +4,22 @@ const express = require('express'),
 	utils = require('./../utils')
 
 router.get('/activities',(req,res) => {
-	models.activity.find({}, (err,activities) => {
-		res.render('children/activities',{
-			classcss:utils.stylesPage.getRandom(),
-			activities:activities
+	models.activity.find()
+	.lean(true)
+	.exec((err,activities) => {
+		models.children.findOne({user: req.user._id},(err, children) => {
+			models.history.find({children : children._id},{activity : 1}, (err, activitiesComplete) => {
+				activities.forEach(activity => {
+					if (activitiesComplete.some(e => String(e.activity) == String(activity._id)))
+						activity.state = 'complete'
+					else activity.state = 'inprocess'
+				})
+
+				res.render('children/activities',{
+					classcss:utils.stylesPage.getRandom(),
+					activities:activities
+				})
+			})
 		})
 	})
 })

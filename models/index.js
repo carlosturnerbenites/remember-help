@@ -23,7 +23,6 @@ const childrenSchema = new Mongoose.Schema({
 		dateMax : {type:Date},
 		hour : {type:Date, required: true},
 		img : {type:String, default:'', required: true},
-		state : {type:String, default:'inprocess', required: true},
 		text : {type:String, default:'', required: true},
 		textSpeech : {type:String, default:'', required: true},
 		/* la tolerancio se define en minutos*/
