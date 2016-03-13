@@ -11,7 +11,7 @@ block modal
 		section.contentModal
 			article.titleModal
 			article.bodyModal
-			article.modalFooter
+			article.footerModal
 				button.btn.btnError(data-closeModal="#modal" data-rol-modal="close" data-referenceModal="#modal") Volver
 
 block content
@@ -28,14 +28,14 @@ block content
 						span.meridiem
 	template#templateConfirmActivityWindow
 		section.templateConfirmActivityWindow
-		if (children.stateHealth == 1)
-			button.btn.btnSuccess.btnRound#buttonCaptureVoice
-				span.icon-voice
-		if (children.stateHealth == 2)
-			button.btn.btnSuccess.btnRound(onclick="response('si')") Si
-				span.icon-voice
-			button.btn.btnError.btnRound(onclick="response('no')") No
-				span.icon-voice
+			if (children.stateHealth == 1)
+				button.btn.btnSuccess.btnRound#buttonCaptureVoice
+					span.icon-voice
+			else if (children.stateHealth == 2)
+				button.btn.btnSuccess.btnRound(onclick="response('si')") Si
+					span.icon-
+				button.btn.btnError.btnRound(onclick="response('no')") No
+					span.icon-
 		script(src="/js/confirmActivity.js")
 
 block script

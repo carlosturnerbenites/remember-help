@@ -16,9 +16,12 @@ router.get('/line-evolution',(req,res) => {
 })
 
 router.get('/statistics',(req,res) => {
+
 	models.father.findOne({user: req.user._id})
 	.populate('children')
 	.exec((err, father) => {
+		if (err) return res.json({err: err})
+
 		res.render('management/statistics',{
 			classcss:utils.stylesPage.getRandom(),
 			father: father

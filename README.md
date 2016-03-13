@@ -13,7 +13,7 @@ El modulo de los niños contara con:
 El modulo de padres:
 
 1. Estadisticas
-2. Manego de Collectiones de Base de Datos
+2. Manego de Collecciones de Base de Datos
 3. Linea de Evolución
 
 La aplicación cuenta con soporte para al `Web Speech API`. Reconocimiento de Voz y Lectura de texto.

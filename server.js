@@ -11,7 +11,7 @@ const config = require(urlConfig),
 	favicon = require('express-favicon'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
-	schedule = require('node-schedule'),
+	// schedule = require('node-schedule'),
 
 	mongoose = require('mongoose'),
 	models = require('./models'),
@@ -71,7 +71,7 @@ passport.deserializeUser((user, done) => {
 })
 
 app.use('',urlGeneral)
-app.use('/children', requiredType([0,1]) , urlChildren)
+app.use('/children', requiredType([1]) , urlChildren)
 app.use('/management', requiredType([0]) , urlManagement)
 app.use('/statistics', requiredType([0]) , urlStatistics)
 app.use('/api',api)
@@ -94,13 +94,5 @@ function requiredType (type){
 		}
 	}
 }
-
-schedule.scheduleJob({hour: 0, minute: 0, dayOfWeek: new schedule.Range(0, 7)}, () => {
-	models.activity.update(
-		{ state : { $ne : 'inprocess'}},
-		{ $set : { state : 'inprocess' }},
-		{ multi: true }
-	).exec()
-})
 
 server.listen(port, () => {console.log('Server listen in ' + port)})

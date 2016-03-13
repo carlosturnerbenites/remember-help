@@ -12,11 +12,13 @@ router.get('/activities',(req,res) => {
 	.lean(true)
 	.exec((err,activities) => {
 		models.children.findOne({user: req.user._id},(err, children) => {
+			if (err) return res.json({err: err})
+
 			models.history.find({children : children._id, timeCurrent: currentTime.toISOString()},{activity : 1}, (err, activitiesComplete) => {
+				if (err) return res.json({err: err})
+
 				activities.forEach(activity => {
-					if (activitiesComplete.some(e => String(e.activity) == String(activity._id)))
-						activity.state = 'complete'
-					else activity.state = 'inprocess'
+					activity.state = activitiesComplete.some(e => String(e.activity) == String(activity._id)) ? 'complete' : 'inprocess'
 				})
 
 				res.render('children/activities',{
@@ -31,6 +33,8 @@ router.get('/activities',(req,res) => {
 
 router.get('/messages',(req,res) => {
 	models.message.find({} , (err,messages) => {
+		if (err) return res.json({err: err})
+
 		res.render('children/messages',{
 			classcss:utils.stylesPage.getRandom(),
 			messages:messages

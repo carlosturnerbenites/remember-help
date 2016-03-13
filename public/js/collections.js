@@ -12,10 +12,14 @@ function renderForm (schema,selector) {
 	var form = document.createElement('form')
 	form.classList.add('form','formLabelInput', 'documentDB')
 
+		console.info(schema)
 	for(var field in schema){
+		console.warn(field)
+		var data = schema[field]
 		var templateField = document.importNode(template.content, true)
 
 		templateField.querySelector('.label').innerHTML = field
+		templateField.querySelector('.data').type = data.instance
 		form.appendChild(templateField)
 	}
 	container.appendChild(form)

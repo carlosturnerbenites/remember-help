@@ -1,8 +1,6 @@
 .modal
-	color white
 	height 100%
 	opacity 0
-	overflow scroll
 	position fixed
 	right 0
 	transition 1s all linear
@@ -11,9 +9,11 @@
 	&[modalActive]
 		display flex
 		justify-content flex-end
-		overflow-x hidden
+		//overflow-x hidden
 	.contentModal
-		background-color rgba(0,0,0,.9)
+		display flex
+		flex-wrap wrap
+		height calc(100% - 20px)
 		overflow auto
 		padding 20px
 		transition all 2s linear
@@ -21,19 +21,24 @@
 		z-index 100
 		.titleModal
 			border-bottom 1px solid gray
+			height 8%
 			text-align right
+			width 100%
 		.bodyModal
 			border none
-			padding 10px 0
+			height calc(80% - 10px)
+			overflow: auto;
+			padding 10px
+			width 100%
 		.footerModal
-			bottom: 20px;
-			position fixed
+			height 8%
+			width 100%
 			.backPage
 				cursor pointer
 				font-size 50px
 
 .sectionInactive
-	opacity .5 !important
+	opacity 0 !important
 	overflow hidden
 	pointer-events none
 

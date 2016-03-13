@@ -10,12 +10,14 @@ router.get('/collections/schemas/:collection',(req, res) => {
 	var collection = req.params.collection,
 		model = mongoose.model(collection),
 		paths = model.schema.paths
+
 	res.json(paths)
 })
 
 router.post('/collections/empty/:collection',(req, res) => {
 	var collection = req.params.collection,
 		model = mongoose.model(collection)
+
 	model.remove({},(err) => {
 		if (err) return res.json({err:err})
 		res.json({msg: 'Delete Complete'})
@@ -28,7 +30,9 @@ router.get('/collections/:collection',(req, res) => {
 
 	model.find({},{_id : 0, __v : 0})
 	.populate('activity children')
-	.exec((errr,documents) => {
+	.exec((err,documents) => {
+		if (err) return res.json({err:err})
+
 		res.json(documents)
 	})
 })

@@ -5,8 +5,14 @@ template.optionsStatistic
 			select(type='date', name='children' id='children' required)
 				for children in father.children
 					option(value="#{children.id}") #{children.name}
-		article.inputContainer
+		article.inputContainer.alignItemsEnd
 			button.btn.btnSuccess(type="submit")
 				span Generar
 	script(src="/js/statistics.js")
+template.resultStatistics
+	article
+		h1.nameActivity
+		p
+			span.timeActivity
+			span.stateActivity
 

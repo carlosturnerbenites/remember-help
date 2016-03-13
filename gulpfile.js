@@ -17,3 +17,5 @@ function compileStyl () {
 gulp.task('default', () => {
 	gulp.watch(config.gulp.srcStylus).on('change',compileStyl).on('added',compileStyl)
 })
+
+compileStyl()

@@ -5,6 +5,7 @@ var activities = document.querySelectorAll('.activity'),
 	confirmActivityWindow = new Modal('confirmActivityWindow','.contentWidth')
 
 function RangeTolerance (options){
+	var developed = options.developed | false
 
 	var currentTime = new Date(),
 		date = options.date
@@ -16,9 +17,13 @@ function RangeTolerance (options){
 	var lowerLimit = new Date(currentTime.setMinutes(currentTime.getMinutes() - options.tolerance)),
 		upperLimit = new Date(currentTime.setMinutes(currentTime.getMinutes() + options.tolerance*2))
 
-	if (date >= lowerLimit && date <= upperLimit) return options.onDuring()
-	else if(date < lowerLimit) return options.onBefore()
-	else if(date > upperLimit) return options.onAfter()
+	if (!developed){
+		if(date < lowerLimit) return options.onBefore()
+		else if(date > upperLimit) return options.onAfter()
+		else if (date >= lowerLimit && date <= upperLimit) return options.onDuring()
+	}else{
+		return options.onDuring()
+	}
 }
 
 function confirmActivity () {
@@ -29,8 +34,8 @@ function confirmActivity () {
 
 	if (reminder.dataset.statereminder == 'complete') return text.toVoice('Ya has completado esta actiidad.')
 
-	/* Este condicional verifica que la hora de la tarea este en el rango de la tolerancia de la misma*/
 	RangeTolerance({
+		developed: true,
 		date: activityTime,
 		tolerance: tolerance,
 		onBefore : () => text.toVoice('Huuu, Ya no puedes realizar esta actividad.'),
@@ -59,12 +64,11 @@ for (var activity of Array.from(activities)){
 		.toLocaleTimeString('es-CO',{hour12:true})
 		.replace('p. m.','PM')
 		.replace('a. m.','AM')
-
 	activity.querySelector('[rol=time]').innerHTML = dateFormat
 
-	var dataDate = date.getHours() > 12 ? {meridiem: 'PM',classcss:'nigth'} : {meridiem: 'AM',classcss:'morning'}
+	var dataDate = date.getHours() > 6 && date.getHours() < 18 ? {meridiem: 'PM',classcss:'morning'} : {meridiem: 'AM',classcss:'nigth'}
 
-	//activity.querySelector('.meridiem').innerHTML = dataDate.meridiem
+	// activity.querySelector('.meridiem').innerHTML = dataDate.meridiem
 	activity.querySelector('.date').classList.add(dataDate.classcss)
 
 	activity.addEventListener('click', confirmActivity)

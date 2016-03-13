@@ -23,7 +23,6 @@ const childrenSchema = new Mongoose.Schema({
 	}),
 	activitySchema = new Mongoose.Schema({
 		date :{type:Date},
-		dateMax :{type:Date},
 		hour :{type:Date, required:true},
 		img :{type:String, default:'', required:true},
 		text :{type:String, default:'', required:true},
@@ -39,13 +38,26 @@ const childrenSchema = new Mongoose.Schema({
 		activity:{ type:Schema.ObjectId, ref:'activity' },
 		children:{ type:Schema.ObjectId, ref:'children' },
 		timeCurrent :{type:Date, default:Date.now}
-	})
+	}),
+	models = {activity :Mongoose.model('activity', activitySchema),
+		children :Mongoose.model('children', childrenSchema),
+		father :Mongoose.model('father', fatherSchema),
+		history :Mongoose.model('history', historySchema),
+		message :Mongoose.model('message', messageSchema),
+		user :Mongoose.model('user', userSchema)
+	}
 
-module.exports = {
-	activity :Mongoose.model('activity', activitySchema),
-	children :Mongoose.model('children', childrenSchema),
-	father :Mongoose.model('father', fatherSchema),
-	history :Mongoose.model('history', historySchema),
-	message :Mongoose.model('message', messageSchema),
-	user :Mongoose.model('user', userSchema)
-}
+childrenSchema.pre('save', function (next) {
+	models.children.findOne({id : this.id}, function (err, children) {
+		if (children) next(new Error('Children Duplicate'))
+		else next()
+	})
+})
+userSchema.pre('save', function (next) {
+	models.user.findOne({username : this.username}, function (err, children) {
+		if (children) next(new Error('Username Duplicate'))
+		else next()
+	})
+})
+
+module.exports = models

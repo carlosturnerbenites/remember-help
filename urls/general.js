@@ -31,52 +31,42 @@ router.post('/check-in', (req, res) => {
 			username: 'P' + data.username
 		}
 
-	models.user.findOne({username : data.username},(err,exists) => {
-		if(err) return res.send(err)
-		if(exists) return res.json({msg:'Username Duplicate'})
+	models.user.create(dataNewChildren, (err, userChildren) => {
+		if (err) return res.json({err: err})
 
-		models.children.findOne({id : data.idChildren},(err,childrenDB) => {
-			if(err) return res.send(err)
-			if(childrenDB) return res.json({msg:'Children Duplicate'})
+		dataNewChildren.user = userChildren._id
+		dataNewChildren.age = data.ageChildren
+		dataNewChildren.stateHealth = data.stateHealth
 
-			models.user.create(dataNewChildren, (err, userChildren) => {
-				if(err) return res.send(err)
+		models.children.create(dataNewChildren, (err,newChildren) => {
+			if (err) return res.json({err: err})
 
-				dataNewChildren.user = userChildren._id
-				dataNewChildren.age = data.ageChildren
-				dataNewChildren.stateHealth = data.stateHealth
+			models.father.findOne({id : data.idFamily},(err,family) => {
+				if (err) return res.json({err: err})
 
-				models.children.create(dataNewChildren, (err,newChildren) => {
-					if(err) return res.json(err)
-
-					models.father.findOne({id : data.idFamily},(err,family) => {
-						if(err) return res.json(err)
-
-						if(family) {
-							family.update({ $push : {children: newChildren}}, (err, father) => {
-								if(err) return res.json(err)
-								return res.redirect('/authenticate')
-							})
-						}else {
-							models.user.create(dataNewFamily, (err, user) => {
-
-								dataNewFamily.user = user._id
-								dataNewFamily.children = [newChildren]
-
-								models.father.create(dataNewFamily, (err,father) => {
-									models.children.findOneAndUpdate({_id : newChildren._id}, {$set : { father : father._id}}).exec()
-									if(err) return res.json(err)
-									return res.redirect('/authenticate')
-								})
-							})
-						}
+				if(family) {
+					family.update({ $push : {children: newChildren}}, (err, father) => {
+						if (err) return res.json({err: err})
+						return res.redirect('/authenticate')
 					})
+				}else {
+					models.user.create(dataNewFamily, (err, user) => {
 
-				})
+						dataNewFamily.user = user._id
+						dataNewFamily.children = [newChildren]
+
+						models.father.create(dataNewFamily, (err,father) => {
+							models.children.findOneAndUpdate({_id : newChildren._id}, {$set : { father : father._id}}).exec()
+							if (err) return res.json({err: err})
+							return res.redirect('/authenticate')
+						})
+					})
+				}
 			})
-		})
 
+		})
 	})
+
 })
 
 module.exports = router
