@@ -4,6 +4,7 @@ var statistics = document.querySelectorAll('.statistic'),
 for (var statistic of Array.from(statistics)){
 	statistic.addEventListener('click', showOptionStatistic)
 }
+
 function showOptionStatistic () {
 	containerOptionsStatistic.innerHTML = ''
 

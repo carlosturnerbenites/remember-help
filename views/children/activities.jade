@@ -28,7 +28,13 @@ block content
 						span.meridiem
 	template#templateConfirmActivityWindow
 		section.templateConfirmActivityWindow
+		if (children.stateHealth == 1)
 			button.btn.btnSuccess.btnRound#buttonCaptureVoice
+				span.icon-voice
+		if (children.stateHealth == 2)
+			button.btn.btnSuccess.btnRound(onclick="response('si')") Si
+				span.icon-voice
+			button.btn.btnError.btnRound(onclick="response('no')") No
 				span.icon-voice
 		script(src="/js/confirmActivity.js")
 

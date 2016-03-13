@@ -1,12 +1,6 @@
-HTMLFormElement.prototype.isValid = function (){
-	for (var element of Array.from(this.elements)){
-		if (element.validity.valid == false) return false
-	}
-	return true
-}
-
 var btnAgregate = document.querySelector('#AgregateInCollection'),
 	btnFind = document.querySelector('#findInCollection'),
+	btnEmpty = document.querySelector('#emptyCollection'),
 	collectionSelected = document.querySelector('#collection')
 
 function renderForm (schema,selector) {
@@ -51,7 +45,6 @@ btnFind.addEventListener('click', () => {
 		type : 'GET',
 		URL : '/api/collections/' + collectionSelected.value,
 		async : true,
-		contentType : 'application/json',
 		onSuccess : (result) => {
 			var documents = JSON.parse(result)
 			renderDataModel(documents,'#results')
@@ -65,11 +58,22 @@ btnAgregate.addEventListener('click', () => {
 		type : 'GET',
 		URL : '/api/collections/schemas/' + collectionSelected.value,
 		async : true,
-		contentType : 'application/json',
 		onSuccess : (result) => {
 			var schema = JSON.parse(result)
 			console.log(schema)
 			renderForm(schema,'#addDocument')
+		},
+		data : null
+	})
+})
+
+btnEmpty.addEventListener('click', () => {
+	ajax({
+		type : 'POST',
+		URL : '/api/collections/empty/' + collectionSelected.value,
+		async : true,
+		onSuccess : (result) => {
+			console.log(result)
 		},
 		data : null
 	})

@@ -13,7 +13,14 @@ router.get('/collections/schemas/:collection',(req, res) => {
 	res.json(paths)
 })
 
-// router.post('/collections/add',(req, res) => {})
+router.post('/collections/empty/:collection',(req, res) => {
+	var collection = req.params.collection,
+		model = mongoose.model(collection)
+	model.remove({},(err) => {
+		if (err) return res.json({err:err})
+		res.json({msg: 'Delete Complete'})
+	})
+})
 
 router.get('/collections/:collection',(req, res) => {
 	var collection = req.params.collection,
@@ -26,16 +33,21 @@ router.get('/collections/:collection',(req, res) => {
 	})
 })
 
+// router.post('/collections/add',(req, res) => {})
+
 router.post('/history/add',(req, res) => {
 	if(req.user.type != 1) return res.json({err : 'Solo una niña ó un niño puede completar las actividades'})
 
-	var data = req.body
+	var data = req.body,
+		timeCurrent = new Date()
+	timeCurrent.setHours(0,0,0,0)
+
 	console.log(data)
 
 	models.children.findOne({user: req.user._id},(err, children) => {
 		models.history.findOne({children : children._id, activity: data.id},(err, history) => {
 			if (err) return res.json({err : err})
-			if (history) return res.json({err : 'Ya has completado esta actiidad.'})
+			if (history) return res.json({err : 'Ya has completado esta actividad.'})
 
 			models.activity.findById(data.id, (err, activity) => {
 
@@ -53,7 +65,7 @@ router.post('/history/add',(req, res) => {
 					models.history.create({
 						children: children._id,
 						activity: activity._id,
-						timeCurrent: Date.now()
+						timeCurrent: timeCurrent
 					})
 
 				}else{
@@ -71,7 +83,6 @@ router.post('/history/add',(req, res) => {
 			})
 		})
 	})
-
 })
 
 module.exports = router

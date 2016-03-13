@@ -4,11 +4,15 @@ const express = require('express'),
 	utils = require('./../utils')
 
 router.get('/activities',(req,res) => {
+
+	var currentTime = new Date()
+	currentTime.setHours(0,0,0,0)
+
 	models.activity.find()
 	.lean(true)
 	.exec((err,activities) => {
 		models.children.findOne({user: req.user._id},(err, children) => {
-			models.history.find({children : children._id},{activity : 1}, (err, activitiesComplete) => {
+			models.history.find({children : children._id, timeCurrent: currentTime.toISOString()},{activity : 1}, (err, activitiesComplete) => {
 				activities.forEach(activity => {
 					if (activitiesComplete.some(e => String(e.activity) == String(activity._id)))
 						activity.state = 'complete'
@@ -17,7 +21,8 @@ router.get('/activities',(req,res) => {
 
 				res.render('children/activities',{
 					classcss:utils.stylesPage.getRandom(),
-					activities:activities
+					activities:activities,
+					children:children
 				})
 			})
 		})

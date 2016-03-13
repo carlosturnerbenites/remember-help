@@ -27,7 +27,6 @@ function Voice (cb){
 		recognition = new webkitSpeechRecognition()
 
 	this.toText = function (event){
-		console.log(event)
 		for (var i = event.resultIndex; i < event.results.length; i++){
 			if(event.results[i].isFinal){
 				text = event.results[i][0].transcript
@@ -41,7 +40,7 @@ function Voice (cb){
 	recognition.continuous = true
 	recognition.interimResults = true
 
-	recognition.onstart = function (){recognizing = true;console.log('inicio')}
+	recognition.onstart = function (){recognizing = true;console.log("inicio")}
 
 	recognition.onresult = this.toText
 

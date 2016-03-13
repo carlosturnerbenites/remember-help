@@ -1,9 +1,13 @@
-/* exported Modal Message ajax */
 Date.prototype.getTimeHumanize = function () {
 	var time = this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds()
 	return time
 }
-
+HTMLFormElement.prototype.isValid = function (){
+	for (var element of Array.from(this.elements)){
+		if (element.validity.valid == false) return false
+	}
+	return true
+}
 function Modal (modalReference,selectorParentElement){
 	this.modal = document.getElementById(modalReference)
 

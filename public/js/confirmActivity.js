@@ -2,17 +2,18 @@ var buttonCaptureVoice = document.querySelector('#buttonCaptureVoice'),
 	voice = new Voice(response),
 	text = new Text()
 
-buttonCaptureVoice.addEventListener('mousedown', () => {
-	voice.listen()
-	this.addEventListener('mouseup',voice.listen)
-})
+if (buttonCaptureVoice){
+	buttonCaptureVoice.addEventListener('mousedown', () => {
+		voice.listen()
+		this.addEventListener('mouseup',voice.listen)
+	})
+}
 
 var answersAffirmation = ['si', 'sí','ya','efectivamente', 'evidentemente', 'sin duda'],
 	answersNegation = ['no','nones', 'nanai', 'naranjas', 'quia', 'ca'],
 	answers = answersAffirmation.concat(answersNegation)
 
 function response (resultText){
-
 	if (resultText) {
 		if (answers.indexOf(resultText) < 0) {
 			text.toVoice('No respondiste la pregunta.')
@@ -26,8 +27,6 @@ function response (resultText){
 					contentType : 'application/json',
 					onSuccess : (result) => {
 						var data = JSON.parse(result)
-						console.log(data)
-						console.log(typeof data)
 						if(data.err) return text.toVoice(data.err)
 
 						var selector = '[data-id = "' + data.id +'"]',
