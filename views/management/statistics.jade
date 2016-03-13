@@ -8,22 +8,10 @@ block titleSection
 block content
 	section.statistics
 		article.statistic
-			h2 Actividades Completadas
-			p Actividdes completadas en un rango de tiempo determinado
-			template.optionsStatistic
-				form.form.formLabelInput
-					article.inputContainer
-						label.label(for="fini") Fecha Inicial
-						input(type='date', name='fini' id='fini' placeholder='Fecha de Inicio', required)
-					article.inputContainer
-						label.label(for="ffin") Fecha Final
-						input(type='date', name='ffin' id='ffin' placeholder='Fecha Final', required)
-					article.inputContainer
-						input.check(type="checkbox" name="all" id="all")
-						label.label(for="all") Desde el Origien
-					article.inputContainer
-						button.btn.btnSuccess(type="submit")
-							span Generar
+			h2 Hoy
+			p Resumen de la actividad de un niñ@ en el dia actual
+				include ../templatesStatistics/today.jade
+
 	section.containerOptionsStatistic
 block script
 	script(src="/js/statistic.js")

@@ -1,0 +1,12 @@
+template.optionsStatistic
+	form.form.formLabelInput#today
+		article.inputContainer
+			label.label(for="children") niñ@
+			select(type='date', name='children' id='children' required)
+				for children in father.children
+					option(value="#{children.id}") #{children.name}
+		article.inputContainer
+			button.btn.btnSuccess(type="submit")
+				span Generar
+	script(src="/js/statistics.js")
+

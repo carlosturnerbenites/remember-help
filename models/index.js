@@ -3,19 +3,20 @@ var Mongoose = require('mongoose'),
 
 const childrenSchema = new Mongoose.Schema({
 		age:{type:Number, min:5, required:true},
-		id:{type:Number, required:true},
+		father :{type:Schema.ObjectId, ref:'father'},
+		id:{type:Number, required:true, unique:true},
 		name:{type:String, required:true},
 		stateHealth:{type:Number, required:true},
 		user :{type:Schema.ObjectId, ref:'user', required:true}
 	}),
 	fatherSchema = new Mongoose.Schema({
-		children:{ type:Array, required:true },
-		id:{type:Number, required:true},
+		children:[{ type:Schema.ObjectId, ref:'children', required:'true' }],
+		id:{type:Number, required:true, unique:true},
 		name:{type:String, required:true},
 		user :{type:Schema.ObjectId, ref:'user', required:true}
 	}),
 	userSchema = new Mongoose.Schema({
-		name:{type:String, default:'' , required:true},
+		name:{type:String, default:'' , required:true, unique:true},
 		password:{type:String, default:'' , required:true},
 		type:{type:Number , emum:[0,1,2],required:true},
 		username:{type:String, default:'' , required:true, unique:true}

@@ -24,6 +24,7 @@ const config = require(urlConfig),
 
 	urlGeneral = require('./urls/general'),
 	urlChildren = require('./urls/children'),
+	urlStatistics = require('./urls/statistics'),
 	urlManagement = require('./urls/management'),
 	api = require('./urls/api')
 
@@ -72,6 +73,7 @@ passport.deserializeUser((user, done) => {
 app.use('',urlGeneral)
 app.use('/children', requiredType([0,1]) , urlChildren)
 app.use('/management', requiredType([0]) , urlManagement)
+app.use('/statistics', requiredType([0]) , urlStatistics)
 app.use('/api',api)
 
 app.post('/authenticate',

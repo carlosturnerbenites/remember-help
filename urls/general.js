@@ -52,22 +52,24 @@ router.post('/check-in', (req, res) => {
 					models.father.findOne({id : data.idFamily},(err,family) => {
 						if(err) return res.json(err)
 
-						models.user.create(dataNewFamily, (err, user) => {
-							dataNewFamily.user = user._id
+						if(family) {
+							family.update({ $push : {children: newChildren}}, (err, father) => {
+								if(err) return res.json(err)
+								return res.redirect('/authenticate')
+							})
+						}else {
+							models.user.create(dataNewFamily, (err, user) => {
 
-							if(family) {
-								family.update({ $push : {children: newChildren}}, (err, father) => {
-									if(err) return res.json(err)
-									return res.redirect('/authenticate')
-								})
-							}else {
+								dataNewFamily.user = user._id
 								dataNewFamily.children = [newChildren]
-								models.father.create(dataNewFamily, (err) => {
+
+								models.father.create(dataNewFamily, (err,father) => {
+									models.children.findOneAndUpdate({_id : newChildren._id}, {$set : { father : father._id}}).exec()
 									if(err) return res.json(err)
 									return res.redirect('/authenticate')
 								})
-							}
-						})
+							})
+						}
 					})
 
 				})

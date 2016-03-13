@@ -1,5 +1,6 @@
 const express = require('express'),
 	router = express.Router(),
+	models = require('./../models/'),
 	utils = require('./../utils')
 
 router.get('/collections',(req,res) => {
@@ -15,8 +16,13 @@ router.get('/line-evolution',(req,res) => {
 })
 
 router.get('/statistics',(req,res) => {
-	res.render('management/statistics',{
-		classcss:utils.stylesPage.getRandom()
+	models.father.findOne({user: req.user._id})
+	.populate('children')
+	.exec((err, father) => {
+		res.render('management/statistics',{
+			classcss:utils.stylesPage.getRandom(),
+			father: father
+		})
 	})
 })
 
