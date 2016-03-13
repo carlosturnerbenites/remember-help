@@ -13,10 +13,20 @@ block content
 				input(type="text" name="nameChildren" id="nameChildren" placeholder="Nombre Niño" required)
 			article.inputContainer
 				input(type="number" min="5" name="ageChildren" id="ageChildren" placeholder="Edad Niño" required)
+			article.inputContainer
+				input(type="number" name="idChildren" id="idChildren" placeholder="Identificacion Niñ@" required)
+			article.inputContainer
+				label.label(for="stateHealth") Estado de Salud
+				select(name="stateHealth" id="stateHealth" required size="3")
+					option(Value=0) Ninguna
+					option(Value=1) Sord@
+					option(Value=2) Mud@
 		fieldset
 			legend Familiar
 			article.inputContainer
-				input(type="text" name="nameFather" id="nameFather" placeholder="Nombre Padre" required)
+				input(type="text" name="nameFamily" id="nameFamily" placeholder="Nombre Padre" required)
+			article.inputContainer
+				input(type="number" name="idFamily" id="idFamily" placeholder="Identificacion Familiar" required)
 		fieldset
 			legend Usuario
 			article.inputContainer

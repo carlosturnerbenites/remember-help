@@ -16,37 +16,60 @@ router.get('/logout', (req, res) => {
 router.post('/check-in', (req, res) => {
 
 	var data = req.body,
-		children = {
+		dataNewChildren = {
+			id : data.idChildren,
 			name: data.nameChildren,
-			username: 'C' + data.username,
 			password: data.password,
-			type : 1
+			type : 1,
+			username: 'C' + data.username
 		},
-		father = {
-			name: data.nameFather,
-			username: 'P' + data.username,
+		dataNewFamily = {
+			id: data.idFamily,
+			name: data.nameFamily,
 			password: data.password,
-			type : 0
+			type : 0,
+			username: 'P' + data.username
 		}
 
 	models.user.findOne({username : data.username},(err,exists) => {
 		if(err) return res.send(err)
-		if(exists) return res.json({msg:'Usename Duplicate'})
+		if(exists) return res.json({msg:'Username Duplicate'})
 
-		models.user.create(children, (err, user) => {
-			children.user = user._id
-			children.age =  data.ageChildren
+		models.children.findOne({id : data.idChildren},(err,childrenDB) => {
+			if(err) return res.send(err)
+			if(childrenDB) return res.json({msg:'Children Duplicate'})
 
-			models.children.create(children, (err) => {
-				if(err) return res.json(err)
+			models.user.create(dataNewChildren, (err, userChildren) => {
+				if(err) return res.send(err)
 
-				models.user.create(father, (err, user) => {
-					father.user = user._id
-					models.father.create(father, (err) => {
+				dataNewChildren.user = userChildren._id
+				dataNewChildren.age = data.ageChildren
+				dataNewChildren.stateHealth = data.stateHealth
+
+				models.children.create(dataNewChildren, (err,newChildren) => {
+					if(err) return res.json(err)
+
+					models.father.findOne({id : data.idFamily},(err,family) => {
 						if(err) return res.json(err)
 
-						return res.redirect('/authenticate')
+						models.user.create(dataNewFamily, (err, user) => {
+							dataNewFamily.user = user._id
+
+							if(family) {
+								family.update({ $push : {children: newChildren}}, (err, father) => {
+									if(err) return res.json(err)
+									return res.redirect('/authenticate')
+								})
+							}else {
+								dataNewFamily.children = [newChildren]
+								models.father.create(dataNewFamily, (err) => {
+									if(err) return res.json(err)
+									return res.redirect('/authenticate')
+								})
+							}
+						})
 					})
+
 				})
 			})
 		})

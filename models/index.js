@@ -4,11 +4,14 @@ var Mongoose = require('mongoose'),
 const childrenSchema = new Mongoose.Schema({
 		age: {type:Number, min:5, required: true},
 		father: { type: Schema.ObjectId, ref: 'father' },
+		id: {type:Number, required: true},
 		name: {type:String, required:true},
+		stateHealth: {type:Number, required:true},
 		user : {type: Schema.ObjectId, ref:'user'}
 	}),
 	fatherSchema = new Mongoose.Schema({
-		children: { type: Schema.ObjectId, ref: 'children' },
+		children: { type: Array, required: true },
+		id: {type:Number, required: true},
 		name: {type:String, required: true},
 		user : {type: Schema.ObjectId, ref:'user'}
 	}),
