@@ -14,13 +14,22 @@ block modal
 				button.btn.btnError(data-closeModal="#modal" data-rol-modal="close" data-referenceModal="#modal") Volver
 block content
 	section.statistics
-		article.statistic.statisticToday
+		article.statistic.statisticToday(data-statistic="today")
 			h2 Hoy
-			p Resumen de la actividad de un niñ@ en el dia actual
+			span.type.icon-
+			p Listado de las actividades de un niñ@ en el dia actual
 			include ../templatesStatistics/today.jade
+	section.statistics
+		article.statistic.statisticsRangeDates(data-statistic="rangeDate")
+			h2 Rango De Fechas
+			span.type.icon-
+			p Grafica Barras comparativa. Actidades completadas y no completadas en un rango de fecha determinado
+			include ../templatesStatistics/rangeDates.jade
 
 	section.containerOptionsStatistic
 block script
+	script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
 	script(src="/js/statistic.js")
+
 
 

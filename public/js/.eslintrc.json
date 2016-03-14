@@ -5,14 +5,15 @@
 		"es6": true
 	},
 	"globals" :{
-		"response": true,
-		"Voice": true,
-		"Text": true,
-		"Modal": true,
 		"ajax": true,
-		"webkitSpeechRecognition": true,
 		"confirmActivityWindow": true,
-		"detailActivityActive": true
+		"detailActivityActive": true,
+		"google": true,
+		"Modal": true,
+		"response": true,
+		"Text": true,
+		"Voice": true,
+		"webkitSpeechRecognition": true
 		},
 	"extends": "eslint:recommended",
 	"rules": {

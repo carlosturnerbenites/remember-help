@@ -46,10 +46,8 @@ router.post('/history/add',(req, res) => {
 		timeCurrent = new Date()
 	timeCurrent.setHours(0,0,0,0)
 
-	console.log(data)
-
 	models.children.findOne({user: req.user._id},(err, children) => {
-		models.history.findOne({children : children._id, activity: data.id},(err, history) => {
+		models.history.findOne({children : children._id, activity: data.id,timeCurrent: timeCurrent.toISOString()},(err, history) => {
 			if (err) return res.json({err : err})
 			if (history) return res.json({err : 'Ya has completado esta actividad.'})
 

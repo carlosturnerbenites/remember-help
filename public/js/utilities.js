@@ -2,12 +2,30 @@ Date.prototype.getTimeHumanize = function () {
 	var time = this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds()
 	return time
 }
+
+Date.prototype.getValueInput = function (format){
+	var d = String(this.getDate()).length == 2 ? this.getDate() : '0' + this.getDate(),
+		m = String(this.getMonth()).length == 2 ? this.getMonth() : '0' + this.getMonth(),
+		y = this.getFullYear(),
+		dateFormat = format.replace('d',d).replace('m',m).replace('y',y)
+	return dateFormat
+}
+
 HTMLFormElement.prototype.isValid = function (){
 	for (var element of Array.from(this.elements)){
 		if (element.validity.valid == false) return false
 	}
 	return true
 }
+
+function getValueInput (date,format){
+	var d = String(date.getDate()).length == 2 ? date.getDate() : '0' + date.getDate(),
+		m = String(date.getMonth()).length == 2 ? date.getMonth() : '0' + date.getMonth(),
+		y = date.getFullYear(),
+		dateFormat = format.replace('d',d).replace('m',m).replace('y',y)
+	return dateFormat
+}
+
 function Modal (modalReference,selectorParentElement){
 	this.modal = document.getElementById(modalReference)
 
