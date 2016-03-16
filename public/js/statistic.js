@@ -70,7 +70,6 @@ var FStatistics = {
 	},
 	rangeDate : function (){
 		var formSRangeDate = document.querySelector('#rangeDate')
-		console.log(formSRangeDate)
 
 		formSRangeDate.addEventListener('submit',function (event) {
 			event.preventDefault()
@@ -86,14 +85,13 @@ var FStatistics = {
 
 					for (var record of data){
 						var dataRecord = []
-						dataRecord.push(record._id.day + '/' + record._id.month + '/' + record._id.year )
+						dataRecord.push(record._id.day + '/' + record._id.month + '/' + record._id.year)
 						dataRecord.push(record.complete)
 						dataRecord.push(record.incomplete)
 						rows.push(dataRecord)
 					}
-					console.info(rows)
 					statisticsWindow
-					.setTitle('Resumen de Actividad por Rango de Fechas')
+					.setTitle('Actividades por Rango de Fechas')
 					.addContent(node)
 					.show()
 
@@ -108,11 +106,11 @@ var FStatistics = {
 						data.addRows(rows)
 
 						var options = {
-							title : 'Actividades Completadas/Incompletas',
-							'legend':'bottom',
-							'width':500,
-							'height':300,
-							vAxis: {title: 'Cantidad'},
+							title : 'Actividades Completas/Incompletas',
+							legend:'bottom',
+							width:500,
+							height:300,
+							vAxis: {title: '# de Actividades'},
 							hAxis: {title: 'Fecha'},
 							seriesType: 'bars',
 							series: {5: {type: 'line'}

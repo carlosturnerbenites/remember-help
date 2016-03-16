@@ -2,46 +2,66 @@ var Mongoose = require('mongoose'),
 	Schema = Mongoose.Schema
 
 const childrenSchema = new Mongoose.Schema({
+		/* age : Edad del/de la niñ@ */
 		age:{type:Number, min:5, required:true},
-		father :{type:Schema.ObjectId, ref:'father'},
+		/* parent : Referencia del pariente asociado al/a la niñ@*/
+		parent :{type:Schema.ObjectId, ref:'parent'},
+		/* id : Identificacion de/de la niñ@*/
 		id:{type:Number, required:true, unique:true},
+		/* name : Nombre del/de la niñ@*/
 		name:{type:String, required:true},
+		/* stateHealth :  Estado de salud del niño : Sord@, mud@*/
 		stateHealth:{type:Number, required:true},
+		/* user : Referencia al usuario del/de la niñ@ */
 		user :{type:Schema.ObjectId, ref:'user', required:true}
 	}),
-	fatherSchema = new Mongoose.Schema({
+	parentSchema = new Mongoose.Schema({
+		/* children : Referencia a el/la (los/las) niñ@ asosiados al pariente*/
 		children:[{ type:Schema.ObjectId, ref:'children', required:'true' }],
+		/* id : identificacion del pariente */
 		id:{type:Number, required:true, unique:true},
+		/* name : nombre del pariente */
 		name:{type:String, required:true},
+		/* user : Referencia al usuario del pariente*/
 		user :{type:Schema.ObjectId, ref:'user', required:true}
 	}),
 	userSchema = new Mongoose.Schema({
-		name:{type:String, default:'' , required:true, unique:true},
+		/* password : contraseña del usuario */
 		password:{type:String, default:'' , required:true},
+		/* type : Tipo de usuario : 0 - pariente , 1 - niñ@*/
 		type:{type:Number , emum:[0,1,2],required:true},
+		/* username : Nombre de usuario*/
 		username:{type:String, default:'' , required:true, unique:true}
 	}),
 	activitySchema = new Mongoose.Schema({
 		date :{type:Date},
 		hour :{type:Date, required:true},
+		/* img : imagen de la actividad*/
 		img :{type:String, default:'', required:true},
+		/* text : texto de la actividad*/
 		text :{type:String, default:'', required:true},
+		/* textSpeech : texto usado por el API Speech para convertir a voz*/
 		textSpeech :{type:String, default:'', required:true},
-		/* la tolerancio se define en minutos*/
+		/* tolerance : tiempo antes o despues en el cual se puede realizar una actividd (en minutos)*/
 		tolerance :{type:Number, default:20, required:true }
 	}),
 	messageSchema = new Mongoose.Schema({
+		/* text : Texto del Mensaje*/
 		text :{type:String, required:true},
-		type:{type:Number , required:true}
+		/* type : Tipo de Mensaje : 0 - Perfecto, 1 - Regular*/
+		type:{type:Number , required:true, enum : [0,1]}
 	}),
 	historySchema = new Mongoose.Schema({
+		/* activity : Referencia a la actividad completada*/
 		activity:{ type:Schema.ObjectId, ref:'activity' },
+		/* children : Referencia al niñ@ que completo la acvtividad*/
 		children:{ type:Schema.ObjectId, ref:'children' },
+		/* timeCurrent : Fecha a la cual se completo la actividad*/
 		timeCurrent :{type:Date, default:Date.now}
 	}),
 	models = {activity :Mongoose.model('activity', activitySchema),
 		children :Mongoose.model('children', childrenSchema),
-		father :Mongoose.model('father', fatherSchema),
+		parent :Mongoose.model('parent', parentSchema),
 		history :Mongoose.model('history', historySchema),
 		message :Mongoose.model('message', messageSchema),
 		user :Mongoose.model('user', userSchema)

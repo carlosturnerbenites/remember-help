@@ -17,14 +17,14 @@ router.get('/line-evolution',(req,res) => {
 
 router.get('/statistics',(req,res) => {
 
-	models.father.findOne({user: req.user._id})
+	models.parent.findOne({user: req.user._id})
 	.populate('children')
-	.exec((err, father) => {
+	.exec((err, parent) => {
 		if (err) return res.json({err: err})
 
 		res.render('management/statistics',{
 			classcss:utils.stylesPage.getRandom(),
-			father: father
+			parent: parent
 		})
 	})
 })
