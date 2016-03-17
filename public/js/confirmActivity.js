@@ -22,7 +22,7 @@ function response (resultText){
 
 				ajax({
 					type : 'POST',
-					URL : '/api/history/add',
+					URL : '/activities/valid-activity',
 					async : true,
 					contentType : 'application/json',
 					onSuccess : (result) => {

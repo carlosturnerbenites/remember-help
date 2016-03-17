@@ -25,6 +25,7 @@ router.post('/today',(req,res) => {
 		})
 	})
 })
+
 router.post('/rangeDate',(req,res) => {
 	var data = req.body
 
@@ -67,7 +68,6 @@ router.post('/rangeDate',(req,res) => {
 			})
 		})
 	})
-
 })
 
 module.exports = router

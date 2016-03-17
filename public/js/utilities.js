@@ -5,7 +5,7 @@ Date.prototype.getTimeHumanize = function () {
 
 Date.prototype.getValueInput = function (format){
 	var d = String(this.getDate()).length == 2 ? this.getDate() : '0' + this.getDate(),
-		m = String(this.getMonth()).length == 2 ? this.getMonth() : '0' + this.getMonth(),
+		m = String(this.getMonth()).length == 2 ? this.getMonth()+1 : '0' + (this.getMonth()+1),
 		y = this.getFullYear(),
 		dateFormat = format.replace('d',d).replace('m',m).replace('y',y)
 	return dateFormat
@@ -16,6 +16,85 @@ HTMLFormElement.prototype.isValid = function (){
 		if (element.validity.valid == false) return false
 	}
 	return true
+}
+
+HTMLElement.prototype.disabeldInputs = function (valueDisabled, selector, exceptions){
+	var elements = this.querySelectorAll(selector)
+	for (var element of Array.from(elements)){
+		if (exceptions.indexOf(element.name) < 0) element.disabled = valueDisabled
+	}
+	return this
+}
+
+HTMLElement.prototype.emptyInputs = function (selector,exceptions){
+	var elements = this.querySelectorAll(selector)
+	for (var element of Array.from(elements)){
+		if (exceptions.indexOf(element.name) < 0) element.value = ''
+	}
+	return this
+}
+
+function Validator (form){
+
+	this.stagesFaild = []
+
+	this.config = function (stages){
+		this.stages = stages
+		for (var stage of this.stages){
+			stage.isValid = false
+		}
+	}
+
+	this.showErrors = function (){
+		console.log(this.stagesFaild)
+	}
+
+	this.validateStage = function (){
+		for (var stage of this.stages){
+			var fn = this[stage.fn]
+			stage.isValid = fn(stage.params.split(' '))
+		}
+	}
+
+	this.isValid = function (){
+
+		this.validateStage()
+
+		this.stagesFaild = this.stages.filter((stage) => {
+			return stage.isValid == false
+		})
+		if (!this.stagesFaild.length){
+			return {isValid : true}
+		}else{
+			return {isValid : false, stagesFaild : this.stagesFaild}
+		}
+	}
+
+	this.equals = function (elements){
+		var valueOne = form[elements[0]],
+			valueTwo = form[elements[1]]
+		if (valueOne.value == valueTwo.value) {
+			return true
+		}
+		return false
+	}
+
+	this.notEquals = function (elements){
+		var valueOne = form[elements[0]],
+			valueTwo = form[elements[1]]
+		if (valueOne.value != valueTwo.value) {
+			return true
+		}
+		return false
+	}
+	this.mayor = function (elements){
+		var valueOne = form[elements[0]],
+			valueTwo = form[elements[1]]
+		if (valueOne.value > valueTwo.value) {
+			return true
+		}
+		return false
+	}
 }
 
 function getValueInput (date,format){

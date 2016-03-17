@@ -46,7 +46,6 @@ function BuildStatistic (){
 
 var FStatistics = {
 	today : function (){
-
 		var formSToday = document.querySelector('#today')
 		formSToday.addEventListener('submit',function (event) {
 			event.preventDefault()
@@ -69,61 +68,72 @@ var FStatistics = {
 		})
 	},
 	rangeDate : function (){
-		var formSRangeDate = document.querySelector('#rangeDate')
+		var formSRangeDate = document.querySelector('#rangeDate'),
+			validator = new Validator(formSRangeDate)
+
+		validator.config([
+			{fn : 'mayor', params : 'dateEnd dateInit', messageError : 'La fecha Inicial debe ser mayor a la Final'}
+		])
 
 		formSRangeDate.addEventListener('submit',function (event) {
 			event.preventDefault()
-			ajax({
-				type : 'POST',
-				URL : '/statistics/rangeDate',
-				async : true,
-				contentType : 'application/json',
-				onSuccess : (result) => {
-					var data = JSON.parse(result),
-						node = buildSatistic.rangeDate(),
-						rows = []
+			var formValidation = validator.isValid()
+			if(formValidation.isValid){
+				ajax({
+					type : 'POST',
+					URL : '/statistics/rangeDate',
+					async : true,
+					contentType : 'application/json',
+					onSuccess : (result) => {
+						var data = JSON.parse(result),
+							node = buildSatistic.rangeDate(),
+							rows = []
 
-					for (var record of data){
-						var dataRecord = []
-						dataRecord.push(record._id.day + '/' + record._id.month + '/' + record._id.year)
-						dataRecord.push(record.complete)
-						dataRecord.push(record.incomplete)
-						rows.push(dataRecord)
-					}
-					statisticsWindow
-					.setTitle('Actividades por Rango de Fechas')
-					.addContent(node)
-					.show()
+						for (var record of data){
+							var dataRecord = []
+							dataRecord.push(record._id.day + '/' + record._id.month + '/' + record._id.year)
+							dataRecord.push(record.complete)
+							dataRecord.push(record.incomplete)
+							rows.push(dataRecord)
+						}
+						statisticsWindow
+						.setTitle('Actividades por Rango de Fechas')
+						.addContent(node)
+						.show()
 
-					google.charts.setOnLoadCallback(drawVisualization)
+						google.charts.setOnLoadCallback(drawVisualization)
 
-					function drawVisualization () {
-						var data = new google.visualization.DataTable()
+						function drawVisualization () {
+							var data = new google.visualization.DataTable()
 
-						data.addColumn('string', 'Date')
-						data.addColumn('number', 'Completadas')
-						data.addColumn('number', 'Incompletas')
-						data.addRows(rows)
+							data.addColumn('string', 'Date')
+							data.addColumn('number', 'Completadas')
+							data.addColumn('number', 'Incompletas')
+							data.addRows(rows)
 
-						var options = {
-							title : 'Actividades Completas/Incompletas',
-							legend:'bottom',
-							width:500,
-							height:300,
-							vAxis: {title: '# de Actividades'},
-							hAxis: {title: 'Fecha'},
-							seriesType: 'bars',
-							series: {5: {type: 'line'}
+							var options = {
+								title : 'Actividades Completas/Incompletas',
+								legend:'bottom',
+								width:500,
+								height:300,
+								vAxis: {title: '# de Actividades'},
+								hAxis: {title: 'Fecha'},
+								seriesType: 'bars',
+								series: {5: {type: 'line'}
+								}
 							}
+
+							var chart = new google.visualization.ComboChart(document.getElementById('chartRangeDate'))
+							chart.draw(data, options)
 						}
 
-						var chart = new google.visualization.ComboChart(document.getElementById('chartRangeDate'))
-						chart.draw(data, options)
-					}
-
-				},
-				data : JSON.stringify({dateInit: formSRangeDate.dateInit.value ,dateEnd: formSRangeDate.dateEnd.value,children: formSRangeDate.children.value })
-			})
+					},
+					data : JSON.stringify({dateInit: formSRangeDate.dateInit.value ,dateEnd: formSRangeDate.dateEnd.value,children: formSRangeDate.children.value })
+				})
+			}else{
+				console.error("form invalid")
+				validator.showErrors()
+			}
 		})
 	}
 }

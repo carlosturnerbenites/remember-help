@@ -18,16 +18,20 @@ router.post('/check-in', (req, res) => {
 	var data = req.body,
 		dataNewChildren = {
 			id : data.idChildren,
-			password: data.password,
+			password: data.passwordChildren,
 			type : 1,
-			username: 'C' + data.username
+			username: data.usernameChildren
 		},
 		dataNewFamily = {
 			id: data.idFamily,
-			password: data.password,
+			password: data.passwordParent,
 			type : 0,
-			username: 'P' + data.username
+			username: data.usernameParent
 		}
+
+	if (dataNewChildren.username == dataNewFamily.username) return {err : 'User Duplicate'}
+
+	console.log(data)
 
 	models.user.create(dataNewChildren, (err, userChildren) => {
 		if (err) return res.json({err: err})
@@ -66,7 +70,6 @@ router.post('/check-in', (req, res) => {
 
 		})
 	})
-
 })
 
 module.exports = router

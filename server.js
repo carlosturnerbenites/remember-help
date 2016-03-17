@@ -22,10 +22,11 @@ const config = require(urlConfig),
 	app = express(),
 	server = http.createServer(app),
 
-	urlGeneral = require('./urls/general'),
+	urlActivities = require('./urls/activities'),
 	urlChildren = require('./urls/children'),
-	urlStatistics = require('./urls/statistics'),
+	urlGeneral = require('./urls/general'),
 	urlManagement = require('./urls/management'),
+	urlStatistics = require('./urls/statistics'),
 	api = require('./urls/api')
 
 mongoose.connect(config.URIMongo)
@@ -71,9 +72,10 @@ passport.deserializeUser((user, done) => {
 })
 
 app.use('',urlGeneral)
-app.use('/children', requiredType([1]) , urlChildren)
-app.use('/management', requiredType([0]) , urlManagement)
-app.use('/statistics', requiredType([0]) , urlStatistics)
+app.use('/children', requiredType([1]), urlChildren)
+app.use('/activities', requiredType([1]), urlActivities)
+app.use('/management', requiredType([0]), urlManagement)
+app.use('/statistics', requiredType([0]), urlStatistics)
 app.use('/api',api)
 
 app.post('/authenticate',

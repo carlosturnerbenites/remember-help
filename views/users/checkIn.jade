@@ -7,41 +7,44 @@ block titleSection
 
 block content
 	form#formCheckIn.form.formOnlyInput(action="/check-in" method="POST")
-		fieldset
+		fieldset#dataChildren
 			legend Niñ@
 			article.inputContainer
 				input(type="text" name="nameChildren" id="nameChildren" placeholder="Nombre Niño" required)
 			article.inputContainer
-				input(type="number" min="5" name="ageChildren" id="ageChildren" placeholder="Edad Niño" required)
-			article.inputContainer
 				input(type="number" name="idChildren" id="idChildren" placeholder="Identificacion Niñ@" required)
+			article.inputContainer
+				input(type="number" min="5" name="ageChildren" id="ageChildren" placeholder="Edad Niño" required)
 			article.inputContainer
 				label.label(for="stateHealth") Estado de Salud
 				select(name="stateHealth" id="stateHealth" required size="3")
 					option(Value=0) Ninguna
 					option(Value=1) Sord@
 					option(Value=2) Mud@
-		fieldset
+			fieldset
+				legend Usuario
+				article.inputContainer
+					input(type="text" name="usernameChildren" id="usernameChildren" placeholder="Usuario" required)
+				article.inputContainer
+					input(type="password" name="passwordChildren" id="passwordChildren" placeholder="Contraseña" required)
+				article.inputContainer
+					input(type="password" name="confirmPasswordChildren" id="confirmPasswordChildren" placeholder="Confirmar Contraseña" required)
+
+		fieldset#dataParent
 			legend Familiar
 			article.inputContainer
 				input(type="text" name="nameParent" id="nameParent" placeholder="Nombre Padre" required)
 			article.inputContainer
 				input(type="number" name="idFamily" id="idFamily" placeholder="Identificacion Familiar" required)
-		fieldset
-			legend Usuario
-			article.inputContainer
-				input(type="text" name="username" id="username" placeholder="Usuario" required)
-			article.inputContainer
-				input(type="password" name="password" id="password" placeholder="Contraseña" required)
-			article.inputContainer
-				input(type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirmar Contraseña" required)
+			fieldset
+				legend Usuario
+				article.inputContainer
+					input(type="text" name="usernameParent" id="usernameParent" placeholder="Usuario" required)
+				article.inputContainer
+					input(type="password" name="passwordParent" id="passwordParent" placeholder="Contraseña" required)
+				article.inputContainer
+					input(type="password" name="confirmPasswordParent" id="confirmPasswordParent" placeholder="Confirmar Contraseña" required)
 		button.btn.btnSuccess(type='submit')
 			span Registro
-	script.
-		var formCheckIn = document.querySelector('#formCheckIn')
-		formCheckIn.onsubmit = function(e){
-			if (formCheckIn.password.value != formCheckIn.confirmPassword.value){
-				event.preventDefault()
-					alert("Las contraseñas no coinciden")
-				}
-		}
+	script(src="/js/utilities.js")
+	script(src="/js/checkIn.js")

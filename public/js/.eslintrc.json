@@ -12,6 +12,7 @@
 		"Modal": true,
 		"response": true,
 		"Text": true,
+		"Validator": true,
 		"Voice": true,
 		"webkitSpeechRecognition": true
 		},
