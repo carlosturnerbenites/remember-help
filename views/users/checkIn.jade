@@ -7,8 +7,8 @@ block titleSection
 
 block content
 	form#formCheckIn.form.formOnlyInput(action="/check-in" method="POST")
-		fieldset#dataChildren
-			legend Niñ@
+		fieldset.fieldset#dataChildren
+			legend.legend Niñ@
 			article.inputContainer
 				input(type="text" name="nameChildren" id="nameChildren" placeholder="Nombre Niño" required)
 			article.inputContainer
@@ -18,11 +18,10 @@ block content
 			article.inputContainer
 				label.label(for="stateHealth") Estado de Salud
 				select(name="stateHealth" id="stateHealth" required size="3")
-					option(Value=0) Ninguna
-					option(Value=1) Sord@
-					option(Value=2) Mud@
-			fieldset
-				legend Usuario
+					- for (stateHealth of statesHealth)
+						option(value="#{stateHealth.value}") #{stateHealth.name}
+			fieldset.fieldset
+				legend.legend Usuario
 				article.inputContainer
 					input(type="text" name="usernameChildren" id="usernameChildren" placeholder="Usuario" required)
 				article.inputContainer
@@ -30,14 +29,14 @@ block content
 				article.inputContainer
 					input(type="password" name="confirmPasswordChildren" id="confirmPasswordChildren" placeholder="Confirmar Contraseña" required)
 
-		fieldset#dataParent
-			legend Familiar
+		fieldset.fieldset#dataParent
+			legend.legend Familiar
 			article.inputContainer
 				input(type="text" name="nameParent" id="nameParent" placeholder="Nombre Padre" required)
 			article.inputContainer
 				input(type="number" name="idFamily" id="idFamily" placeholder="Identificacion Familiar" required)
-			fieldset
-				legend Usuario
+			fieldset.fieldset
+				legend.legend Usuario
 				article.inputContainer
 					input(type="text" name="usernameParent" id="usernameParent" placeholder="Usuario" required)
 				article.inputContainer

@@ -1,12 +1,13 @@
 const express = require('express'),
 	router = express.Router(),
-	models = require('./../models/')
+	models = require('./../models/'),
+	utils = require('./../utils/')
 
 router.get('/', (req, res) => res.render('index',{user :req.user}))
 
 router.get('/authenticate', (req, res) => res.render('users/authenticate'))
 
-router.get('/check-in', (req, res) => res.render('users/checkIn'))
+router.get('/check-in', (req, res) => res.render('users/checkIn',{statesHealth : utils.statesHealth}))
 
 router.get('/logout', (req, res) => {
 	req.logout()
@@ -29,9 +30,7 @@ router.post('/check-in', (req, res) => {
 			username: data.usernameParent
 		}
 
-	if (dataNewChildren.username == dataNewFamily.username) return {err : 'User Duplicate'}
-
-	console.log(data)
+	if (dataNewChildren.username == dataNewFamily.username) return {err : {msg: 'User Duplicate'}}
 
 	models.user.create(dataNewChildren, (err, userChildren) => {
 		if (err) return res.json({err: err})

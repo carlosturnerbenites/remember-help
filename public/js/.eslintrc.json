@@ -10,6 +10,7 @@
 		"detailActivityActive": true,
 		"google": true,
 		"Modal": true,
+		"markdown": true,
 		"response": true,
 		"Text": true,
 		"Validator": true,

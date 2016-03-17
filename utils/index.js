@@ -21,7 +21,14 @@ function Validator (){
 
 var stylesPage = ['styleRed','styleYellow','styleBlue','styleGreen','styleOscure','stylePurple']
 
+var statesHealth = [
+	{value : 0, name : 'Ninguna'},
+	{value : 1, name : 'Sord@'},
+	{value : 2, name : 'Mud@'}
+]
+
 module.exports = {
 	stylesPage : stylesPage,
+	statesHealth : statesHealth,
 	Validator : Validator
 }

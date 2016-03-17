@@ -1,6 +1,5 @@
 const express = require('express'),
 	router = express.Router(),
-	models = require('./../models/'),
 	bodyParser = require('body-parser'),
 	mongoose = require('mongoose')
 
@@ -41,11 +40,8 @@ router.post('/collection/:collection',(req, res) => {
 	var collection = req.params.collection,
 		model = mongoose.model(collection),
 		data = req.body
-	console.log(data)
-	console.log(data)
 
-	model.findOne({ id : parseInt(data.value)},{_id : 0, __v : 0})
-	.exec((err,document) => {
+	model.findOne({ id : parseInt(data.value)},{_id : 0, __v : 0},(err,document) => {
 		if (err) return res.json({err:err})
 		res.json({document : document})
 	})

@@ -40,6 +40,8 @@ router.post('/rangeDate',(req,res) => {
 	var datesQuery = dateInit.getDatesUntil(dateEnd)
 
 	models.children.findOne({id: data.children},(err,children) => {
+		if (err) return res.json({err: err})
+
 		models.history.aggregate([
 			{
 				$match: {
@@ -58,12 +60,11 @@ router.post('/rangeDate',(req,res) => {
 				}
 			}
 		], (err, docs) => {
-			if (err) return res.json(err)
+			if (err) return res.json({err: err})
+
 			models.activity.count({},(err,count) => {
-				for (var doc of docs){
-					console.log(doc)
-					doc.incomplete = count - doc.complete
-				}
+				if (err) return res.json({err: err})
+				for (var doc of docs){ doc.incomplete = count - doc.complete }
 				return res.json(docs)
 			})
 		})

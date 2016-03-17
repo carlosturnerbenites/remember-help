@@ -40,20 +40,20 @@ function Validator (form){
 
 	this.config = function (stages){
 		this.stages = stages
-		for (var stage of this.stages){
-			stage.isValid = false
-		}
+		this.stages.forEach((stage) => { stage.isValid = false })
 	}
 
 	this.showErrors = function (){
-		console.log(this.stagesFaild)
+		var section = document.createElement('section')
+		this.stagesFaild.forEach((e) => { section.innerHTML += markdown.toHTML(e.messageError) })
+		return section
 	}
 
 	this.validateStage = function (){
-		for (var stage of this.stages){
+		this.stages.forEach((stage) => {
 			var fn = this[stage.fn]
 			stage.isValid = fn(stage.params.split(' '))
-		}
+		})
 	}
 
 	this.isValid = function (){
@@ -63,11 +63,9 @@ function Validator (form){
 		this.stagesFaild = this.stages.filter((stage) => {
 			return stage.isValid == false
 		})
-		if (!this.stagesFaild.length){
-			return {isValid : true}
-		}else{
-			return {isValid : false, stagesFaild : this.stagesFaild}
-		}
+
+		if (this.stagesFaild.length) return {isValid : false, stagesFaild : this.stagesFaild}
+		return {isValid : true}
 	}
 
 	this.equals = function (elements){
@@ -87,6 +85,7 @@ function Validator (form){
 		}
 		return false
 	}
+
 	this.mayor = function (elements){
 		var valueOne = form[elements[0]],
 			valueTwo = form[elements[1]]

@@ -34,7 +34,6 @@ router.get('/activities',(req,res) => {
 router.get('/messages',(req,res) => {
 	models.message.find({} , (err,messages) => {
 		if (err) return res.json({err: err})
-
 		res.render('children/messages',{
 			classcss:utils.stylesPage.getRandom(),
 			messages:messages

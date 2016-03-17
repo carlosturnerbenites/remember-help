@@ -1,8 +1,7 @@
 const express = require('express'),
 	router = express.Router(),
 	models = require('./../models/'),
-	bodyParser = require('body-parser'),
-	mongoose = require('mongoose')
+	bodyParser = require('body-parser')
 
 router.use(bodyParser.json())
 
@@ -14,6 +13,8 @@ router.post('/valid-activity',(req, res) => {
 	timeCurrent.setHours(0,0,0,0)
 
 	models.children.findOne({user: req.user._id},(err, children) => {
+		if (err) return res.json({err : err})
+
 		models.history.findOne({children : children._id, activity: data.id,timeCurrent: timeCurrent.toISOString()},(err, history) => {
 			if (err) return res.json({err : err})
 			if (history) return res.json({err : 'Ya has completado esta actividad.'})
@@ -24,9 +25,6 @@ router.post('/valid-activity',(req, res) => {
 					message : 'Felicidades, has terminado ha tiempo la actividad',
 					type : 0
 				}
-
-				response.classcss = 'complete'
-				activity.update({ $set : { state : 'complete' }}).exec()
 
 				models.history.create({
 					children: children._id,
@@ -39,9 +37,10 @@ router.post('/valid-activity',(req, res) => {
 					text: response.message
 				})
 
+				response.classcss = 'complete'
 				response.id = activity._id
 
-				res.send(response)
+				res.json(response)
 			})
 		})
 	})

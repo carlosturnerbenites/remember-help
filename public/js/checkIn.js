@@ -2,16 +2,28 @@ var formCheckIn = document.querySelector('#formCheckIn'),
 	validator = new Validator(formCheckIn)
 
 validator.config([
-	{fn : 'notEquals', params : 'usernameChildren usernameParent'},
-	{fn : 'equals', params : 'passwordChildren confirmPasswordChildren'},
-	{fn : 'equals', params : 'passwordParent confirmPasswordParent'}
+	{
+		fn : 'notEquals',
+		params : 'usernameChildren usernameParent',
+		messageError : 'No pueden registrarse dos usuarios con el mismo **username**'
+	},
+	{
+		fn : 'equals',
+		params : 'passwordChildren confirmPasswordChildren',
+		messageError : 'La contraseña del **niñ@** no **coincide**'
+	},
+	{
+		fn : 'equals',
+		params : 'passwordParent confirmPasswordParent',
+		messageError : 'La contraseña del **pariente** no **coincide**'
+	}
 ])
 
 formCheckIn.onsubmit = function (event){
 	var formValidation = validator.isValid()
 	if(!formValidation.isValid){
 		event.preventDefault()
-		alert('El formulario no es valido')
+		validator.showErrors()
 	}
 }
 
