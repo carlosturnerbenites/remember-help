@@ -14,6 +14,7 @@
 		"response": true,
 		"Text": true,
 		"Validator": true,
+		"NotificationC": true,
 		"Voice": true,
 		"webkitSpeechRecognition": true
 		},

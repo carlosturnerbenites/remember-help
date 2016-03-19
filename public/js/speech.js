@@ -2,6 +2,7 @@
 // convierte texto a voz
 
 function Text (){
+	console.info("to voice")
 	this.toVoice = function (text){
 		var msg = new SpeechSynthesisUtterance(),
 			voices = window.speechSynthesis.getVoices()

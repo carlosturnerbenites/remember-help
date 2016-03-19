@@ -5,7 +5,7 @@ block template
 		header(class="#{classcss}")
 			nav
 				h3
-					a(href = "/") rememberHelp
+					a(href = "/") Remember Help
 				article.itemsNavs
 					a.item(href="/children/activities")
 						span.icon-activities(tooltip="Actividades")
@@ -18,6 +18,6 @@ block template
 			section.titleSection
 				block titleSection
 		block content
-	script(src="/js/utilities.js")
 	script(src='/js/speech.js')
+	script(src="/js/utilities.js")
 	block script

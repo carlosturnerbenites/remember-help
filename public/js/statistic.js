@@ -27,11 +27,16 @@ function BuildStatistic (){
 		var container = document.createElement('section')
 		for (var history of histories){
 			var clone = Stoday.querySelector('.resultStatistics'),
-				template = document.importNode(clone.content, true)
+				template = document.importNode(clone.content, true),
+				dateActivity = new Date(history.date),
+				dateHistory = new Date(history.activity.hour)
+
+			var timeText = (dateHistory > dateActivity) ? 'Despues' : 'Antes'
 
 			template.querySelector('.nameActivity').innerHTML = history.activity.text
-			template.querySelector('.timeActivity').innerHTML = history.activity.hour
-			template.querySelector('.stateActivity').innerHTML = 'Estado'
+			template.querySelector('.timeActivity').innerHTML = dateActivity.toHour12()
+			template.querySelector('.timeHistory').innerHTML = dateHistory.toHour12()
+			template.querySelector('.timeText').innerHTML = timeText
 
 			container.appendChild(template)
 		}
@@ -131,8 +136,7 @@ var FStatistics = {
 					data : JSON.stringify({dateInit: formSRangeDate.dateInit.value ,dateEnd: formSRangeDate.dateEnd.value,children: formSRangeDate.children.value })
 				})
 			}else{
-				console.error("form invalid")
-				validator.showErrors()
+				validator.showErrors('.errors')
 			}
 		})
 	}

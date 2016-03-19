@@ -59,16 +59,12 @@ function confirmActivity () {
 
 for (var activity of Array.from(activities)){
 
-	var date = new Date(activity.dataset.date),
-		dateFormat = date
-		.toLocaleTimeString('es-CO',{hour12:true})
-		.replace('p. m.','PM')
-		.replace('a. m.','AM')
-	activity.querySelector('[rol=time]').innerHTML = dateFormat
+	var date = new Date(activity.dataset.date)
+
+	activity.querySelector('[rol=time]').innerHTML = date.toHour12()
 
 	var dataDate = date.getHours() > 6 && date.getHours() < 18 ? {meridiem: 'PM',classcss:'morning'} : {meridiem: 'AM',classcss:'nigth'}
 
-	// activity.querySelector('.meridiem').innerHTML = dataDate.meridiem
 	activity.querySelector('.date').classList.add(dataDate.classcss)
 
 	activity.addEventListener('click', confirmActivity)

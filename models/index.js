@@ -57,7 +57,9 @@ const childrenSchema = new Mongoose.Schema({
 		/* children : Referencia al niñ@ que completo la acvtividad*/
 		children:{ type:Schema.ObjectId, ref:'children' },
 		/* timeCurrent : Fecha a la cual se completo la actividad*/
-		timeCurrent :{type:Date, default:Date.now}
+		date :{type:Date, default:Date.now},
+		/* timeCurrent : Hora a la cual se completo la actividad*/
+		time :{type:Date, default:Date.now}
 	}),
 	models = {activity :Mongoose.model('activity', activitySchema),
 		children :Mongoose.model('children', childrenSchema),

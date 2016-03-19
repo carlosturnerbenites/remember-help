@@ -5,7 +5,7 @@ block template
 		header(class="styleBlue")
 			nav
 				h3
-					a(href = "/") rememberHelp
+					a(href = "/") Remember Help
 				article.itemsNavs
 					if user
 						a.item(href="/children/activities")
@@ -13,10 +13,10 @@ block template
 						a.item(href="/management/statistics")
 							span.icon-family(tooltip="Padres")
 						a.item(href="/logout")
-							span.icon-logout(tooltip="Cerrar Sesion")
+							span.icon-logout(tooltip="Cerrar Sesión")
 					else
 						a.item(href="/authenticate")
-							span.icon-login(tooltip="Iniciar Sesion")
+							span.icon-login(tooltip="Iniciar Sesión")
 						a.item(href="/check-in")
 							span.icon-check-in(tooltip="Registrarse")
 			section.titleSection
@@ -24,5 +24,4 @@ block template
 		block content
 
 	block script
-	script(src='/js/lib/markdown.js')
 

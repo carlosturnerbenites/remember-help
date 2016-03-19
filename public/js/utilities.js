@@ -1,3 +1,9 @@
+Date.prototype.toHour12 = function () {
+	return this.toLocaleTimeString('es-CO',{hour12:true})
+		.replace('p. m.','PM')
+		.replace('a. m.','AM')
+}
+
 Date.prototype.getTimeHumanize = function () {
 	var time = this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds()
 	return time
@@ -45,7 +51,13 @@ function Validator (form){
 
 	this.showErrors = function (){
 		var section = document.createElement('section')
+		section.classList.add('errors')
 		this.stagesFaild.forEach((e) => { section.innerHTML += markdown.toHTML(e.messageError) })
+		form.appendChild(section)
+		section.scrollIntoView()
+
+		window.setTimeout(() => { form.removeChild(section) }, 10000)
+
 		return section
 	}
 
@@ -150,44 +162,41 @@ function Modal (modalReference,selectorParentElement){
 	close.addEventListener('click',this.hide.bind(this))
 }
 
-function Message (data){
-	this.contenedorPrincipal = document.body
+function NotificationC (){
+	var contenedorPrincipal = document.body
 
-	this.createMessage = function (){
-		this.contenedorMSG = document.createElement('article')
-		this.contenedorMSG.classList.add('contenedorMensaje')
+	var createMessage = function (data){
+		var contenedorMSG = document.createElement('article')
+		contenedorMSG.classList.add('contenedorMensaje')
 		var mensaje = document.createElement('p')
-		// var contenedorIcon = document.createElement('article')
-		// var contenedorMensaje = document.createElement('article')
 		mensaje.innerHTML= data.msg
-		// var icono = document.createElement('span')
-		this.contenedorMSG.classList.add('MSG')
+		contenedorMSG.classList.add('MSG')
 		var icon = document.createElement('img')
 
-		this.contenedorMSG.appendChild(icon)
-		this.contenedorMSG.appendChild(mensaje)
+		contenedorMSG.appendChild(icon)
+		contenedorMSG.appendChild(mensaje)
 
-		if (data.tipo == 0){
-			icon.src = 'correcto.png'
-		}else if(data.tipo == 1){
-			icon.src = 'incorrecto.png'
-		}
-		else if(data.tipo == 2){
-			icon.src = 'informacion.png'
-		}
+		if (data.type == 0) icon.src = '/images/notifications/correcto.png'
+		else if(data.type == 1) icon.src = '/images/notifications/incorrecto.png'
+		else if(data.type == 2) icon.src = '/images/notifications/informacion.png'
 
 		icon.classList.add('contenedorIcon')
 		mensaje.classList.add('contenedorMensaje')
+
+		return contenedorMSG
 	}
-	this.show = function (){
-		this.createMessage()
-		var top = window.window.scrollY
-		this.contenedorMSG.setAttribute('style', 'top:' + top + 'px')
-		this.contenedorPrincipal.appendChild(this.contenedorMSG)
-		setTimeout(this.hide.bind(this), data.time)
+
+	this.show = function (data){
+		var contenedorMSG = createMessage(data),
+			top = window.window.scrollY,
+			time = data.time || 3000
+
+		contenedorMSG.setAttribute('style', 'top:' + top + 'px')
+		contenedorPrincipal.appendChild(contenedorMSG)
+		setTimeout(this.hide.bind(this), time)
 	}
 	this.hide = function (){
-		this.contenedorPrincipal.removeChild(this.contenedorPrincipal.lastChild)
+		contenedorPrincipal.removeChild(contenedorPrincipal.lastChild)
 	}
 }
 

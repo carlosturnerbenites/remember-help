@@ -9,13 +9,13 @@ router.post('/valid-activity',(req, res) => {
 	if(req.user.type != 1) return res.json({err : 'Solo una niña ó un niño puede completar las actividades'})
 
 	var data = req.body,
-		timeCurrent = new Date()
-	timeCurrent.setHours(0,0,0,0)
+		dateCurrent = new Date()
+	dateCurrent.setHours(0,0,0,0)
 
 	models.children.findOne({user: req.user._id},(err, children) => {
 		if (err) return res.json({err : err})
 
-		models.history.findOne({children : children._id, activity: data.id,timeCurrent: timeCurrent.toISOString()},(err, history) => {
+		models.history.findOne({children : children._id, activity: data.id,date: dateCurrent.toISOString()},(err, history) => {
 			if (err) return res.json({err : err})
 			if (history) return res.json({err : 'Ya has completado esta actividad.'})
 
@@ -29,7 +29,8 @@ router.post('/valid-activity',(req, res) => {
 				models.history.create({
 					children: children._id,
 					activity: activity._id,
-					timeCurrent: timeCurrent
+					date: dateCurrent,
+					time : new Date()
 				})
 
 				models.message.create({

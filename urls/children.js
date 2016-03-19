@@ -5,8 +5,8 @@ const express = require('express'),
 
 router.get('/activities',(req,res) => {
 
-	var currentTime = new Date()
-	currentTime.setHours(0,0,0,0)
+	var dateCurrent = new Date()
+	dateCurrent.setHours(0,0,0,0)
 
 	models.activity.find()
 	.lean(true)
@@ -14,7 +14,7 @@ router.get('/activities',(req,res) => {
 		models.children.findOne({user: req.user._id},(err, children) => {
 			if (err) return res.json({err: err})
 
-			models.history.find({children : children._id, timeCurrent: currentTime.toISOString()},{activity : 1}, (err, activitiesComplete) => {
+			models.history.find({children : children._id, date: dateCurrent.toISOString()},{activity : 1}, (err, activitiesComplete) => {
 				if (err) return res.json({err: err})
 
 				activities.forEach(activity => {
