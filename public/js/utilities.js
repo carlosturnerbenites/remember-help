@@ -1,3 +1,5 @@
+/* exported Validator */
+
 Date.prototype.toHour12 = function () {
 	return this.toLocaleTimeString('es-CO',{hour12:true})
 		.replace('p. m.','PM')
@@ -196,7 +198,7 @@ function NotificationC (){
 		setTimeout(this.hide.bind(this), time)
 	}
 	this.hide = function (){
-		contenedorPrincipal.removeChild(contenedorPrincipal.lastChild)
+		//contenedorPrincipal.removeChild(contenedorPrincipal.lastChild)
 	}
 }
 

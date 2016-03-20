@@ -22,7 +22,6 @@ router.get('/activities',(req,res) => {
 				})
 
 				res.render('children/activities',{
-					classcss:utils.stylesPage.getRandom(),
 					activities:activities,
 					children:children
 				})
@@ -35,16 +34,13 @@ router.get('/messages',(req,res) => {
 	models.message.find({} , (err,messages) => {
 		if (err) return res.json({err: err})
 		res.render('children/messages',{
-			classcss:utils.stylesPage.getRandom(),
 			messages:messages
 		})
 	})
 })
 
 router.get('/treasure',(req,res) => {
-	res.render('children/treasure',{
-		classcss:utils.stylesPage.getRandom()
-	})
+	res.render('children/treasure',{})
 })
 
 module.exports = router

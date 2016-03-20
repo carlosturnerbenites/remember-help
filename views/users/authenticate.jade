@@ -3,14 +3,14 @@ block title
 	title Ingresar
 
 block titleSection
-	p Ingesar
+	p Ingresar
 
 block content
-	form#formAuthenticate.form.formOnlyInput(action="/authenticate" method="POST")
+	form#formAuthenticate.form.formOnlyInput(action='/authenticate' method='POST')
 		article.inputContainer
 			input(type='text', name='username', placeholder='Usuario', required)
 		article.inputContainer
 			input(type='password', name='password', placeholder='Contraseña', required)
-		article.inputContainer
-			button.btn.btnSuccess.button(type='submit')
+		article.inputContainer.alignItemsCenter
+			button.btn.btnSuccess(type='submit')
 				span Ingresar

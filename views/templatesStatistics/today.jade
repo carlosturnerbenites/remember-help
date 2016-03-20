@@ -1,12 +1,12 @@
 template.optionsStatistic
 	form.form.formLabelInput#today
 		article.inputContainer
-			label.label(for="children") Niñ@
+			label.label(for='children') Niñ@
 			select(type='date', name='children' id='children' required)
 				for children in parent.children
-					option(value="#{children.id}") #{children.name}
-		article.inputContainer.alignItemsEnd
-			button.btn.btnSuccess(type="submit")
+					option(value='#{children.id}') #{children.name}
+		article.inputContainer.alignItemsCenter
+			button.btn.btnSuccess(type='submit')
 				span Generar
 template.resultStatistics
 	article

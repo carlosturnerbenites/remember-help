@@ -31,7 +31,7 @@ function BuildStatistic (){
 				dateActivity = new Date(history.date),
 				dateHistory = new Date(history.activity.hour)
 
-			var timeText = (dateHistory > dateActivity) ? 'Despues' : 'Antes'
+			var timeText = dateHistory > dateActivity ? 'Despues' : 'Antes'
 
 			template.querySelector('.nameActivity').innerHTML = history.activity.text
 			template.querySelector('.timeActivity').innerHTML = dateActivity.toHour12()
@@ -43,6 +43,11 @@ function BuildStatistic (){
 		return container
 	}
 	this.rangeDate = function (){
+		var clone = SRangeDate.querySelector('.resultStatistics'),
+			template = document.importNode(clone.content, true)
+		return template
+	}
+	this.evolution = function (){
 		var clone = SRangeDate.querySelector('.resultStatistics'),
 			template = document.importNode(clone.content, true)
 		return template
@@ -77,7 +82,7 @@ var FStatistics = {
 			validator = new Validator(formSRangeDate)
 
 		validator.config([
-			{fn : 'mayor', params : 'dateEnd dateInit', messageError : 'La fecha Inicial debe ser mayor a la Final'}
+			{fn : 'mayor', params : 'dateEnd dateInit', messageError : 'La **Fecha Inicial** debe ser **mayor** a la **Fecha Final**'}
 		])
 
 		formSRangeDate.addEventListener('submit',function (event) {
@@ -128,12 +133,78 @@ var FStatistics = {
 								}
 							}
 
-							var chart = new google.visualization.ComboChart(document.getElementById('chartRangeDate'))
+							var chart = new google.visualization['ComboChart'](document.getElementById('chartRangeDate'))
+
 							chart.draw(data, options)
 						}
 
 					},
 					data : JSON.stringify({dateInit: formSRangeDate.dateInit.value ,dateEnd: formSRangeDate.dateEnd.value,children: formSRangeDate.children.value })
+				})
+			}else{
+				validator.showErrors('.errors')
+			}
+		})
+	},
+	evolution : function (){
+		var formSEvolution = document.querySelector('#evolution'),
+			validator = new Validator(formSEvolution)
+
+		validator.config([
+			{fn : 'mayor', params : 'dateEnd dateInit', messageError : 'La **Fecha Inicial** debe ser **mayor** a la **Fecha Final**'}
+		])
+
+		formSEvolution.addEventListener('submit',function (event) {
+			event.preventDefault()
+			var formValidation = validator.isValid()
+			if(formValidation.isValid){
+				ajax({
+					type : 'POST',
+					URL : '/statistics/line-evolution',
+					async : true,
+					contentType : 'application/json',
+					onSuccess : (result) => {
+						var data = JSON.parse(result),
+							node = buildSatistic.rangeDate(),
+							rows = []
+
+						for (var record of data){
+							var dataRecord = []
+							dataRecord.push(record._id.day + '/' + record._id.month + '/' + record._id.year)
+							dataRecord.push(record.complete)
+							dataRecord.push(record.incomplete)
+							rows.push(dataRecord)
+						}
+						statisticsWindow
+						.setTitle('Evolución')
+						.addContent(node)
+						.show()
+
+						google.charts.setOnLoadCallback(drawVisualization)
+
+						function drawVisualization () {
+							var data = new google.visualization.DataTable()
+
+							data.addColumn('string', 'Date')
+							data.addColumn('number', 'Completadas')
+							data.addColumn('number', 'Incompletas')
+							data.addRows(rows)
+
+							var options = {
+								title: 'Company Performance',
+								pointSize: 10,
+								hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+								vAxis: {minValue: 0, title: '# de Actividades'},
+								legend:'bottom'
+
+							}
+							var chart = new google.visualization.AreaChart(document.getElementById('chartRangeDate'))
+
+							chart.draw(data, options)
+						}
+
+					},
+					data : JSON.stringify({dateInit: formSEvolution.dateInit.value ,dateEnd: formSEvolution.dateEnd.value,children: formSEvolution.children.value })
 				})
 			}else{
 				validator.showErrors('.errors')

@@ -1,4 +1,4 @@
-extends ../templates/templateAppChildren.jade
+extends ../templates/templateApp.jade
 
 block title
 	title Actividades
@@ -7,24 +7,24 @@ block titleSection
 	p Actividades
 
 block modal
-	section#confirmActivityWindow.modal.modal-hide(data-rol-modal="modal" data-contentModal data-referenceModal="#modal")
+	section#confirmActivityWindow.modal.modal-hide(data-rol-modal='modal' data-contentModal data-referenceModal='#modal')
 		section.contentModal
 			article.titleModal
 			article.bodyModal
 			article.footerModal
-				button.btn.btnError(data-closeModal="#modal" data-rol-modal="close" data-referenceModal="#modal") Volver
+				button.btn.btnError(data-closeModal='#modal' data-rol-modal='close' data-referenceModal='#modal') Volver
 
 block content
 	section.activities
 		each activity in activities
-			article.activity(data-date="#{activity.hour}" data-speech="#{activity.textSpeech}" data-id="#{activity._id}" data-text="#{activity.text}" data-tolerance = "#{activity.tolerance}")
+			article.activity(data-date='#{activity.hour}' data-speech='#{activity.textSpeech}' data-id='#{activity._id}' data-text='#{activity.text}' data-tolerance = '#{activity.tolerance}')
 				p.titleActivity #{activity.text}
-				img.imgActivity(src="#{activity.img}", alt="")
-				article.reminder(data-statereminder = "#{activity.state}")
+				img.imgActivity(src='#{activity.img}', alt='')
+				article.reminder(data-statereminder = '#{activity.state}')
 					article.titleReminder
 						p
 					article.date
-						span(rol="time")
+						span(rol='time')
 						span.meridiem
 	template#templateConfirmActivityWindow
 		section.templateConfirmActivityWindow
@@ -32,11 +32,11 @@ block content
 				button.btn.btnSuccess.btnRound#buttonCaptureVoice
 					span.icon-voice
 			else if (children.stateHealth == 2)
-				button.btn.btnSuccess.btnRound(onclick="response('si')") Si
+				button.btn.btnSuccess.btnRound(onclick='response("si")') Si
 					span.icon-
-				button.btn.btnError.btnRound(onclick="response('no')") No
+				button.btn.btnError.btnRound(onclick='response("no")') No
 					span.icon-
-		script(src="/js/confirmActivity.js")
+		script(src='/js/confirmActivity.js')
 
 block script
-	script(src="/js/activities.js")
+	script(src='/js/activities.js')

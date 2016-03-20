@@ -27,21 +27,21 @@ const childrenSchema = new Mongoose.Schema({
 	}),
 	userSchema = new Mongoose.Schema({
 		/* password : contraseña del usuario */
-		password:{type:String, default:'' , required:true},
-		/* type : Tipo de usuario : 0 - pariente , 1 - niñ@*/
-		type:{type:Number , emum:[0,1,2],required:true},
+		password:{type:String, required:true},
+		/* type : Tipo de usuario : 777 - Developer, 776 - Administrador, 0 - pariente, 1 - niñ@*/
+		type:{type:Number , emum:[777,776,0,1,2],required:true},
 		/* username : Nombre de usuario*/
-		username:{type:String, default:'' , required:true, unique:true}
+		username:{type:String, required:true, unique:true}
 	}),
 	activitySchema = new Mongoose.Schema({
 		date :{type:Date},
 		hour :{type:Date, required:true},
 		/* img : imagen de la actividad*/
-		img :{type:String, default:'', required:true},
+		img :{type:String, required:true},
 		/* text : texto de la actividad*/
-		text :{type:String, default:'', required:true},
+		text :{type:String, required:true},
 		/* textSpeech : texto usado por el API Speech para convertir a voz*/
-		textSpeech :{type:String, default:'', required:true},
+		textSpeech :{type:String, required:true},
 		/* tolerance : tiempo antes o despues en el cual se puede realizar una actividd (en minutos)*/
 		tolerance :{type:Number, default:20, required:true }
 	}),
@@ -53,13 +53,13 @@ const childrenSchema = new Mongoose.Schema({
 	}),
 	historySchema = new Mongoose.Schema({
 		/* activity : Referencia a la actividad completada*/
-		activity:{ type:Schema.ObjectId, ref:'activity' },
+		activity:{ type:Schema.ObjectId, ref:'activity', required:true},
 		/* children : Referencia al niñ@ que completo la acvtividad*/
-		children:{ type:Schema.ObjectId, ref:'children' },
+		children:{ type:Schema.ObjectId, ref:'children', required:true},
 		/* timeCurrent : Fecha a la cual se completo la actividad*/
-		date :{type:Date, default:Date.now},
+		date :{type:Date, required:true},
 		/* timeCurrent : Hora a la cual se completo la actividad*/
-		time :{type:Date, default:Date.now}
+		time :{type:Date, required:true}
 	}),
 	models = {activity :Mongoose.model('activity', activitySchema),
 		children :Mongoose.model('children', childrenSchema),

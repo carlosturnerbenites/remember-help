@@ -1,49 +1,50 @@
-extends ../templates/template.jade
+extends ../templates/templateApp.jade
 block title
 	title Registro
 
 block titleSection
-	p Registrarse
+	p Registro
 
 block content
-	form#formCheckIn.form.formOnlyInput(action="/check-in" method="POST")
+	form#formCheckIn.form.formOnlyInput(action='/check-in' method='POST')
 		fieldset.fieldset#dataChildren
 			legend.legend Niñ@
 			article.inputContainer
-				input(type="number" name="idChildren" id="idChildren" placeholder="Identificación Niñ@" required)
+				input(type='number' name='idChildren' id='idChildren' placeholder='Identificación Niñ@' required)
 			article.inputContainer
-				input(type="text" name="nameChildren" id="nameChildren" placeholder="Nombre Niño" required)
+				input(type='text' name='nameChildren' id='nameChildren' placeholder='Nombre Niño' required)
 			article.inputContainer
-				input(type="number" min="5" name="ageChildren" id="ageChildren" placeholder="Edad Niño" required)
+				input(type='number' min='5' name='ageChildren' id='ageChildren' placeholder='Edad Niño' required)
 			article.inputContainer
-				label.label(for="stateHealth") Estado de Salud
-				select(name="stateHealth" id="stateHealth" required size="3")
+				label.label(for='stateHealth') Estado de Salud
+				select(name='stateHealth' id='stateHealth' required size='3')
 					- for (stateHealth of statesHealth)
-						option(value="#{stateHealth.value}") #{stateHealth.name}
+						option(value='#{stateHealth.value}') #{stateHealth.name}
 			fieldset.fieldset
 				legend.legend Usuario
 				article.inputContainer
-					input(type="text" name="usernameChildren" id="usernameChildren" placeholder="Usuario" required)
+					input(type='text' name='usernameChildren' id='usernameChildren' placeholder='Usuario' required)
 				article.inputContainer
-					input(type="password" name="passwordChildren" id="passwordChildren" placeholder="Contraseña" required)
+					input(type='password' name='passwordChildren' id='passwordChildren' placeholder='Contraseña' required)
 				article.inputContainer
-					input(type="password" name="confirmPasswordChildren" id="confirmPasswordChildren" placeholder="Confirmar Contraseña" required)
+					input(type='password' name='confirmPasswordChildren' id='confirmPasswordChildren' placeholder='Confirmar Contraseña' required)
 
 		fieldset.fieldset#dataParent
 			legend.legend Familiar
 			article.inputContainer
-				input(type="number" name="idFamily" id="idFamily" placeholder="Identificación Familiar" required)
+				input(type='number' name='idFamily' id='idFamily' placeholder='Identificación Familiar' required)
 			article.inputContainer
-				input(type="text" name="nameParent" id="nameParent" placeholder="Nombre Familiar" required)
+				input(type='text' name='nameParent' id='nameParent' placeholder='Nombre Familiar' required)
 			fieldset.fieldset
 				legend.legend Usuario
 				article.inputContainer
-					input(type="text" name="usernameParent" id="usernameParent" placeholder="Usuario" required)
+					input(type='text' name='usernameParent' id='usernameParent' placeholder='Usuario' required)
 				article.inputContainer
-					input(type="password" name="passwordParent" id="passwordParent" placeholder="Contraseña" required)
+					input(type='password' name='passwordParent' id='passwordParent' placeholder='Contraseña' required)
 				article.inputContainer
-					input(type="password" name="confirmPasswordParent" id="confirmPasswordParent" placeholder="Confirmar Contraseña" required)
-		button.btn.btnSuccess(type='submit')
-			span Registro
-	script(src="/js/utilities.js")
-	script(src="/js/checkIn.js")
+					input(type='password' name='confirmPasswordParent' id='confirmPasswordParent' placeholder='Confirmar Contraseña' required)
+		article.inputContainer.alignItemsCenter
+			button.btn.btnSuccess(type='submit')
+				span Registro
+	script(src='/js/utilities.js')
+	script(src='/js/checkIn.js')

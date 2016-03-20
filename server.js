@@ -20,14 +20,18 @@ const config = require(urlConfig),
 	port = process.env.PORT || 8000,
 	http = require('http'),
 	app = express(),
+	/* Desde Express 4 ya no es necesario crear un servidor con http Module (Esisten Exepciones), solo se debe usar app.listen()*/
 	server = http.createServer(app),
 
 	urlActivities = require('./urls/activities'),
 	urlChildren = require('./urls/children'),
+	urlAdministration = require('./urls/administration'),
 	urlGeneral = require('./urls/general'),
 	urlManagement = require('./urls/management'),
 	urlStatistics = require('./urls/statistics'),
-	api = require('./urls/api')
+	api = require('./urls/api'),
+
+	utils = require('./utils')
 
 mongoose.connect(config.URIMongo)
 
@@ -56,6 +60,7 @@ app.use(passport.session())
 
 passport.use(new LocalStrategy((username, password, done) => {
 	models.user.findOne({username : username},(err,user) => {
+		console.log(user)
 		if(err) return done(null, false, { message: err})
 		if (!user) return done(null, false, { message: 'Unknown user'})
 		if(user.password == password) return done(null,user)
@@ -71,9 +76,16 @@ passport.deserializeUser((user, done) => {
 	})
 })
 
+app.use((req, res, next) => {
+	res.locals.user = req.user
+	res.locals.classcss = utils.stylesPage.getRandom()
+	next()
+})
+
 app.use('',urlGeneral)
 app.use('/children', requiredType([1]), urlChildren)
 app.use('/activities', requiredType([1]), urlActivities)
+app.use('/admin', requiredType([777,776]), urlAdministration)
 app.use('/management', requiredType([0]), urlManagement)
 app.use('/statistics', requiredType([0]), urlStatistics)
 app.use('/api',api)
@@ -83,6 +95,7 @@ app.post('/authenticate',
 	(req, res) => {
 		if (req.user.type == 0) return res.redirect('/management/statistics')
 		if (req.user.type == 1) return res.redirect('/children/activities')
+		if (req.user.type == 776) return res.redirect('/admin/collections')
 	}
 )
 

@@ -1,6 +1,6 @@
-extends ../templates/templateAppManagement.jade
+extends ../templates/templateApp.jade
 block title
-	title Colleciones
+	title Colecciones
 
 block titleSection
 	p Colecciones
@@ -13,24 +13,24 @@ block content
 
 	form.form.formLabelInput#formCollections
 		article.inputContainer
-			label.label(for="collection") Coleccion
-			select#collection(name="collection" size="6" required)
-				option(value="parent") Pariente
-				option(value="children") Niños
-				option(value="user") Usuarios
-				option(value="message") Mensajes
-				option(value="activity") Actividades
-				option(value="history") Historias
+			label.label(for='collection') Coleccion
+			select#collection(name='collection' size='6' required)
+				option(value='parent') Pariente
+				option(value='children') Niños
+				option(value='user') Usuarios
+				option(value='message') Mensajes
+				option(value='activity') Actividades
+				option(value='history') Historias
 
 		article.alignItemsEnd
-			input.btn.btnInfo(type="button" id="findInCollection" value="Buscar")
-			input.btn.btnSuccess(type="button" id="AgregateInCollection" value="Agregar")
-			input.btn.btnError(type="button" id="emptyCollection" value="Vaciar")
+			input.btn.btnInfo(type='button' id='findInCollection' value='Buscar')
+			input.btn.btnSuccess(type='button' id='AgregateInCollection' value='Agregar')
+			input.btn.btnError(type='button' id='emptyCollection' value='Vaciar')
 
 	section.documents#results
 	section#addDocument
 	block scripts
-		script(src="/js/collections.js")
+		script(src='/js/collections.js')
 
 
 

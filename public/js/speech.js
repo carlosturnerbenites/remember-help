@@ -2,7 +2,6 @@
 // convierte texto a voz
 
 function Text (){
-	console.info("to voice")
 	this.toVoice = function (text){
 		var msg = new SpeechSynthesisUtterance(),
 			voices = window.speechSynthesis.getVoices()
@@ -31,7 +30,6 @@ function Voice (cb){
 		for (var i = event.resultIndex; i < event.results.length; i++){
 			if(event.results[i].isFinal){
 				text = event.results[i][0].transcript
-				console.log(text)
 				cb(text)
 			}
 		}
@@ -41,7 +39,7 @@ function Voice (cb){
 	recognition.continuous = true
 	recognition.interimResults = true
 
-	recognition.onstart = function (){recognizing = true;console.log("inicio")}
+	recognition.onstart = function (){recognizing = true}
 
 	recognition.onresult = this.toText
 

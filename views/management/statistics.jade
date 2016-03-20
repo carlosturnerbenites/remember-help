@@ -1,4 +1,4 @@
-extends ../templates/templateAppManagement.jade
+extends ../templates/templateApp.jade
 block title
 	title Estadisticas
 
@@ -6,21 +6,27 @@ block titleSection
 	p Estadisticas
 
 block modal
-	section#statisticsWindow.modal.modal-hide(data-rol-modal="modal" data-contentModal data-referenceModal="#modal")
+	section#statisticsWindow.modal.modal-hide(data-rol-modal='modal' data-contentModal data-referenceModal='#modal')
 		section.contentModal
 			article.titleModal
 			article.bodyModal
 			article.footerModal
-				button.btn.btnError(data-closeModal="#modal" data-rol-modal="close" data-referenceModal="#modal") Volver
+				button.btn.btnError(data-closeModal='#modal' data-rol-modal='close' data-referenceModal='#modal') Volver
 block content
 	section.statistics
-		article.statistic.statisticToday(data-statistic="today")
+		article.statistic.statisticToday(data-statistic='today')
 			h2 Hoy
 			span.icon-statitics-list
 			p Listado de las actividades completadas de un niñ@ en el dia actual.
 			include ../templatesStatistics/today.jade
 	section.statistics
-		article.statistic.statisticsRangeDates(data-statistic="rangeDate")
+		article.statistic.statisticsEvolution(data-statistic='evolution')
+			h2 Evolución
+			span.icon-statitics-area
+			p Grafica de Area. Relacion  de Actidades completadas/incompletadas en un rango de fecha determinado.
+			include ../templatesStatistics/evolution.jade
+	section.statistics
+		article.statistic.statisticsRangeDates(data-statistic='rangeDate')
 			h2 Rango De Fechas
 			span.icon-statitics-bars
 			p Grafica de Barras comparativa. Actidades completadas/incompletadas en un rango de fecha determinado.
@@ -28,8 +34,8 @@ block content
 
 	section.containerOptionsStatistic
 block script
-	script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
-	script(src="/js/statistic.js")
+	script(type='text/javascript' src='https://www.gstatic.com/charts/loader.js')
+	script(src='/js/statistic.js')
 
 
 

@@ -2,23 +2,23 @@ extends base.jade
 block template
 	block modal
 	section.contentWidth
-		header(class="styleBlue")
+		header(class='#{classcss}')
+			h3.nameApp
+				a(href = '/') Remember Help
 			nav
-				h3
-					a(href = "/") Remember Help
 				article.itemsNavs
 					if user
-						a.item(href="/children/activities")
-							span.icon-children(tooltip="Niños")
-						a.item(href="/management/statistics")
-							span.icon-family(tooltip="Padres")
-						a.item(href="/logout")
-							span.icon-logout(tooltip="Cerrar Sesión")
+						a.item(href='/children/activities')
+							span.icon-children(tooltip='Niños')
+						a.item(href='/management/statistics')
+							span.icon-family(tooltip='Padres')
+						a.item(href='/logout')
+							span.icon-logout(tooltip='Cerrar Sesión')
 					else
-						a.item(href="/authenticate")
-							span.icon-login(tooltip="Iniciar Sesión")
-						a.item(href="/check-in")
-							span.icon-check-in(tooltip="Registrarse")
+						a.item(href='/authenticate')
+							span.icon-login(tooltip='Iniciar Sesión')
+						a.item(href='/recommendations')
+							span.icon-notification(tooltip='Recomendaciones')
 			section.titleSection
 				block titleSection
 		block content

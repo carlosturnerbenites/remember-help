@@ -12,9 +12,7 @@ function renderForm (schema,selector) {
 	var form = document.createElement('form')
 	form.classList.add('form','formLabelInput', 'documentDB')
 
-		console.info(schema)
 	for(var field in schema){
-		console.warn(field)
 		var data = schema[field]
 		var templateField = document.importNode(template.content, true)
 
@@ -64,7 +62,6 @@ btnAgregate.addEventListener('click', () => {
 		async : true,
 		onSuccess : (result) => {
 			var schema = JSON.parse(result)
-			console.log(schema)
 			renderForm(schema,'#addDocument')
 		},
 		data : null
@@ -77,7 +74,7 @@ btnEmpty.addEventListener('click', () => {
 		URL : '/api/collections/empty/' + collectionSelected.value,
 		async : true,
 		onSuccess : (result) => {
-			console.log(result)
+			var data = JSON.parse(result)
 		},
 		data : null
 	})
