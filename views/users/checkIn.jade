@@ -6,11 +6,11 @@ block titleSection
 	p Registro
 
 block content
-	form#formCheckIn.form.formOnlyInput(action='/check-in' method='POST')
+	form#formCheckIn.form.formOnlyInput(enctype='multipart/form-data' action='/admin/check-in' method='POST')
 		fieldset.fieldset#dataChildren
 			legend.legend Niñ@
 			article.inputContainer
-				input(type='number' name='idChildren' id='idChildren' placeholder='Identificación Niñ@' required)
+				input(type='number' name='idChildren' id='idChildren' placeholder='Identificación Niñ@' autofocus required)
 			article.inputContainer
 				input(type='text' name='nameChildren' id='nameChildren' placeholder='Nombre Niño' required)
 			article.inputContainer
@@ -24,6 +24,8 @@ block content
 				legend.legend Usuario
 				article.inputContainer
 					input(type='text' name='usernameChildren' id='usernameChildren' placeholder='Usuario' required)
+				article.inputContainer
+					input(type='file' accept='image/*' name='photoChildren' id='photoChildren' required)
 				article.inputContainer
 					input(type='password' name='passwordChildren' id='passwordChildren' placeholder='Contraseña' required)
 				article.inputContainer
@@ -39,6 +41,8 @@ block content
 				legend.legend Usuario
 				article.inputContainer
 					input(type='text' name='usernameParent' id='usernameParent' placeholder='Usuario' required)
+				article.inputContainer
+					input(type='file' accept='image/*' name='photoParent' id='photoParent' required)
 				article.inputContainer
 					input(type='password' name='passwordParent' id='passwordParent' placeholder='Contraseña' required)
 				article.inputContainer

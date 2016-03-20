@@ -26,6 +26,8 @@ const childrenSchema = new Mongoose.Schema({
 		user :{type:Schema.ObjectId, ref:'user', required:true}
 	}),
 	userSchema = new Mongoose.Schema({
+		/* photo : Nombre del imagen del usuario*/
+		photo:{type:String, default: 'unkown.png', required:true, unique:true},
 		/* password : contraseña del usuario */
 		password:{type:String, required:true},
 		/* type : Tipo de usuario : 777 - Developer, 776 - Administrador, 0 - pariente, 1 - niñ@*/
@@ -34,7 +36,9 @@ const childrenSchema = new Mongoose.Schema({
 		username:{type:String, required:true, unique:true}
 	}),
 	activitySchema = new Mongoose.Schema({
-		date :{type:Date},
+		/* date : Fecha en la cual se completo la actividad*/
+		date :{type:Date, required:true},
+		/* hour : Hora a la cual se completo la actividad*/
 		hour :{type:Date, required:true},
 		/* img : imagen de la actividad*/
 		img :{type:String, required:true},

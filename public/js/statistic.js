@@ -128,9 +128,7 @@ var FStatistics = {
 								height:300,
 								vAxis: {title: '# de Actividades'},
 								hAxis: {title: 'Fecha'},
-								seriesType: 'bars',
-								series: {5: {type: 'line'}
-								}
+								seriesType: 'bars'
 							}
 
 							var chart = new google.visualization['ComboChart'](document.getElementById('chartRangeDate'))
@@ -191,9 +189,10 @@ var FStatistics = {
 							data.addRows(rows)
 
 							var options = {
-								title: 'Company Performance',
+								title: 'Evolución',
 								pointSize: 10,
-								hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+								hAxis: {titleTextStyle: {color: '#333'},direction:-1, slantedText:false, slantedTextAngle:90},
+								colors: ['#34A853','#EA4235'],
 								vAxis: {minValue: 0, title: '# de Actividades'},
 								legend:'bottom'
 

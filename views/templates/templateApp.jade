@@ -5,6 +5,11 @@ block template
 		header(class='#{classcss}')
 			h3.nameApp
 				a(href = '/') Remember Help
+			article.wellcome
+				p Hola
+				img.photoUser(src='/images/users/#{user.photo}')
+				p #[strong #{user.username}]
+
 			nav
 				article.itemsNavs
 					if user.type == 0

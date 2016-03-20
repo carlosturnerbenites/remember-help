@@ -1,69 +1,87 @@
 const express = require('express'),
 	router = express.Router(),
 	models = require('./../models/'),
-	utils = require('./../utils/')
+	utils = require('./../utils/'),
+	multer = require('multer'),
+	bodyParser = require('body-parser'),
+	upload = multer({ dest: 'public/images/users' })
+
+router.use(bodyParser.json())
 
 router.get('/collections',(req,res) => {
 	res.render('collections/index')
 })
 
+router.post(
+	'/uploadimg',
+	upload.any(),
+	(req,res) => {
+		res.json(req.files)
+	}
+	)
+
 router.get('/check-in', (req, res) => res.render('users/checkIn',{statesHealth : utils.statesHealth}))
 
-router.post('/check-in',(req, res) => {
+router.post(
+	'/check-in',
+	upload.any(),
+	(req, res) => {
 
-	var data = req.body,
-		dataNewChildren = {
-			id : data.idChildren,
-			password: data.passwordChildren,
-			type : 1,
-			username: data.usernameChildren
-		},
-		dataNewFamily = {
-			id: data.idFamily,
-			password: data.passwordParent,
-			type : 0,
-			username: data.usernameParent
-		}
+		var data = req.body,
+			dataNewChildren = {
+				id : data.idChildren,
+				password: data.passwordChildren,
+				type: 1,
+				username: data.usernameChildren,
+				photo: req.files[0].filename
+			},
+			dataNewFamily = {
+				id: data.idFamily,
+				password: data.passwordParent,
+				type: 0,
+				username: data.usernameParent,
+				photo: req.files[1].filename
+			}
 
-	if (dataNewChildren.username == dataNewFamily.username) return {err : {msg: 'User Duplicate'}}
+		if (dataNewChildren.username == dataNewFamily.username) return {err : {msg: 'User Duplicate'}}
 
-	models.user.create(dataNewChildren, (err, userChildren) => {
-		if (err) return res.json({err: err})
-
-		dataNewChildren.user = userChildren._id
-		dataNewChildren.age = data.ageChildren
-		dataNewChildren.stateHealth = data.stateHealth
-		dataNewChildren.name = data.nameChildren
-
-		models.children.create(dataNewChildren, (err,newChildren) => {
+		models.user.create(dataNewChildren, (err, userChildren) => {
 			if (err) return res.json({err: err})
 
-			models.parent.findOne({id : data.idFamily},(err,family) => {
+			dataNewChildren.user = userChildren._id
+			dataNewChildren.age = data.ageChildren
+			dataNewChildren.stateHealth = data.stateHealth
+			dataNewChildren.name = data.nameChildren
+
+			models.children.create(dataNewChildren, (err,newChildren) => {
 				if (err) return res.json({err: err})
 
-				if(family) {
-					family.update({ $push : {children: newChildren}}, (err) => {
-						if (err) return res.json({err: err})
-						return res.redirect('/authenticate')
-					})
-				}else {
-					models.user.create(dataNewFamily, (err, user) => {
+				models.parent.findOne({id : data.idFamily},(err,family) => {
+					if (err) return res.json({err: err})
 
-						dataNewFamily.user = user._id
-						dataNewFamily.children = [newChildren]
-						dataNewFamily.name = data.nameParent
-
-						models.parent.create(dataNewFamily, (err,parent) => {
-							models.children.findOneAndUpdate({_id : newChildren._id}, {$set : { parent : parent._id}}).exec()
+					if(family) {
+						family.update({ $push : {children: newChildren}}, (err) => {
 							if (err) return res.json({err: err})
 							return res.redirect('/authenticate')
 						})
-					})
-				}
-			})
+					}else {
+						models.user.create(dataNewFamily, (err, user) => {
 
+							dataNewFamily.user = user._id
+							dataNewFamily.children = [newChildren]
+							dataNewFamily.name = data.nameParent
+
+							models.parent.create(dataNewFamily, (err,parent) => {
+								models.children.findOneAndUpdate({_id : newChildren._id}, {$set : { parent : parent._id}}).exec()
+								if (err) return res.json({err: err})
+								return res.redirect('/admin/check-in')
+							})
+						})
+					}
+				})
+
+			})
 		})
 	})
-})
 
 module.exports = router

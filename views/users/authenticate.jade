@@ -6,11 +6,23 @@ block titleSection
 	p Ingresar
 
 block content
-	form#formAuthenticate.form.formOnlyInput(action='/authenticate' method='POST')
-		article.inputContainer
-			input(type='text', name='username', placeholder='Usuario', required)
-		article.inputContainer
-			input(type='password', name='password', placeholder='Contraseña', required)
-		article.inputContainer.alignItemsCenter
-			button.btn.btnSuccess(type='submit')
-				span Ingresar
+	form#formAuthenticate.form.formOnlyInput.formAuthenticate(action='/authenticate' method='POST')
+		img.userPhoto(src="/images/users/unkown.png", alt="")
+		p.userUsername
+		section#sectionContinue(data-hidden="false")
+			article.inputContainer
+				input(type='text', name='username', placeholder='Usuario', autofocus required)
+			article.inputContainer.alignItemsCenter
+				button#continueAuthenticate.btn.btnSuccess(type='button')
+					span Continuar
+		section#sectionAuth(data-hidden="true")
+			article.inputContainer.alignItemsCenter
+				p.backContinue.icon-back
+			article.inputContainer
+				input(type='password', name='password', placeholder='Contraseña', required)
+			article.inputContainer.alignItemsCenter
+				button.btn.btnSuccess(type='submit')
+					span Ingresar
+	script(src='/js/lib/markdown.min.js')
+	script(src='/js/utilities.js')
+	script(src='/js/authenticate.js')

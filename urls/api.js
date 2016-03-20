@@ -39,9 +39,14 @@ router.get('/collections/:collection',(req, res) => {
 router.post('/collection/:collection',(req, res) => {
 	var collection = req.params.collection,
 		model = mongoose.model(collection),
-		data = req.body
+		data = req.body,
+		query = data.query,
+		projection = data.projection
 
-	model.findOne({ id : parseInt(data.value)},{_id : 0, __v : 0},(err,document) => {
+	projection._id = 0
+	projection.__id = 0
+
+	model.findOne(query,projection,(err,document) => {
 		if (err) return res.json({err:err})
 		res.json({document : document})
 	})

@@ -33,7 +33,7 @@ formCheckIn.idChildren.onchange = function (e){
 	if (target.validity.valid){
 		ajax({
 			type : 'POST',
-			URL : 'api/collection/children',
+			URL : '/api/collection/children',
 			async : true,
 			contentType : 'application/json',
 			onSuccess : (result) => {
@@ -50,11 +50,11 @@ formCheckIn.idChildren.onchange = function (e){
 				}else{
 					container
 						.disabeldInputs(false, 'input, select',['idChildren'])
-						.emptyInputs('input, select',['idFamily'])
+						.emptyInputs('input, select',['idChildren'])
 
 				}
 			},
-			data : JSON.stringify({value : target.value})
+			data : JSON.stringify({query: {id : target.value}, projection: {}})
 		})
 	}
 }
@@ -64,7 +64,7 @@ formCheckIn.idFamily.onchange = function (e){
 	if (target.validity.valid){
 		ajax({
 			type : 'POST',
-			URL : 'api/collection/parent',
+			URL : '/api/collection/parent',
 			async : true,
 			contentType : 'application/json',
 			onSuccess : (result) => {
@@ -85,7 +85,7 @@ formCheckIn.idFamily.onchange = function (e){
 						.emptyInputs('input, select',['idFamily'])
 				}
 			},
-			data : JSON.stringify({value : target.value})
+			data : JSON.stringify({query: {id : target.value}, projection: {}})
 		})
 	}
 }

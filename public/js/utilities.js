@@ -171,7 +171,7 @@ function NotificationC (){
 		var contenedorMSG = document.createElement('article')
 		contenedorMSG.classList.add('contenedorMensaje')
 		var mensaje = document.createElement('p')
-		mensaje.innerHTML= data.msg
+		mensaje.innerHTML= markdown.toHTML(data.msg)
 		contenedorMSG.classList.add('MSG')
 		var icon = document.createElement('img')
 
@@ -198,7 +198,7 @@ function NotificationC (){
 		setTimeout(this.hide.bind(this), time)
 	}
 	this.hide = function (){
-		//contenedorPrincipal.removeChild(contenedorPrincipal.lastChild)
+		contenedorPrincipal.removeChild(contenedorPrincipal.lastChild)
 	}
 }
 
