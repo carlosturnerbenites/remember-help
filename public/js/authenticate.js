@@ -32,6 +32,8 @@ continueAuthenticate.onclick = function (){
 
 				sectionContinue.setAttribute('data-hidden', 'true')
 				sectionAuth.setAttribute('data-hidden', 'false')
+
+				formAuthenticate.password.focus()
 			}else{
 				notification.show({msg: 'No existe un usuario registrado con este **username**', type: 2})
 			}

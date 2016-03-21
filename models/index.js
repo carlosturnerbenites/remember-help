@@ -49,12 +49,6 @@ const childrenSchema = new Mongoose.Schema({
 		/* tolerance : tiempo antes o despues en el cual se puede realizar una actividd (en minutos)*/
 		tolerance :{type:Number, default:20, required:true }
 	}),
-	messageSchema = new Mongoose.Schema({
-		/* text : Texto del Mensaje*/
-		text :{type:String, required:true},
-		/* type : Tipo de Mensaje : 0 - Perfecto, 1 - Regular*/
-		type:{type:Number , required:true, enum : [0,1]}
-	}),
 	historySchema = new Mongoose.Schema({
 		/* activity : Referencia a la actividad completada*/
 		activity:{ type:Schema.ObjectId, ref:'activity', required:true},
@@ -64,14 +58,46 @@ const childrenSchema = new Mongoose.Schema({
 		date :{type:Date, required:true},
 		/* timeCurrent : Hora a la cual se completo la actividad*/
 		time :{type:Date, required:true}
-	}),
-	models = {activity :Mongoose.model('activity', activitySchema),
-		children :Mongoose.model('children', childrenSchema),
-		parent :Mongoose.model('parent', parentSchema),
-		history :Mongoose.model('history', historySchema),
-		message :Mongoose.model('message', messageSchema),
-		user :Mongoose.model('user', userSchema)
-	}
+	})
+
+activitySchema.method('getState', function (children){
+	var activity = this
+	return new Promise((resolve, reject) => {
+		var dateCurrent = new Date()
+		dateCurrent.setHours(0,0,0,0)
+
+		models.history.findOne({children : children._id, activity: activity._id,date: dateCurrent.toISOString()},(err, history) => {
+			if (err) reject({err : err})
+			if (history) {
+
+				var dateHistory = history.time,
+					dateActivity = activity.hour,
+					detail = {
+						aClock : false,
+						after : false
+					}
+
+				dateActivity.setDate(dateHistory.getDate())
+				dateActivity.setFullYear(dateHistory.getFullYear())
+				dateActivity.setMonth(dateHistory.getMonth())
+
+				var lowerLimit = new Date(dateHistory.setMinutes(dateHistory.getMinutes() - activity.tolerance)),
+					upperLimit = new Date(dateHistory.setMinutes(dateHistory.getMinutes() + activity.tolerance*2))
+				if (dateActivity > lowerLimit && dateActivity < upperLimit) detail.aClock = true
+				else detail.after = true
+
+				return resolve({code : 1,codeText : 'complete', detail : detail})
+			}else return resolve({code : 0,codeText : 'inprocess'})
+		})
+	})
+})
+
+const models = {activity :Mongoose.model('activity', activitySchema),
+	children :Mongoose.model('children', childrenSchema),
+	parent :Mongoose.model('parent', parentSchema),
+	history :Mongoose.model('history', historySchema),
+	user :Mongoose.model('user', userSchema)
+}
 
 childrenSchema.pre('save', function (next) {
 	models.children.findOne({id : this.id}, function (err, children) {

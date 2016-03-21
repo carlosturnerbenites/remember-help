@@ -20,7 +20,15 @@ block content
 			article.activity(data-date='#{activity.hour}' data-speech='#{activity.textSpeech}' data-id='#{activity._id}' data-text='#{activity.text}' data-tolerance = '#{activity.tolerance}')
 				p.titleActivity #{activity.text}
 				img.imgActivity(src='#{activity.img}', alt='')
-				article.reminder(data-statereminder = '#{activity.state}')
+
+				- if (activity.state.codeText == 'complete')
+					- if (activity.state.detail.aClock)
+						- var state = 'complete'
+					- else
+						- var state = 'warning'
+				- else
+					- var state = 'inprocess'
+				article.reminder(data-statereminder = '#{state}')
 					article.titleReminder
 						p
 					article.date

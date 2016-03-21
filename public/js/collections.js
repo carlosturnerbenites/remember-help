@@ -69,13 +69,15 @@ btnAgregate.addEventListener('click', () => {
 })
 
 btnEmpty.addEventListener('click', () => {
-	ajax({
-		type : 'POST',
-		URL : '/api/collections/empty/' + collectionSelected.value,
-		async : true,
-		onSuccess : (result) => {
-			var data = JSON.parse(result)
-		},
-		data : null
-	})
+	if(confirm('Desea Borrar todos los datos de la Coleccion ' + collectionSelected.value)){
+		ajax({
+			type : 'POST',
+			URL : '/api/collections/empty/' + collectionSelected.value,
+			async : true,
+			onSuccess : (result) => {
+				var data = JSON.parse(result)
+			},
+			data : null
+		})
+	}
 })

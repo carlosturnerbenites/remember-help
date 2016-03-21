@@ -15,15 +15,14 @@ router.post('/valid-activity',(req, res) => {
 	models.children.findOne({user: req.user._id},(err, children) => {
 		if (err) return res.json({err : err})
 
-		models.history.findOne({children : children._id, activity: data.id,date: dateCurrent.toISOString()},(err, history) => {
-			if (err) return res.json({err : err})
-			if (history) return res.json({err : 'Ya has completado esta actividad.'})
+		models.activity.findById(data.id, (err, activity) => {
 
-			models.activity.findById(data.id, (err, activity) => {
+			activity.getState(children).then((state) => {
+
+				if(state.code == 1) return res.json({err : 'Ya has completado esta actividad.'})
 
 				var response = {
-					message : 'Felicidades, has terminado ha tiempo la actividad',
-					type : 0
+					id : activity._id
 				}
 
 				models.history.create({
@@ -31,18 +30,21 @@ router.post('/valid-activity',(req, res) => {
 					activity: activity._id,
 					date: dateCurrent,
 					time : new Date()
+				},(err, history) => {
+					activity.getState(children).then((state) => {
+						if(state.detail.aClock){
+							response.message = 'Felicidades, has terminado ha tiempo la actividad',
+							response.classcss = 'complete'
+						}else{
+							response.message = 'Has terminado la actividad, pero mejora la proxima vez.',
+							response.classcss = 'warning'
+						}
+						res.json(response)
+					})
 				})
 
-				models.message.create({
-					type: response.type,
-					text: response.message
-				})
-
-				response.classcss = 'complete'
-				response.id = activity._id
-
-				res.json(response)
 			})
+
 		})
 	})
 })

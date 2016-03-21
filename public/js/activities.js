@@ -26,35 +26,39 @@ function RangeTolerance (options){
 	}
 }
 
+function registerActivity (){
+	text.toVoice(this.dataset.speech)
+
+	detailActivityActive = this.dataset
+
+	var template = document.querySelector('#templateConfirmActivityWindow'),
+		clone = document.importNode(template.content,true)
+
+	confirmActivityWindow
+	.setTitle(this.dataset.text)
+	.addContent(clone)
+	.show()
+}
+
 function confirmActivity () {
 
 	var reminder = this.querySelector('[data-statereminder]'),
 		tolerance = parseInt(this.dataset.tolerance),
 		activityTime = new Date(this.dataset.date)
 
-	if (reminder.dataset.statereminder == 'complete') return text.toVoice('Ya has completado esta actiidad.')
+	if (reminder.dataset.statereminder != 'inprocess') return text.toVoice('Ya has completado esta actiidad.')
 
 	RangeTolerance({
-		developed: true,
+		developed: false,
 		date: activityTime,
 		tolerance: tolerance,
-		onBefore : () => text.toVoice('Huuu, Ya no puedes realizar esta actividad.'),
-		onDuring : () => {
-			text.toVoice(this.dataset.speech)
-
-			detailActivityActive = this.dataset
-
-			var template = document.querySelector('#templateConfirmActivityWindow'),
-				clone = document.importNode(template.content,true)
-
-			confirmActivityWindow
-			.setTitle(this.dataset.text)
-			.addContent(clone)
-			.show()
+		onBefore : () => {
+			text.toVoice('Vas un poco tarde.')
+			registerActivity.bind(this)()
 		},
+		onDuring : registerActivity.bind(this),
 		onAfter : () => text.toVoice('Aun no es hora de realizar esta actividad.')
 	})
-
 }
 
 for (var activity of Array.from(activities)){

@@ -26,6 +26,9 @@ HTMLFormElement.prototype.isValid = function (){
 	return true
 }
 
+HTMLElement.prototype.remove = function (){
+	this.parentNode.removeChild(this)
+}
 HTMLElement.prototype.disabeldInputs = function (valueDisabled, selector, exceptions){
 	var elements = this.querySelectorAll(selector)
 	for (var element of Array.from(elements)){

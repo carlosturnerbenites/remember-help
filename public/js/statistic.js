@@ -18,6 +18,13 @@ function showOptionStatistic () {
 	var tOptionsStatistic = this.querySelector('.optionsStatistic'),
 		cOptionsStatistic = document.importNode(tOptionsStatistic.content, true)
 
+	var btnClose = cOptionsStatistic.querySelector("#closeOptionsStatistic")
+
+	btnClose.onclick = function (e){
+		var parent = e.target.parentNode
+		parent.remove()
+	}
+
 	containerOptionsStatistic.appendChild(cOptionsStatistic)
 	FStatistics[this.dataset.statistic]()
 }
@@ -31,7 +38,11 @@ function BuildStatistic (){
 				dateActivity = new Date(history.date),
 				dateHistory = new Date(history.activity.hour)
 
-			var timeText = dateHistory > dateActivity ? 'Despues' : 'Antes'
+			dateHistory.setDate(dateActivity.getDate())
+			dateHistory.setFullYear(dateActivity.getFullYear())
+			dateHistory.setMonth(dateActivity.getMonth())
+
+			var timeText = dateHistory > dateActivity ? 'Despues' : 'A tiempo'
 
 			template.querySelector('.nameActivity').innerHTML = history.activity.text
 			template.querySelector('.timeActivity').innerHTML = dateActivity.toHour12()
