@@ -75,9 +75,8 @@ var FStatistics = {
 				URL : '/statistics/today',
 				async : true,
 				contentType : 'application/json',
-				onSuccess : (result) => {
-					var data = JSON.parse(result),
-						node = buildSatistic.today(data.histories)
+				onSuccess : response => {
+					var node = buildSatistic.today(response.histories)
 
 					statisticsWindow
 					.setTitle('Resumen de Actividad Actual')
@@ -105,18 +104,18 @@ var FStatistics = {
 					URL : '/statistics/rangeDate',
 					async : true,
 					contentType : 'application/json',
-					onSuccess : (result) => {
-						var data = JSON.parse(result),
-							node = buildSatistic.rangeDate(),
+					onSuccess : response => {
+						var node = buildSatistic.rangeDate(),
 							rows = []
 
-						for (var record of data){
+						for (var record of response){
 							var dataRecord = []
 							dataRecord.push(record._id.day + '/' + record._id.month + '/' + record._id.year)
 							dataRecord.push(record.complete)
 							dataRecord.push(record.incomplete)
 							rows.push(dataRecord)
 						}
+
 						statisticsWindow
 						.setTitle('Actividades por Rango de Fechas')
 						.addContent(node)
@@ -135,15 +134,14 @@ var FStatistics = {
 							var options = {
 								title : 'Actividades Completas/Incompletas',
 								legend:'bottom',
-								width:500,
-								height:300,
+								width: 500,
+								height: 300,
 								vAxis: {title: '# de Actividades'},
 								hAxis: {title: 'Fecha'},
 								seriesType: 'bars'
 							}
 
 							var chart = new google.visualization['ComboChart'](document.getElementById('chartRangeDate'))
-
 							chart.draw(data, options)
 						}
 
@@ -172,18 +170,18 @@ var FStatistics = {
 					URL : '/statistics/line-evolution',
 					async : true,
 					contentType : 'application/json',
-					onSuccess : (result) => {
-						var data = JSON.parse(result),
-							node = buildSatistic.rangeDate(),
+					onSuccess : response => {
+						var node = buildSatistic.rangeDate(),
 							rows = []
 
-						for (var record of data){
+						for (var record of response){
 							var dataRecord = []
 							dataRecord.push(record._id.day + '/' + record._id.month + '/' + record._id.year)
 							dataRecord.push(record.complete)
 							dataRecord.push(record.incomplete)
 							rows.push(dataRecord)
 						}
+
 						statisticsWindow
 						.setTitle('Evolución')
 						.addContent(node)
@@ -202,14 +200,13 @@ var FStatistics = {
 							var options = {
 								title: 'Evolución',
 								pointSize: 10,
-								hAxis: {titleTextStyle: {color: '#333'},direction:-1, slantedText:false, slantedTextAngle:90},
+								hAxis: {titleTextStyle: {color: '#333'}, direction:-1, slantedText:false, slantedTextAngle:90},
 								colors: ['#34A853','#EA4235'],
 								vAxis: {minValue: 0, title: '# de Actividades'},
 								legend:'bottom'
-
 							}
-							var chart = new google.visualization.AreaChart(document.getElementById('chartRangeDate'))
 
+							var chart = new google.visualization.AreaChart(document.getElementById('chartRangeDate'))
 							chart.draw(data, options)
 						}
 

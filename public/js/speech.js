@@ -1,7 +1,8 @@
-// abstraccion de la interfaz 'SpeechSynthesisUtterance' de la 'Web Speech API'
-// convierte texto a voz
-
 function Text (){
+	/*
+		Abstraccion de la interfaz 'SpeechSynthesisUtterance' de la 'Web Speech API'
+		Convierte texto a voz
+	*/
 	this.toVoice = function (text){
 		var msg = new SpeechSynthesisUtterance(),
 			voices = window.speechSynthesis.getVoices()
@@ -18,10 +19,11 @@ function Text (){
 	}
 }
 
-// abstraccion de la interfaz 'webkitSpeechRecognition' de la 'Web Speech API'
-// convierte voz a texto
-
 function Voice (cb){
+	/*
+		Abstraccion de la interfaz 'webkitSpeechRecognition' de la 'Web Speech API'
+		Convierte voz a texto
+	*/
 	var recognizing = false,
 		text,
 		recognition = new webkitSpeechRecognition()

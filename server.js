@@ -60,6 +60,7 @@ app.use(passport.session())
 
 passport.use(new LocalStrategy((username, password, done) => {
 	models.user.findOne({username : username},(err,user) => {
+		console.log(user)
 		if(err) return done(null, false, { message: err})
 		if (!user) return done(null, false, { message: 'Unknown user'})
 		if(user.password == password) return done(null,user)

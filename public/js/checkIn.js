@@ -21,8 +21,8 @@ validator.config([
 ])
 
 formCheckIn.onsubmit = function (event){
-	var formValidation = validator.isValid()
-	if(!formValidation.isValid){
+	var validation = validator.isValid()
+	if(!validation.isValid){
 		event.preventDefault()
 		validator.showErrors('.errors')
 	}
@@ -36,22 +36,22 @@ formCheckIn.idChildren.onchange = function (e){
 			URL : '/api/collection/children',
 			async : true,
 			contentType : 'application/json',
-			onSuccess : (result) => {
-				var data = JSON.parse(result),
-					container = document.querySelector('#dataChildren')
-				if (data.err) return alert(data.err)
-				if (data.document) {
-					var documentDB = data.document
+			onSuccess : (response) => {
+				var container = document.querySelector('#dataChildren')
+
+				if (response.err) return notification.show({msg: response.err.message, type: 1})
+				if (response.document) {
+					var documentDB = response.document
 
 					container.disabeldInputs(true, 'input, select',['idChildren'])
 					container.querySelector('#nameChildren').value = documentDB.name
 					container.querySelector('#ageChildren').value = documentDB.age
+
 					notification.show({msg: 'Este numero de identificacion ya se encuentra registrado.', type: 2})
 				}else{
 					container
 						.disabeldInputs(false, 'input, select',['idChildren'])
 						.emptyInputs('input, select',['idChildren'])
-
 				}
 			},
 			data : JSON.stringify({query: {id : target.value}, projection: {}})
@@ -67,16 +67,17 @@ formCheckIn.idFamily.onchange = function (e){
 			URL : '/api/collection/parent',
 			async : true,
 			contentType : 'application/json',
-			onSuccess : (result) => {
-				var data = JSON.parse(result)
+			onSuccess : (response) => {
+				if (response.err) return notification.show({msg: response.err.message, type: 1})
 
-				if (data.err) return alert(data.err)
+				var container = document.querySelector('#dataParent')
 
-				var container =document.querySelector('#dataParent')
-				if (data.document){
-					var documentDB = data.document
+				if (response.document){
+					var documentDB = response.document
+
 					container.disabeldInputs(true, 'input, select',['idFamily'])
 					container.querySelector('#nameParent').value = documentDB.name
+
 					notification.show({msg: 'Este numero de identificacion ya se encuentra registrado.', type: 2})
 
 				}else {

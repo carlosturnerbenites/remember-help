@@ -1,6 +1,8 @@
 var Mongoose = require('mongoose'),
 	Schema = Mongoose.Schema
 
+/* Definicion de Esquemas de la DB*/
+
 const childrenSchema = new Mongoose.Schema({
 		/* age : Edad del/de la niñ@ */
 		age:{type:Number, min:5, required:true},
@@ -60,7 +62,14 @@ const childrenSchema = new Mongoose.Schema({
 		time :{type:Date, required:true}
 	})
 
+/* Definicion de metodos de los Esquemas */
 activitySchema.method('getState', function (children){
+	/*
+		Crea un objeto con informacion referente al estado de las actividades de determinado niñ@
+			estado : complete, incomplete - Estado de la actividad
+			detail : after, aClock - completada a tiempo o despues de la hora
+		Retorna una promesa
+	*/
 	var activity = this
 	return new Promise((resolve, reject) => {
 		var dateCurrent = new Date()
@@ -86,30 +95,50 @@ activitySchema.method('getState', function (children){
 				if (dateActivity > lowerLimit && dateActivity < upperLimit) detail.aClock = true
 				else detail.after = true
 
-				return resolve({code : 1,codeText : 'complete', detail : detail})
-			}else return resolve({code : 0,codeText : 'inprocess'})
+				return resolve({code: 1, codeText: 'complete', detail: detail})
+			}else return resolve({code: 0, codeText: 'inprocess'})
 		})
 	})
 })
 
-const models = {activity :Mongoose.model('activity', activitySchema),
+/* Creacion de los Modelos de la DB*/
+
+const models = {
+	/*
+		El nombre de la coleccion se pasa en singular, y mongoose la crea en plular en la DB
+		Mongoose.model('singularName', schemas)
+	*/
+	activity :Mongoose.model('activity', activitySchema),
 	children :Mongoose.model('children', childrenSchema),
 	parent :Mongoose.model('parent', parentSchema),
 	history :Mongoose.model('history', historySchema),
 	user :Mongoose.model('user', userSchema)
 }
 
+/* Definicion de Middlewares de los Esquemas*/
+
 childrenSchema.pre('save', function (next) {
+	/*
+		Verificar que no exista el 'id' (en la coleccion 'childrens') con el que se este intentando crear un nuevo niñ@
+		Returna Error al intentar crear un niñ@ con un 'id' ya existente
+	*/
 	models.children.findOne({id : this.id}, function (err, children) {
 		if (children) next(new Error('Children Duplicate'))
 		else next()
 	})
 })
+
 userSchema.pre('save', function (next) {
+	/*
+		Verificar que no exista el 'username' (en la coleccion 'users') con el que se este intentando crear un nuevo usuario
+		Returna Error al intentar crear un usuario con un 'username' ya existente
+	*/
 	models.user.findOne({username : this.username}, function (err, children) {
 		if (children) next(new Error('Username Duplicate'))
 		else next()
 	})
 })
+
+/* Exportacion de los modelos*/
 
 module.exports = models

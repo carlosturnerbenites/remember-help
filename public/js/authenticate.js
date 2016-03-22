@@ -21,11 +21,11 @@ continueAuthenticate.onclick = function (){
 		URL : '/api/collection/user',
 		async : true,
 		contentType : 'application/json',
-		onSuccess : (result) => {
-			var data = JSON.parse(result)
-			if (data.err) return alert(data.err)
-			if (data.document) {
-				var user = data.document
+		onSuccess : (response) => {
+			if (response.err) return notification.show({msg: response.err.message, type: 1})
+
+			if (response.document) {
+				var user = response.document
 
 				potho.src = 'images/users/' + user.photo
 				username.innerHTML = user.username
@@ -34,9 +34,7 @@ continueAuthenticate.onclick = function (){
 				sectionAuth.setAttribute('data-hidden', 'false')
 
 				formAuthenticate.password.focus()
-			}else{
-				notification.show({msg: 'No existe un usuario registrado con este **username**', type: 2})
-			}
+			}else notification.show({msg: 'No existe un usuario registrado con este **username**', type: 2})
 		},
 		data : JSON.stringify({query: {username : formAuthenticate.username.value}, projection:{password : 0}})
 	})

@@ -1,6 +1,7 @@
-/* exported Validator */
-
 Date.prototype.toHour12 = function () {
+	/*
+		Formatea un Object Date en Time (12 horas)
+	*/
 	return this.toLocaleTimeString('es-CO',{hour12:true})
 		.replace('p. m.','PM')
 		.replace('a. m.','AM')
@@ -26,9 +27,28 @@ HTMLFormElement.prototype.isValid = function (){
 	return true
 }
 
+HTMLElement.prototype.serialize = function (){
+	var elements = this instanceof HTMLFormElement ? this.elements: this.querySelector('input, select'),
+		exceptions = ['submit','reset']
+
+	var data = {}
+	console.info(elements)
+	for(var element of Array.from(elements)){
+		console.info(element)
+		if(exceptions.indexOf(element.type) < 0){
+			data[element.name] = element.value
+		}
+	}
+	return data
+}
+
 HTMLElement.prototype.remove = function (){
+	/*
+		Remueve del DOM un elemento
+	*/
 	this.parentNode.removeChild(this)
 }
+
 HTMLElement.prototype.disabeldInputs = function (valueDisabled, selector, exceptions){
 	var elements = this.querySelectorAll(selector)
 	for (var element of Array.from(elements)){
@@ -37,7 +57,11 @@ HTMLElement.prototype.disabeldInputs = function (valueDisabled, selector, except
 	return this
 }
 
-HTMLElement.prototype.emptyInputs = function (selector,exceptions){
+HTMLFormElement.prototype.emptyInputs = function (selector,exceptions){
+	/*
+		Vacia el attributo 'value' de los elementos de un HTMLFormElement
+		El array exceptions, contiene los inputs que no se deben vaciar
+	*/
 	var elements = this.querySelectorAll(selector)
 	for (var element of Array.from(elements)){
 		if (exceptions.indexOf(element.name) < 0) element.value = ''
@@ -171,6 +195,7 @@ function NotificationC (){
 	var contenedorPrincipal = document.body
 
 	var createMessage = function (data){
+		console.log(data)
 		var contenedorMSG = document.createElement('article')
 		contenedorMSG.classList.add('contenedorMensaje')
 		var mensaje = document.createElement('p')
@@ -206,17 +231,40 @@ function NotificationC (){
 }
 
 function ajax (config){
-	var xhr = new XMLHttpRequest()
+	var xhr = new XMLHttpRequest(),
+		responseJSON = config | true
 
 	xhr.open(config.type, config.URL, config.async)
 	xhr.setRequestHeader('Content-Type', config.contentType)
 
 	xhr.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
-			config.onSuccess(this.responseText)
+			var response = responseJSON ? JSON.parse(this.responseText) : this.responseText
+			config.onSuccess(response)
 		}
 	}
 
 	xhr.send(config.data)
 }
 
+function RangeTolerance (options){
+	var developed = options.developed | false
+
+	var currentTime = new Date(),
+		date = options.date
+
+	date.setDate(currentTime.getDate())
+	date.setFullYear(currentTime.getFullYear())
+	date.setMonth(currentTime.getMonth())
+
+	var lowerLimit = new Date(currentTime.setMinutes(currentTime.getMinutes() - options.tolerance)),
+		upperLimit = new Date(currentTime.setMinutes(currentTime.getMinutes() + options.tolerance*2))
+
+	if (!developed){
+		if(date < lowerLimit) return options.onBefore()
+		else if(date > upperLimit) return options.onAfter()
+		else if (date >= lowerLimit && date <= upperLimit) return options.onDuring()
+	}else{
+		return options.onDuring()
+	}
+}

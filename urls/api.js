@@ -10,6 +10,8 @@ router.get('/collections/schemas/:collection',(req, res) => {
 		model = mongoose.model(collection),
 		paths = model.schema.paths
 
+	delete paths._id
+	delete paths.__v
 	res.json(paths)
 })
 
@@ -17,9 +19,13 @@ router.post('/collections/empty/:collection',(req, res) => {
 	var collection = req.params.collection,
 		model = mongoose.model(collection)
 
-	model.remove({},(err) => {
-		if (err) return res.json({err:err})
-		res.json({msg: 'Delete Complete'})
+	model.count({},(err, count) => {
+		if (err) return res.json({err: err})
+		if (!count) return res.json({err: {message : 'Collection empty'}})
+		model.remove({},(err, count) => {
+			if (err) return res.json({err:err})
+			res.json({msg: 'Delete Complete', count: count})
+		})
 	})
 })
 
@@ -48,10 +54,19 @@ router.post('/collection/:collection',(req, res) => {
 
 	model.findOne(query,projection,(err,document) => {
 		if (err) return res.json({err:err})
-		res.json({document : document})
+		return res.json({document : document})
 	})
 })
 
-// router.post('/collections/add',(req, res) => {})
+router.post('/collections/add/:collection',(req, res) => {
+	var collection = req.params.collection,
+		model = mongoose.model(collection),
+		data = req.body
+
+	model.create(data,(err, document) => {
+		if(err) return res.json({err: err})
+		res.json({msg: 'Se ha creado Correctamente el documento', document: document})
+	})
+})
 
 module.exports = router

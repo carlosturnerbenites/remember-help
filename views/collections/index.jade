@@ -6,11 +6,6 @@ block titleSection
 	p Colecciones
 
 block content
-	template#field
-		article.inputContainer
-			label.label
-			input.data
-
 	form.form.formLabelInput#formCollections
 		article.inputContainer
 			label.label(for='collection') Coleccion
@@ -18,19 +13,24 @@ block content
 				option(value='parent') Pariente
 				option(value='children') Niños
 				option(value='user') Usuarios
-				option(value='message') Mensajes
 				option(value='activity') Actividades
 				option(value='history') Historias
 
 		article.alignItemsEnd
-			input.btn.btnInfo(type='button' id='findInCollection' value='Buscar')
-			input.btn.btnSuccess(type='button' id='AgregateInCollection' value='Agregar')
-			input.btn.btnError(type='button' id='emptyCollection' value='Vaciar')
+			input.btn.btnInfo(type='button' id='findInCollection' value='Buscar' data-action='find')
+			input.btn.btnSuccess(type='button' id='AgregateInCollection' value='Agregar' data-action='create')
+			input.btn.btnError(type='button' id='emptyCollection' value='Vaciar' data-action='delete')
 
 	section.documents#results
 	section#addDocument
-	block scripts
-		script(src='/js/collections.js')
+
+	template#templateField
+		article.inputContainer#TField
+			label.label
+			input.data
+
+block scripts
+	script(src='/js/collections.js')
 
 
 

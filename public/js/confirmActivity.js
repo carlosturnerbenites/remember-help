@@ -3,7 +3,7 @@ var buttonCaptureVoice = document.querySelector('#buttonCaptureVoice'),
 	text = new Text()
 
 if (buttonCaptureVoice){
-	buttonCaptureVoice.addEventListener('mousedown', () => {
+	buttonCaptureVoice.addEventListener('mousedown', event => {
 		voice.listen()
 		this.addEventListener('mouseup',voice.listen)
 	})
@@ -25,21 +25,19 @@ function response (resultText){
 					URL : '/activities/valid-activity',
 					async : true,
 					contentType : 'application/json',
-					onSuccess : (result) => {
-						var data = JSON.parse(result)
-						if(data.err) return text.toVoice(data.err)
+					onSuccess : (response) => {
+						if(response.err) return text.toVoice(response.err)
 
-						var selector = '[data-id = "' + data.id +'"]',
+						var selector = '[data-id = "' + response.id +'"]',
 							activity = document.querySelector(selector),
 							reminder = activity.querySelector('.reminder')
 
-						reminder.setAttribute('data-statereminder',data.classcss)
-						text.toVoice(data.message)
+						reminder.setAttribute('data-statereminder',response.classcss)
+						text.toVoice(response.message)
 						confirmActivityWindow.hide()
 					},
 					data : JSON.stringify(detailActivityActive)
 				})
-
 			}else{
 				text.toVoice('No olvides hacerlo.')
 				confirmActivityWindow.hide()
