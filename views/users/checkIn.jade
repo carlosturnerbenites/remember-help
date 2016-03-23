@@ -6,6 +6,9 @@ block titleSection
 	p Registro
 
 block content
+	form.form.formOnlyInput(enctype='multipart/form-data' action='/admin/uploadimg' method='POST')
+		input(type='file' accept='image/*' name='photoChildren' id='photoChildren' required)
+		input(type="submit")
 	form#formCheckIn.form.formOnlyInput(enctype='multipart/form-data' action='/admin/check-in' method='POST')
 		fieldset.fieldset#dataChildren
 			legend.legend Niñ@
@@ -25,7 +28,7 @@ block content
 				article.inputContainer
 					input(type='text' name='usernameChildren' id='usernameChildren' placeholder='Usuario' required)
 				article.inputContainer
-					input(type='file' accept='image/*' name='photoChildren' id='photoChildren' required)
+					input(type='file' accept='image/*' name='photoChildren' id='photoChildren' )
 				article.inputContainer
 					input(type='password' name='passwordChildren' id='passwordChildren' placeholder='Contraseña' required)
 				article.inputContainer
@@ -42,7 +45,7 @@ block content
 				article.inputContainer
 					input(type='text' name='usernameParent' id='usernameParent' placeholder='Usuario' required)
 				article.inputContainer
-					input(type='file' accept='image/*' name='photoParent' id='photoParent' required)
+					input(type='file' accept='image/*' name='photoParent' id='photoParent' )
 				article.inputContainer
 					input(type='password' name='passwordParent' id='passwordParent' placeholder='Contraseña' required)
 				article.inputContainer

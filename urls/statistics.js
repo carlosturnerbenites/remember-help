@@ -10,7 +10,6 @@ router.use(bodyParser.urlencoded({ extended: false }))
 router.post('/today',(req,res) => {
 	var data = req.body,
 		dateCurrent = new Date()
-
 	dateCurrent.setHours(0,0,0,0)
 
 	models.children.findOne({id: data.children}, (err, children) => {
@@ -20,8 +19,7 @@ router.post('/today',(req,res) => {
 		.populate('activity children')
 		.exec((err, histories) => {
 			if (err) return res.json({err: err})
-
-			res.json({histories:histories})
+			res.json({histories: histories})
 		})
 	})
 })
@@ -29,9 +27,8 @@ router.post('/today',(req,res) => {
 router.post(
 	['/rangeDate','/line-evolution'],
 	(req,res) => {
-		var data = req.body
-
-		var dateInit = new Date(data.dateInit),
+		var data = req.body,
+			dateInit = new Date(data.dateInit),
 			dateEnd = new Date(data.dateEnd)
 
 		dateInit.setHours(0,0,0,0)
@@ -50,24 +47,24 @@ router.post(
 						'children' : children._id, date : {$in : datesQuery}
 					}
 				},
-				/* {
-					$project: {
-						date: { $dateToString: { format: '%Y-%m-%d', date: '$date' }}
-					}
-				},*/
 				{
 					$group : {
 						_id : { month: { $month: '$date' }, day: { $dayOfMonth: '$date' }, year: { $year: '$date' }},
 						complete: { $sum: 1 }
 					}
 				}
-			], (err, docs) => {
+			], (err, documents) => {
 				if (err) return res.json({err: err})
 
 				models.activity.count({},(err,count) => {
 					if (err) return res.json({err: err})
-					for (var doc of docs){ doc.incomplete = count - doc.complete }
-					return res.json(docs)
+
+					documents = documents.map(document => {
+						document.incomplete = count - document.complete
+						return document
+					})
+
+					return res.json(documents)
 				})
 			})
 		})

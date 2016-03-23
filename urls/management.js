@@ -8,10 +8,7 @@ router.get('/statistics',(req,res) => {
 	.populate('children')
 	.exec((err, parent) => {
 		if (err) return res.json({err: err})
-
-		res.render('management/statistics',{
-			parent: parent
-		})
+		res.render('management/statistics',{parent: parent})
 	})
 })
 

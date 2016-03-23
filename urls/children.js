@@ -9,7 +9,7 @@ router.get('/activities',(req,res) => {
 	var dateCurrent = new Date()
 	dateCurrent.setHours(0,0,0,0)
 
-	models.activity.find().exec((err,activitiesDB) => {
+	models.activity.find({}, (err,activitiesDB) => {
 		models.children.findOne({user: req.user._id},(err, children) => {
 			if (err) return res.json({err: err})
 

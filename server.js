@@ -11,7 +11,6 @@ const config = require(urlConfig),
 	favicon = require('express-favicon'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
-	// schedule = require('node-schedule'),
 
 	mongoose = require('mongoose'),
 	models = require('./models'),
@@ -29,7 +28,7 @@ const config = require(urlConfig),
 	urlGeneral = require('./urls/general'),
 	urlManagement = require('./urls/management'),
 	urlStatistics = require('./urls/statistics'),
-	api = require('./urls/api'),
+	urlApi = require('./urls/api'),
 
 	utils = require('./utils')
 
@@ -47,7 +46,7 @@ app.use(cookieParser())
 app.use(favicon(__dirname + '/public/images/favicon.ico'))
 
 app.use(expressSession({
-	secret: 'help',
+	secret: 're)rYq$"4NJ3C@~DGv>7BuL',
 	resave: false,
 	saveUninitialized: false ,
 	store: new MongoStore({
@@ -60,7 +59,6 @@ app.use(passport.session())
 
 passport.use(new LocalStrategy((username, password, done) => {
 	models.user.findOne({username : username},(err,user) => {
-		console.log(user)
 		if(err) return done(null, false, { message: err})
 		if (!user) return done(null, false, { message: 'Unknown user'})
 		if(user.password == password) return done(null,user)
@@ -88,7 +86,7 @@ app.use('/activities', requiredType([1]), urlActivities)
 app.use('/admin', requiredType([777,776]), urlAdministration)
 app.use('/management', requiredType([0]), urlManagement)
 app.use('/statistics', requiredType([0]), urlStatistics)
-app.use('/api',api)
+app.use('/api',urlApi)
 
 app.post('/authenticate',
 	passport.authenticate('local',{failureRedirect: '/authenticate'}),

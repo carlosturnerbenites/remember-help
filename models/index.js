@@ -29,7 +29,7 @@ const childrenSchema = new Mongoose.Schema({
 	}),
 	userSchema = new Mongoose.Schema({
 		/* photo : Nombre del imagen del usuario*/
-		photo:{type:String, default: 'unkown.png', required:true, unique:true},
+		photo:{type:String, default: 'unkown.png'},
 		/* password : contraseña del usuario */
 		password:{type:String, required:true},
 		/* type : Tipo de usuario : 777 - Developer, 776 - Administrador, 0 - pariente, 1 - niñ@*/

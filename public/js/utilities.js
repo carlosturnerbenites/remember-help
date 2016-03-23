@@ -57,7 +57,7 @@ HTMLElement.prototype.disabeldInputs = function (valueDisabled, selector, except
 	return this
 }
 
-HTMLFormElement.prototype.emptyInputs = function (selector,exceptions){
+HTMLElement.prototype.emptyInputs = function (selector,exceptions){
 	/*
 		Vacia el attributo 'value' de los elementos de un HTMLFormElement
 		El array exceptions, contiene los inputs que no se deben vaciar

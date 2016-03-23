@@ -9,7 +9,6 @@ block template
 				p Hola
 				img.photoUser(src='/images/users/#{user.photo}')
 				p #[strong #{user.username}]
-
 			nav
 				article.itemsNavs
 					if user.type == 0
@@ -22,8 +21,8 @@ block template
 			section.titleSection
 				block titleSection
 		block content
+	script(src='/js/utilities.js')
 	script(src='/js/lib/markdown.js')
 	script(src='/js/speech.js')
-	script(src='/js/utilities.js')
 	block scripts
 

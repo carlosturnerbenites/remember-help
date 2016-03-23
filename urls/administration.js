@@ -16,7 +16,9 @@ router.post(
 	'/uploadimg',
 	upload.any(),
 	(req,res) => {
-		res.json(req.files)
+		var files = req.files
+		var imgChildren = req.files.find(file => {return file.fieldname == 'photoChildren'})
+		res.json([req.files,imgChildren])
 	}
 	)
 
@@ -32,16 +34,22 @@ router.post(
 				id : data.idChildren,
 				password: data.passwordChildren,
 				type: 1,
-				username: data.usernameChildren,
-				photo: req.files[0].filename
+				username: data.usernameChildren
 			},
 			dataNewFamily = {
 				id: data.idFamily,
 				password: data.passwordParent,
 				type: 0,
-				username: data.usernameParent,
-				photo: req.files[1].filename
+				username: data.usernameParent
 			}
+
+		var photoChildren = req.files.find(file => {return file.fieldname == 'photoChildren'}) ,
+			photoParent = req.files.find(file => {return file.fieldname == 'photoParent'})
+
+		dataNewChildren.photo = photoChildren ? photoChildren.filename : undefined
+		dataNewFamily.photo = photoParent ? photoParent.filename : undefined
+
+		//return res.json(dataNewChildren)
 
 		if (dataNewChildren.username == dataNewFamily.username) return {err : {msg: 'User Duplicate'}}
 
@@ -66,14 +74,15 @@ router.post(
 						})
 					}else {
 						models.user.create(dataNewFamily, (err, user) => {
+							if (err) return res.json({err: err})
 
 							dataNewFamily.user = user._id
 							dataNewFamily.children = [newChildren]
 							dataNewFamily.name = data.nameParent
 
 							models.parent.create(dataNewFamily, (err,parent) => {
-								models.children.findOneAndUpdate({_id : newChildren._id}, {$set : { parent : parent._id}}).exec()
 								if (err) return res.json({err: err})
+								models.children.findOneAndUpdate({_id : newChildren._id}, {$set : { parent : parent._id}}).exec()
 								return res.redirect('/admin/check-in')
 							})
 						})
