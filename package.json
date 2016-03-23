@@ -6,8 +6,8 @@
 	"scripts": {
 	"test": "echo \"Error: no test specified\" && exit 1",
 		"eslint": "eslint  ./public/**/*.js ./*.js ./**/*.js",
-		"start": "node server.js",
-		"dev": "npm run eslint && supervisor server"
+		"start": "node server",
+		"dev": "npm run eslint && NODE_ENV=dev supervisor server"
 	},
 	"engines": {
 		"node": "4.2.4",

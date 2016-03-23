@@ -1,6 +1,6 @@
 var urlConfig
-if(!process.env.NODE_ENV) urlConfig = './config/configDev.json'
-else if(process.env.NODE_ENV == 'prod') urlConfig = './config/configProd.json'
+if(!process.env.NODE_ENV) urlConfig = './config/configProd.json'
+else if(process.env.NODE_ENV == 'dev') urlConfig = './config/configDev.json'
 else process.exit()
 
 const config = require(urlConfig),
