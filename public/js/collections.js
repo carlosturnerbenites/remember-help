@@ -2,48 +2,28 @@ var btnAgregate = document.querySelector('#AgregateInCollection'),
 	btnFind = document.querySelector('#findInCollection'),
 	btnEmpty = document.querySelector('#emptyCollection'),
 	collectionSelected = document.querySelector('#collection'),
-	notification = new NotificationC()
+	notification = new NotificationC(),
+	collections
 
-var collections = {
-	parent: {
-		edit : true,
-		find : true,
-		create : false,
-		delete : true
-	},
-	children: {
-		edit : true,
-		find : true,
-		create : false,
-		delete : true
-	},
-	user: {
-		edit : true,
-		find : true,
-		create : false,
-		delete : true
-	},
-	activity: {
-		edit : true,
-		find : true,
-		create : true,
-		delete : true
-	},
-	history: {
-		edit : true,
-		find : true,
-		create : false,
-		delete : false
-	}
-}
+ajax({
+	type : 'GET',
+	URL : '/api/permissions/',
+	async : false,
+	onSuccess : response => collections = response,
+	data : null
+})
 
 function deleteDocumentDB (){
+
+	var action = this.dataset.action
+	if(!collections[collectionSelected.value][action]) return notification.show({msg:'No se puede realizar esta accion sobre la Colección',type: 2})
+
 	var form = document.getElementById(this.dataset.ref)
 	if (!form.contains(this)) notification.show({msg:'Disculpa ha sucedido algo Inesperado, !Recarga La Pagina, Por Favor¡',type:2})
 
 	if(confirm('Desea Borrar este documento ')){
 		ajax({
-			type : 'POST',
+			type : 'DELETE',
 			URL : '/api/collections/empty/' + collectionSelected.value + '/' + this.dataset.ref,
 			async : true,
 			onSuccess : response => {
@@ -114,6 +94,7 @@ function renderViewFind (documents,selector) {
 		buttonDelete.innerHTML = 'Borrar'
 		buttonDelete.addEventListener('click', deleteDocumentDB)
 		buttonDelete.dataset.ref = documentDB._id
+		buttonDelete.dataset.action = 'deleteOne'
 
 		form.classList.add('form','formLabelInput','documentDB')
 		form.id = documentDB._id
@@ -164,7 +145,7 @@ btnEmpty.addEventListener('click', function (){
 
 	if(confirm('Desea Borrar todos los datos de la Coleccion ' + collectionSelected.value)){
 		ajax({
-			type : 'POST',
+			type : 'DELETE',
 			URL : '/api/collections/empty/' + collectionSelected.value,
 			async : true,
 			onSuccess : response => {
@@ -175,5 +156,3 @@ btnEmpty.addEventListener('click', function (){
 		})
 	}
 })
-
-

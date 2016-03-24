@@ -17,7 +17,7 @@ backContinue.onclick = function () {
 
 continueAuthenticate.onclick = function (){
 	ajax({
-		type : 'POST',
+		type : 'GET',
 		URL : '/api/collection/user',
 		async : true,
 		contentType : 'application/json',

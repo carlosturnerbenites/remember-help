@@ -7,7 +7,7 @@ const express = require('express'),
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: false }))
 
-router.post('/today',(req,res) => {
+router.get('/today',(req,res) => {
 	var data = req.body,
 		dateCurrent = new Date()
 	dateCurrent.setHours(0,0,0,0)
@@ -24,7 +24,7 @@ router.post('/today',(req,res) => {
 	})
 })
 
-router.post(
+router.get(
 	['/rangeDate','/line-evolution'],
 	(req,res) => {
 		var data = req.body,

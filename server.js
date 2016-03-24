@@ -32,9 +32,18 @@ const config = require(urlConfig),
 
 	utils = require('./utils'),
 
+	fs = require('fs'),
+	Log = require('log'),
+	log = new Log('debug', fs.createWriteStream('remember-help.log')),
+
 	CONCURRENCY = process.env.WEB_CONCURRENCY || 1
 
-mongoose.connect(process.env.PROD_MONGODB || config.URIMongo)
+mongoose.connect(process.env.PROD_MONGODB || config.URIMongo, (err) => {
+	if(err) {
+		log.error(err)
+		throw new Error(err)
+	}
+})
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
@@ -72,6 +81,7 @@ passport.serializeUser((user, done) => done(null, user))
 
 passport.deserializeUser((user, done) => {
 	models.user.findById(user._id,(err,user) => {
+		log.info('Logout ' + user.username + ' _id ' + user._id)
 		done(err, user)
 	})
 })
@@ -93,6 +103,7 @@ app.use('/api',urlApi)
 app.post('/authenticate',
 	passport.authenticate('local',{failureRedirect: '/authenticate'}),
 	(req, res) => {
+		log.info('Login ' + req.user.username + ' _id ' + req.user._id)
 		if (req.user.type == 0) return res.redirect('/management/statistics')
 		if (req.user.type == 1) return res.redirect('/children/activities')
 		if (req.user.type == 776) return res.redirect('/admin/collections')

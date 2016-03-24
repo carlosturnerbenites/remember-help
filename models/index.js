@@ -1,6 +1,8 @@
 var Mongoose = require('mongoose'),
+	Log = require('log'),
 	Schema = Mongoose.Schema,
-	fs = require('fs')
+	fs = require('fs'),
+	log = new Log('debug', fs.createWriteStream('remember-help.log'))
 
 /* Definicion de Esquemas de la DB*/
 
@@ -130,16 +132,23 @@ childrenSchema.pre('save', function (next) {
 })
 
 childrenSchema.post('remove', function (children) {
-	// remove padre
+	/*
+		Valida si el familiar asociado al niñ@ tiene mas niñ@
+		Si no tiene mas niñ@S asociados, lo Elimina
+		Pero si tiene solo elimina la refeencia del niñ@
+	*/
+
 	models.parent.findOne({children: {$in :[children._id]}},(err, parent) => {
-		if(err) return console.log(err)
+		if(err) return log.error(err)
 		if(parent.children.length == 1){
-			parent.remove()
+			parent.remove({},(err, removed) => {
+				if(err) return log.error(err)
+			})
 		}else{
 			parent.update(
 				{$pullAll : {children : [children._id]}},
 				(err,parent) => {
-					if(err) return console.log(err)
+					if(err) return log.error(err)
 				})
 		}
 
@@ -150,8 +159,13 @@ childrenSchema.post('remove', function (children) {
 })
 
 parentSchema.post('remove', function (parent) {
+	/*
+		Elimina el usuario de un parent al despues de ser eliminado
+	*/
 	models.user.findById(parent.user,(err, user) => {
-		user.remove()
+		user.remove({},(err, removed) => {
+			if(err) return log.error(err)
+		})
 	})
 })
 
@@ -168,15 +182,14 @@ userSchema.pre('save', function (next) {
 
 userSchema.post('remove', function (user) {
 	/*
-		Borrar la foto de un usuario a eliminarlo
-		Returna Error al intentar crear un usuario con un 'username' ya existente
+		Borrar la foto de un usuario despues de que es eliminado
 	*/
 	var namePhoto = user.photo
 	if (namePhoto != 'unkown.png'){
-		fs.unlink(process.env.PWD + '/public/images/users/' + user.photo, (err) => {
-			if (err) return console.error(err)
-			console.log('Delete Complete')
-		})
+		fs.unlink(
+			process.env.PWD + '/public/images/users/' + user.photo,
+			err => {if (err) return log.error(err)}
+			)
 	}
 })
 

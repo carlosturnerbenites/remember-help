@@ -76,7 +76,7 @@ var FStatistics = {
 		formSToday.addEventListener('submit',function (event) {
 			event.preventDefault()
 			ajax({
-				type : 'POST',
+				type : 'GET',
 				URL : '/statistics/today',
 				async : true,
 				contentType : 'application/json',
@@ -171,7 +171,7 @@ var FStatistics = {
 			var formValidation = validator.isValid()
 			if(formValidation.isValid){
 				ajax({
-					type : 'POST',
+					type : 'POSTGET',
 					URL : '/statistics/line-evolution',
 					async : true,
 					contentType : 'application/json',

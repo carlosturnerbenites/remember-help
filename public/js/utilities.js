@@ -243,14 +243,20 @@ function ajax (config){
 	xhr.open(config.type, config.URL, config.async)
 	xhr.setRequestHeader('Content-Type', config.contentType)
 
-	xhr.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			var response = responseJSON ? JSON.parse(this.responseText) : this.responseText
-			config.onSuccess(response)
+	xhr.send(config.data)
+
+	if(config.async){
+		xhr.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				var response = responseJSON ? JSON.parse(this.responseText) : this.responseText
+				config.onSuccess(response)
+			}
 		}
+	}else{
+		var response = responseJSON ? JSON.parse(xhr.responseText) : xhr.responseText
+		config.onSuccess(response)
 	}
 
-	xhr.send(config.data)
 }
 
 function RangeTolerance (options){

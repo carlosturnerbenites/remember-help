@@ -39,6 +39,7 @@
     "gulp-plumber": "^1.1.0",
     "gulp-stylus": "^2.3.0",
     "gulp-uglify": "^1.5.2",
+    "log": "^1.4.0",
     "multer": "^1.1.0",
     "nib": "^1.1.0",
     "q": "^1.4.1"
