@@ -1,4 +1,3 @@
 {
-	"statics" : "public",
-	"URIMongo" : "mongodb://admin:admin@ds023098.mlab.com:23098/remember-help"
+	"statics" : "public"
 }

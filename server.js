@@ -32,7 +32,8 @@ const config = require(urlConfig),
 
 	utils = require('./utils')
 
-mongoose.connect(config.URIMongo)
+console.log(process.env.PROD_MONGODB)
+mongoose.connect(process.env.PROD_MONGODB || config.URIMongo)
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
