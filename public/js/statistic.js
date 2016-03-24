@@ -18,7 +18,7 @@ function showOptionStatistic () {
 	var tOptionsStatistic = this.querySelector('.optionsStatistic'),
 		cOptionsStatistic = document.importNode(tOptionsStatistic.content, true)
 
-	var btnClose = cOptionsStatistic.querySelector("#closeOptionsStatistic")
+	var btnClose = cOptionsStatistic.querySelector('#closeOptionsStatistic')
 
 	btnClose.onclick = function (e){
 		var parent = e.target.parentNode
@@ -64,7 +64,12 @@ function BuildStatistic (){
 		return template
 	}
 }
-
+function getDimensionsChart (){
+	var width = document.querySelector('.bodyModal').offsetWidth,
+		height = document.querySelector('.bodyModal').offsetWidth
+	if (height > document.querySelector('.bodyModal').offsetHeight) height = document.querySelector('.bodyModal').offsetHeight
+	return {width: width, height:height}
+}
 var FStatistics = {
 	today : function (){
 		var formSToday = document.querySelector('#today')
@@ -134,7 +139,7 @@ var FStatistics = {
 							var options = {
 								title : 'Actividades Completas/Incompletas',
 								legend:'bottom',
-								width: 500,
+								width: document.querySelector('.bodyModal').offsetWidth,
 								height: 300,
 								vAxis: {title: '# de Actividades'},
 								hAxis: {title: 'Fecha'},
@@ -197,17 +202,22 @@ var FStatistics = {
 							data.addColumn('number', 'Incompletas')
 							data.addRows(rows)
 
-							var options = {
-								title: 'Evolución',
-								pointSize: 10,
-								hAxis: {titleTextStyle: {color: '#333'}, direction:-1, slantedText:false, slantedTextAngle:90},
-								colors: ['#34A853','#EA4235'],
-								vAxis: {minValue: 0, title: '# de Actividades'},
-								legend:'bottom'
-							}
+							statisticsWindow.modal.addEventListener('fullOpen', (e) => {
+								var dimensions = getDimensionsChart()
+								var options = {
+									title: 'Evolución',
+									pointSize: 10,
+									width: dimensions.width,
+									height: dimensions.height,
+									hAxis: {titleTextStyle: {color: '#333'}, direction:-1, slantedText:false, slantedTextAngle:90},
+									colors: ['#34A853','#EA4235'],
+									vAxis: {minValue: 0, title: '# de Actividades'},
+									legend:'bottom'
+								}
 
-							var chart = new google.visualization.AreaChart(document.getElementById('chartRangeDate'))
-							chart.draw(data, options)
+								var chart = new google.visualization.AreaChart(document.getElementById('chartRangeDate'))
+								chart.draw(data, options)
+							}, false)
 						}
 
 					},

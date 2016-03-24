@@ -28,12 +28,24 @@ router.post('/collections/empty/:collection',(req, res) => {
 		})
 	})
 })
+router.post('/collections/empty/:collection/:id',(req, res) => {
+	var collection = req.params.collection,
+		id = req.params.id,
+		model = mongoose.model(collection)
+
+	model.findById(id, (err, document) => {
+		if (err) return res.json({err: err})
+		document.remove().then((document) => {
+			return res.json({msg: 'El Documento se ha **eliminadro** correctamente', document: document})
+		})
+	})
+})
 
 router.get('/collections/:collection',(req, res) => {
 	var collection = req.params.collection,
 		model = mongoose.model(collection)
 
-	model.find({},{_id : 0, __v : 0})
+	model.find({},{__v : 0})
 	.populate('activity children')
 	.exec((err,documents) => {
 		if (err) return res.json({err:err})

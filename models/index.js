@@ -1,5 +1,6 @@
 var Mongoose = require('mongoose'),
-	Schema = Mongoose.Schema
+	Schema = Mongoose.Schema,
+	fs = require('fs')
 
 /* Definicion de Esquemas de la DB*/
 
@@ -33,7 +34,7 @@ const childrenSchema = new Mongoose.Schema({
 		/* password : contraseña del usuario */
 		password:{type:String, required:true},
 		/* type : Tipo de usuario : 777 - Developer, 776 - Administrador, 0 - pariente, 1 - niñ@*/
-		type:{type:Number , emum:[777,776,0,1,2],required:true},
+		type:{type:Number , emum:[777,776,0,1],required:true},
 		/* username : Nombre de usuario*/
 		username:{type:String, required:true, unique:true}
 	}),
@@ -128,6 +129,32 @@ childrenSchema.pre('save', function (next) {
 	})
 })
 
+childrenSchema.post('remove', function (children) {
+	// remove padre
+	models.parent.findOne({children: {$in :[children._id]}},(err, parent) => {
+		if(err) return console.log(err)
+		if(parent.children.length == 1){
+			parent.remove()
+		}else{
+			parent.update(
+				{$pullAll : {children : [children._id]}},
+				(err,parent) => {
+					if(err) return console.log(err)
+				})
+		}
+
+	})
+	models.user.findById(children.user,(err, user) => {
+		user.remove()
+	})
+})
+
+parentSchema.post('remove', function (parent) {
+	models.user.findById(parent.user,(err, user) => {
+		user.remove()
+	})
+})
+
 userSchema.pre('save', function (next) {
 	/*
 		Verificar que no exista el 'username' (en la coleccion 'users') con el que se este intentando crear un nuevo usuario
@@ -137,6 +164,20 @@ userSchema.pre('save', function (next) {
 		if (children) next(new Error('Username Duplicate'))
 		else next()
 	})
+})
+
+userSchema.post('remove', function (user) {
+	/*
+		Borrar la foto de un usuario a eliminarlo
+		Returna Error al intentar crear un usuario con un 'username' ya existente
+	*/
+	var namePhoto = user.photo
+	if (namePhoto != 'unkown.png'){
+		fs.unlink(process.env.PWD + '/public/images/users/' + user.photo, (err) => {
+			if (err) return console.error(err)
+			console.log('Delete Complete')
+		})
+	}
 })
 
 /* Exportacion de los modelos*/

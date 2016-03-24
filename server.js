@@ -30,9 +30,10 @@ const config = require(urlConfig),
 	urlStatistics = require('./urls/statistics'),
 	urlApi = require('./urls/api'),
 
-	utils = require('./utils')
+	utils = require('./utils'),
 
-console.log(process.env.PROD_MONGODB)
+	CONCURRENCY = process.env.WEB_CONCURRENCY || 1
+
 mongoose.connect(process.env.PROD_MONGODB || config.URIMongo)
 
 app.set('views', __dirname + '/views')

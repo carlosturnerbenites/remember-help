@@ -146,6 +146,9 @@ function getValueInput (date,format){
 }
 
 function Modal (modalReference,selectorParentElement){
+
+	var fullOpen = new Event('fullOpen')
+
 	this.modal = document.getElementById(modalReference)
 
 	var body = document.body,
@@ -159,6 +162,9 @@ function Modal (modalReference,selectorParentElement){
 		this.modal.setAttribute('modalActive','true')
 		parentElement.classList.add('sectionInactive')
 		body.classList.add('overflowHidden')
+		setTimeout(() => {
+			this.modal.dispatchEvent(fullOpen)
+		},1000)
 	}
 
 	this.hide = function (){

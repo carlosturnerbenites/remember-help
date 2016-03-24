@@ -12,16 +12,6 @@ router.get('/collections',(req,res) => {
 	res.render('collections/index')
 })
 
-router.post(
-	'/uploadimg',
-	upload.any(),
-	(req,res) => {
-		var files = req.files
-		var imgChildren = req.files.find(file => {return file.fieldname == 'photoChildren'})
-		res.json([req.files,imgChildren])
-	}
-	)
-
 router.get('/check-in', (req, res) => res.render('users/checkIn',{statesHealth : utils.statesHealth}))
 
 router.post(
@@ -46,10 +36,8 @@ router.post(
 		var photoChildren = req.files.find(file => {return file.fieldname == 'photoChildren'}) ,
 			photoParent = req.files.find(file => {return file.fieldname == 'photoParent'})
 
-		dataNewChildren.photo = photoChildren ? photoChildren.filename : undefined
-		dataNewFamily.photo = photoParent ? photoParent.filename : undefined
-
-		//return res.json(dataNewChildren)
+		dataNewChildren.photo = photoChildren ? photoChildren.filename : 'unkown.png'
+		dataNewFamily.photo = photoParent ? photoParent.filename : 'unkown.png'
 
 		if (dataNewChildren.username == dataNewFamily.username) return {err : {msg: 'User Duplicate'}}
 
@@ -70,7 +58,7 @@ router.post(
 					if(family) {
 						family.update({ $push : {children: newChildren}}, (err) => {
 							if (err) return res.json({err: err})
-							return res.redirect('/authenticate')
+							return res.redirect('/admin/check-in')
 						})
 					}else {
 						models.user.create(dataNewFamily, (err, user) => {

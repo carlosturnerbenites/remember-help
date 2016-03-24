@@ -6,9 +6,6 @@ block titleSection
 	p Registro
 
 block content
-	form.form.formOnlyInput(enctype='multipart/form-data' action='/admin/uploadimg' method='POST')
-		input(type='file' accept='image/*' name='photoChildren' id='photoChildren' required)
-		input(type="submit")
 	form#formCheckIn.form.formOnlyInput(enctype='multipart/form-data' action='/admin/check-in' method='POST')
 		fieldset.fieldset#dataChildren
 			legend.legend Niñ@

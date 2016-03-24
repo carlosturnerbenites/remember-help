@@ -37,6 +37,26 @@ var collections = {
 	}
 }
 
+function deleteDocumentDB (){
+	var form = document.getElementById(this.dataset.ref)
+	if (!form.contains(this)) notification.show({msg:'Disculpa ha sucedido algo Inesperado, !Recarga La Pagina, Por Favor¡',type:2})
+
+	if(confirm('Desea Borrar este documento ')){
+		ajax({
+			type : 'POST',
+			URL : '/api/collections/empty/' + collectionSelected.value + '/' + this.dataset.ref,
+			async : true,
+			onSuccess : response => {
+				console.log(response)
+				if(response.err) return notification.show({msg:response.err.message,type:1})
+				notification.show({msg:'Se ha eliminado el documento',type:0})
+				form.remove()
+			},
+			data : null
+		})
+	}
+}
+
 function renderViewAgregate (schema,selector) {
 	var template = document.querySelector('template#templateField'),
 		container = document.querySelector(selector)
@@ -86,8 +106,17 @@ function renderViewFind (documents,selector) {
 	container.innerHTML = ''
 
 	documents.forEach(documentDB => {
-		var form = document.createElement('form')
+		var form = document.createElement('form'),
+			buttonDelete = document.createElement('button')
+
+		buttonDelete.type = 'button'
+		buttonDelete.classList.add('btn','btnError')
+		buttonDelete.innerHTML = 'Borrar'
+		buttonDelete.addEventListener('click', deleteDocumentDB)
+		buttonDelete.dataset.ref = documentDB._id
+
 		form.classList.add('form','formLabelInput','documentDB')
+		form.id = documentDB._id
 
 		for(var field in documentDB){
 			var templateField = document.importNode(template.content, true)
@@ -95,6 +124,7 @@ function renderViewFind (documents,selector) {
 			templateField.querySelector('.data').value = documentDB[field]
 			form.appendChild(templateField)
 		}
+		form.appendChild(buttonDelete)
 		container.appendChild(form)
 	})
 }
@@ -145,3 +175,5 @@ btnEmpty.addEventListener('click', function (){
 		})
 	}
 })
+
+

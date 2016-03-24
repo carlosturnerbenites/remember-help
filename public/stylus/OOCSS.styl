@@ -24,3 +24,20 @@ baseYellow = #FBBC05
 
 .overflowHidden
 	overflow hidden
+
+[tooltip]
+	position relative
+
+[tooltip]:hover:after
+	background-color #000
+	bottom -23px
+	color #fff
+	content attr(tooltip)
+	display block
+	font-size 1rem
+	left 0
+	padding 3px
+	position absolute
+	white-space nowrap
+
+

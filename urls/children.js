@@ -26,7 +26,6 @@ router.get('/activities',(req,res) => {
 				// activity.state = activitiesComplete.some(e => String(e.activity) == String(activity._id)) ? 'complete' : 'inprocess'
 			})
 			Q.all(promises).then(() => {
-				console.log(activities)
 				res.render('children/activities',{
 					activities:activities,
 					children:children
