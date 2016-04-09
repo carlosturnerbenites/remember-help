@@ -1,7 +1,7 @@
 google.charts.load('current', {'packages':['corechart']})
 
 var Stoday = document.querySelector('.statisticToday'),
-	SRangeDate = document.querySelector('.statisticsRangeDates'),
+	SRangeDate = document.querySelector('.statisticRangeDates'),
 	statisticsWindow = new Modal('statisticsWindow','.contentWidth'),
 	buildSatistic = new BuildStatistic()
 
@@ -29,14 +29,21 @@ function showOptionStatistic () {
 	FStatistics[this.dataset.statistic]()
 }
 
+function getDimensionsChart (){
+	var width = document.querySelector('.bodyModal').offsetWidth,
+		height = document.querySelector('.bodyModal').offsetWidth
+	if (height > document.querySelector('.bodyModal').offsetHeight) height = document.querySelector('.bodyModal').offsetHeight
+	return {width: width, height:height}
+}
+
 function BuildStatistic (){
 	this.today = function (histories){
 		var container = document.createElement('section')
 		for (var history of histories){
 			var clone = Stoday.querySelector('.resultStatistics'),
 				template = document.importNode(clone.content, true),
-				dateActivity = new Date(history.date),
-				dateHistory = new Date(history.activity.hour)
+				dateActivity = new Date(history.activity.hour),
+				dateHistory = new Date(history.time)
 
 			dateHistory.setDate(dateActivity.getDate())
 			dateHistory.setFullYear(dateActivity.getFullYear())
@@ -64,19 +71,14 @@ function BuildStatistic (){
 		return template
 	}
 }
-function getDimensionsChart (){
-	var width = document.querySelector('.bodyModal').offsetWidth,
-		height = document.querySelector('.bodyModal').offsetWidth
-	if (height > document.querySelector('.bodyModal').offsetHeight) height = document.querySelector('.bodyModal').offsetHeight
-	return {width: width, height:height}
-}
+
 var FStatistics = {
 	today : function (){
 		var formSToday = document.querySelector('#today')
 		formSToday.addEventListener('submit',function (event) {
 			event.preventDefault()
 			ajax({
-				type : 'GET',
+				type : 'POST',
 				URL : '/statistics/today',
 				async : true,
 				contentType : 'application/json',
@@ -126,28 +128,31 @@ var FStatistics = {
 						.addContent(node)
 						.show()
 
-						google.charts.setOnLoadCallback(drawVisualization)
+						google.charts.setOnLoadCallback(drawRangeDates)
 
-						function drawVisualization () {
+						function drawRangeDates () {
 							var data = new google.visualization.DataTable()
 
 							data.addColumn('string', 'Date')
 							data.addColumn('number', 'Completadas')
 							data.addColumn('number', 'Incompletas')
 							data.addRows(rows)
+							statisticsWindow.modal.addEventListener('fullOpen', (e) => {
+								var dimensions = getDimensionsChart()
 
-							var options = {
-								title : 'Actividades Completas/Incompletas',
-								legend:'bottom',
-								width: document.querySelector('.bodyModal').offsetWidth,
-								height: 300,
-								vAxis: {title: '# de Actividades'},
-								hAxis: {title: 'Fecha'},
-								seriesType: 'bars'
-							}
+								var options = {
+									title : 'Actividades Completas/Incompletas',
+									legend:'bottom',
+									width: dimensions.width,
+									height: dimensions.height,
+									vAxis: {title: '# de Actividades'},
+									hAxis: {title: 'Fecha'},
+									seriesType: 'bars'
+								}
 
-							var chart = new google.visualization['ComboChart'](document.getElementById('chartRangeDate'))
-							chart.draw(data, options)
+								var chart = new google.visualization.ComboChart(document.getElementById('chartRangeDate'))
+								chart.draw(data, options)
+							})
 						}
 
 					},
@@ -171,7 +176,7 @@ var FStatistics = {
 			var formValidation = validator.isValid()
 			if(formValidation.isValid){
 				ajax({
-					type : 'POSTGET',
+					type : 'POST',
 					URL : '/statistics/line-evolution',
 					async : true,
 					contentType : 'application/json',
@@ -192,9 +197,9 @@ var FStatistics = {
 						.addContent(node)
 						.show()
 
-						google.charts.setOnLoadCallback(drawVisualization)
+						google.charts.setOnLoadCallback(drawEvolution)
 
-						function drawVisualization () {
+						function drawEvolution () {
 							var data = new google.visualization.DataTable()
 
 							data.addColumn('string', 'Date')

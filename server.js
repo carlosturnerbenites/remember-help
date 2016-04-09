@@ -14,13 +14,11 @@ const config = require(urlConfig),
 
 	mongoose = require('mongoose'),
 	models = require('./models'),
+	URIMongo = process.env.PROD_MONGODB || config.URIMongo,
 	MongoStore = require('connect-mongo')(expressSession),
 
 	port = process.env.PORT || 8000,
-	http = require('http'),
 	app = express(),
-	/* Desde Express 4 ya no es necesario crear un servidor con http Module (Esisten Exepciones), solo se debe usar app.listen()*/
-	server = http.createServer(app),
 
 	urlActivities = require('./urls/activities'),
 	urlChildren = require('./urls/children'),
@@ -38,7 +36,7 @@ const config = require(urlConfig),
 
 	CONCURRENCY = process.env.WEB_CONCURRENCY || 1
 
-mongoose.connect(process.env.PROD_MONGODB || config.URIMongo, (err) => {
+mongoose.connect(URIMongo, (err) => {
 	if(err) {
 		log.error(err)
 		throw new Error(err)
@@ -121,4 +119,4 @@ function requiredType (type){
 	}
 }
 
-server.listen(port, () => {console.log('Server listen in ' + port)})
+app.listen(port, () => {console.log('Server listen in ' + port)})

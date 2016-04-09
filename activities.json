@@ -1,0 +1,4 @@
+{"_id":{"$oid":"56ccc09ca89b07bb06c9e7d1"},"date":{"$date":"2016-02-23T20:15:14.712Z"},"hour":{"$date":"2016-02-23T06:15:00.712Z"},"img":"/images/activities/bañarse.png","textSpeech":"¿Ya te bañaste?.","text":"Bañarse","tolerance" : "20"}
+{"_id":{"$oid":"56ccc09ca89b07bb06c9e7d2"},"date":{"$date":"2016-02-23T20:15:14.712Z"},"hour":{"$date":"2016-02-23T06:30:00.000Z"},"img":"/images/activities/desayunar.png","textSpeech":"¿Ya has desayunado?.","text":"Desayunar","tolerance" : "20"}
+{"_id":{"$oid":"56ccc09ca89b07bb06c9e7d3"},"date":{"$date":"2016-02-23T20:15:14.712Z"},"hour":{"$date":"2016-02-23T20:00:00.712Z"},"img":"/images/activities/dormir.png","textSpeech":"¿Es hora de dormir?.","text":"Dormir","tolerance" : "20"}
+{"_id":{"$oid":"56ccc09ca89b07bb06c9e7d0"},"date":{"$date":"2016-02-23T20:15:14.712Z"},"hour":{"$date":"2016-02-23T06:00:00.712Z"},"img":"/images/activities/cepillarse.png","textSpeech":"¿Ya te has cepillado?.","text":"Cepillarse","tolerance" : "20"}

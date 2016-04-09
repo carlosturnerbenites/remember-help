@@ -17,7 +17,7 @@ backContinue.onclick = function () {
 
 continueAuthenticate.onclick = function (){
 	ajax({
-		type : 'GET',
+		type : 'POST',
 		URL : '/api/collection/user',
 		async : true,
 		contentType : 'application/json',
@@ -36,6 +36,6 @@ continueAuthenticate.onclick = function (){
 				formAuthenticate.password.focus()
 			}else notification.show({msg: 'No existe un usuario registrado con este **username**', type: 2})
 		},
-		data : JSON.stringify({query: {username : formAuthenticate.username.value}, projection:{password : 0}})
+		data : JSON.stringify({query: {username : formAuthenticate.username.value}, projection: {password : 0}})
 	})
 }

@@ -176,13 +176,34 @@ header
 	display flex
 	flex-wrap wrap
 	.statistic
-		border 1px solid gray
-		border-radius 2px
+		//border 1px solid gray
+		//border-radius 2px
 		cursor pointer
 		margin 1%
 		padding 1%
-		text-align center
 		width 96%
+		background-repeat no-repeat
+		background-size 10%
+		background-position 95% 5%
+		//color white
+		&Today
+			background-image url('/images/statistics/today.svg')
+			border-left 5px solid baseGreen
+			border-right 5px solid baseGreen
+			border-top 1px solid baseGreen
+			border-bottom 1px solid baseGreen
+		&Evolution
+			background-image url('/images/statistics/evolution.svg')
+			border-left 5px solid basePurple
+			border-right 5px solid basePurple
+			border-top 1px solid basePurple
+			border-bottom 1px solid basePurple
+		&RangeDates
+			background-image url('/images/statistics/rangeDates.svg')
+			border-left 5px solid baseYellow
+			border-right 5px solid baseYellow
+			border-top 1px solid baseYellow
+			border-bottom 1px solid baseYellow
 
 .containerOptionsStatistic
 	background-color white

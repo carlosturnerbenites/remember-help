@@ -32,7 +32,7 @@ formCheckIn.idChildren.onchange = function (e){
 	var target = e.target
 	if (target.validity.valid){
 		ajax({
-			type : 'GET',
+			type : 'POST',
 			URL : '/api/collection/children',
 			async : true,
 			contentType : 'application/json',
@@ -63,7 +63,7 @@ formCheckIn.idFamily.onchange = function (e){
 	var target = e.target
 	if (target.validity.valid){
 		ajax({
-			type : 'GET',
+			type : 'POST',
 			URL : '/api/collection/parent',
 			async : true,
 			contentType : 'application/json',

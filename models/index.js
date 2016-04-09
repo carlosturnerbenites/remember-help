@@ -1,8 +1,8 @@
-var Mongoose = require('mongoose'),
+var fs = require('fs'),
 	Log = require('log'),
-	Schema = Mongoose.Schema,
-	fs = require('fs'),
-	log = new Log('debug', fs.createWriteStream('remember-help.log'))
+	log = new Log('debug', fs.createWriteStream('remember-help.log')),
+	Mongoose = require('mongoose'),
+	Schema = Mongoose.Schema
 
 /* Definicion de Esquemas de la DB*/
 

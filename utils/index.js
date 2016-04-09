@@ -11,12 +11,6 @@ Date.prototype.getDatesUntil = function (dateEnd){
 		dateInit.setDate(dateInit.getDate()+1)
 	}
 	return datesQuery
-
-}
-
-function Validator (){
-	this.Dates = function () {
-	}
 }
 
 var stylesPage = ['styleRed','styleYellow','styleBlue','styleGreen','styleOscure','stylePurple']
@@ -29,6 +23,5 @@ var statesHealth = [
 
 module.exports = {
 	stylesPage : stylesPage,
-	statesHealth : statesHealth,
-	Validator : Validator
+	statesHealth : statesHealth
 }

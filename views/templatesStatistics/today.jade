@@ -1,6 +1,7 @@
 template.optionsStatistic
 	form.form.formLabelInput.formOptionsStatistics#today
 		span.icon-incorrect.close#closeOptionsStatistic
+		h2 Hoy
 		article.inputContainer
 			label.label(for='children') Niñ@
 			select(type='date', name='children' id='children' required)
@@ -13,9 +14,9 @@ template.resultStatistics
 	article
 		h1.nameActivity
 		p
-			span #[strong Hora de la Actividad : ] #[span.timeActivity]
+			span #[strong Hora fijada ] #[span.timeActivity]
 		p
-			span #[strong Hora de completado : ] #[span.timeHistory]
+			span #[strong Completada a las ] #[span.timeHistory]
 		p
-			span #[strong Completada : ] #[span.timeText]
+			span #[strong Completada ] #[span.timeText]
 

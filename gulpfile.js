@@ -9,7 +9,7 @@ function compileStyl () {
 	gulp
 	.src(config.gulp.srcStyle)
 	.pipe(plumber())
-	.pipe(stylus({use: nib(),compress: true}))
+	.pipe(stylus({use: nib(),compress: false}))
 	.pipe(gulp.dest(config.gulp.dest))
 	.pipe(notify({title : 'Stylus',message: 'Compile Stylus'}))
 }
