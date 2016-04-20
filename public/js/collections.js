@@ -27,7 +27,6 @@ function deleteDocumentDB (){
 			URL : '/api/collections/empty/' + collectionSelected.value + '/' + this.dataset.ref,
 			async : true,
 			onSuccess : response => {
-				console.log(response)
 				if(response.err) return notification.show({msg:response.err.message,type:1})
 				notification.show({msg:'Se ha eliminado el documento',type:0})
 				form.remove()
@@ -124,7 +123,7 @@ btnFind.addEventListener('click', function (){
 	})
 })
 
-btnAgregate.addEventListener('click', function (){
+btnAgregate.onclick =  function (){
 
 	var action = this.dataset.action
 	if(!collections[collectionSelected.value][action]) return notification.show({msg:'No se puede realizar esta accion sobre la Colección',type: 2})
@@ -136,9 +135,9 @@ btnAgregate.addEventListener('click', function (){
 		onSuccess : schema => renderViewAgregate(schema,'#addDocument'),
 		data : null
 	})
-})
+}
 
-btnEmpty.addEventListener('click', function (){
+btnEmpty.onclick =  function (){
 
 	var action = this.dataset.action
 	if(!collections[collectionSelected.value][action]) return notification.show({msg:'No se puede realizar esta accion sobre la Colección',type: 2})
@@ -155,4 +154,4 @@ btnEmpty.addEventListener('click', function (){
 			data : null
 		})
 	}
-})
+}

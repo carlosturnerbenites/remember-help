@@ -4,6 +4,7 @@ else if(process.env.NODE_ENV == 'dev') urlConfig = './config/configDev.json'
 else process.exit()
 
 const config = require(urlConfig),
+	nameProject = 'Remember Help',
 	express = require('express'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
@@ -26,6 +27,7 @@ const config = require(urlConfig),
 	urlGeneral = require('./urls/general'),
 	urlManagement = require('./urls/management'),
 	urlStatistics = require('./urls/statistics'),
+	urlUsers = require('./urls/users'),
 	urlApi = require('./urls/api'),
 
 	utils = require('./utils'),
@@ -35,7 +37,6 @@ const config = require(urlConfig),
 	log = new Log('debug', fs.createWriteStream('remember-help.log')),
 
 	CONCURRENCY = process.env.WEB_CONCURRENCY || 1
-
 mongoose.connect(URIMongo, (err) => {
 	if(err) {
 		log.error(err)
@@ -87,6 +88,7 @@ passport.deserializeUser((user, done) => {
 app.use((req, res, next) => {
 	res.locals.user = req.user
 	res.locals.classcss = utils.stylesPage.getRandom()
+	res.locals.nameProject = nameProject
 	next()
 })
 
@@ -96,6 +98,7 @@ app.use('/activities', requiredType([1]), urlActivities)
 app.use('/admin', requiredType([777,776]), urlAdministration)
 app.use('/management', requiredType([0]), urlManagement)
 app.use('/statistics', requiredType([0]), urlStatistics)
+app.use('/user', requiredType([777,776,0]), urlUsers)
 app.use('/api',urlApi)
 
 app.post('/authenticate',

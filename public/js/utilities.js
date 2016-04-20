@@ -32,9 +32,7 @@ HTMLElement.prototype.serialize = function (){
 		exceptions = ['submit','reset']
 
 	var data = {}
-	console.info(elements)
 	for(var element of Array.from(elements)){
-		console.info(element)
 		if(exceptions.indexOf(element.type) < 0){
 			data[element.name] = element.value
 		}
@@ -257,26 +255,4 @@ function ajax (config){
 		config.onSuccess(response)
 	}
 
-}
-
-function RangeTolerance (options){
-	var developed = options.developed | false
-
-	var currentTime = new Date(),
-		date = options.date
-
-	date.setDate(currentTime.getDate())
-	date.setFullYear(currentTime.getFullYear())
-	date.setMonth(currentTime.getMonth())
-
-	var lowerLimit = new Date(currentTime.setMinutes(currentTime.getMinutes() - options.tolerance)),
-		upperLimit = new Date(currentTime.setMinutes(currentTime.getMinutes() + options.tolerance*2))
-
-	if (!developed){
-		if(date < lowerLimit) return options.onBefore()
-		else if(date > upperLimit) return options.onAfter()
-		else if (date >= lowerLimit && date <= upperLimit) return options.onDuring()
-	}else{
-		return options.onDuring()
-	}
 }

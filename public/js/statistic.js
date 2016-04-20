@@ -5,12 +5,12 @@ var Stoday = document.querySelector('.statisticToday'),
 	statisticsWindow = new Modal('statisticsWindow','.contentWidth'),
 	buildSatistic = new BuildStatistic()
 
-var statistics = document.querySelectorAll('.statistic'),
+var statistics = Array.from(document.querySelectorAll('.statistic')),
 	containerOptionsStatistic = document.querySelector('.containerOptionsStatistic')
 
-for (var statistic of Array.from(statistics)){
+statistics.forEach(statistic => {
 	statistic.addEventListener('click', showOptionStatistic)
-}
+})
 
 function showOptionStatistic () {
 	containerOptionsStatistic.innerHTML = ''
@@ -75,7 +75,7 @@ function BuildStatistic (){
 var FStatistics = {
 	today : function (){
 		var formSToday = document.querySelector('#today')
-		formSToday.addEventListener('submit',function (event) {
+		formSToday.onsubmit = function (event) {
 			event.preventDefault()
 			ajax({
 				type : 'POST',
@@ -92,7 +92,7 @@ var FStatistics = {
 				},
 				data : JSON.stringify({children: formSToday.children.value })
 			})
-		})
+		}
 	},
 	rangeDate : function (){
 		var formSRangeDate = document.querySelector('#rangeDate'),
@@ -102,7 +102,7 @@ var FStatistics = {
 			{fn : 'mayor', params : 'dateEnd dateInit', messageError : 'La **Fecha Inicial** debe ser **mayor** a la **Fecha Final**'}
 		])
 
-		formSRangeDate.addEventListener('submit',function (event) {
+		formSRangeDate.onsubmit = function (event) {
 			event.preventDefault()
 			var formValidation = validator.isValid()
 			if(formValidation.isValid){
@@ -161,7 +161,7 @@ var FStatistics = {
 			}else{
 				validator.showErrors('.errors')
 			}
-		})
+		}
 	},
 	evolution : function (){
 		var formSEvolution = document.querySelector('#evolution'),
@@ -171,7 +171,7 @@ var FStatistics = {
 			{fn : 'mayor', params : 'dateEnd dateInit', messageError : 'La **Fecha Inicial** debe ser **mayor** a la **Fecha Final**'}
 		])
 
-		formSEvolution.addEventListener('submit',function (event) {
+		formSEvolution.onsubmit = function (event) {
 			event.preventDefault()
 			var formValidation = validator.isValid()
 			if(formValidation.isValid){
@@ -231,6 +231,6 @@ var FStatistics = {
 			}else{
 				validator.showErrors('.errors')
 			}
-		})
+		}
 	}
 }

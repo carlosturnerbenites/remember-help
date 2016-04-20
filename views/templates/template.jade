@@ -4,7 +4,7 @@ block template
 	section.contentWidth
 		header(class='#{classcss}')
 			h3.nameApp
-				a(href = '/') Remember Help
+				a(href = '/') #{nameProject}
 			nav
 				article.itemsNavs
 					if user
@@ -14,7 +14,7 @@ block template
 							span.icon-family(tooltip='Padres')
 						a.item(href='/admin/collections')
 							span.icon-admin(tooltip='Administradores')
-						a.item(href='/logout')
+						a#btnLogout.item(href='/logout')
 							span.icon-logout(tooltip='Cerrar Sesión')
 					else
 						a.item(href='/authenticate')
@@ -24,6 +24,6 @@ block template
 			section.titleSection
 				block titleSection
 		block content
-
+	script(src='/js/main.js')
 	block scripts
 

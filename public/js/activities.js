@@ -4,6 +4,28 @@ var text = new Text(),
 var activities = Array.from(document.querySelectorAll('.activity')),
 	confirmActivityWindow = new Modal('confirmActivityWindow','.contentWidth')
 
+function RangeTolerance (options){
+	var developed = options.developed | false
+
+	var currentTime = new Date(),
+		date = options.date
+
+	date.setDate(currentTime.getDate())
+	date.setFullYear(currentTime.getFullYear())
+	date.setMonth(currentTime.getMonth())
+
+	var lowerLimit = new Date(currentTime.setMinutes(currentTime.getMinutes() - options.tolerance)),
+		upperLimit = new Date(currentTime.setMinutes(currentTime.getMinutes() + options.tolerance*2))
+
+	if (!developed){
+		if(date < lowerLimit) return options.onBefore()
+		else if(date > upperLimit) return options.onAfter()
+		else if (date >= lowerLimit && date <= upperLimit) return options.onDuring()
+	}else{
+		return options.onDuring()
+	}
+}
+
 activities.forEach((activity) => {
 
 	var date = new Date(activity.dataset.date),

@@ -4,7 +4,7 @@ block template
 	section.contentWidth
 		header(class='#{classcss}')
 			h3.nameApp
-				a(href = '/') Remember Help
+				a(href = '/') #{nameProject}
 			article.wellcome
 				p Hola
 				img.photoUser(src='/images/users/#{user.photo}')
@@ -17,10 +17,15 @@ block template
 						include ../partials/menuChildren.jade
 					if user.type == 776
 						include ../partials/menuAdmin.jade
+					a#btnLogout.item(href='/logout')
+						span.icon-logout(tooltip='Cerrar Sesion')
+					a.item(href='/user/#{user.username}')
+						span.icon-user(tooltip='Perfil')
 
 			section.titleSection
 				block titleSection
 		block content
+	script(src='/js/main.js')
 	script(src='/js/utilities.js')
 	script(src='/js/lib/markdown.js')
 	script(src='/js/speech.js')

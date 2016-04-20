@@ -16,10 +16,10 @@
 				],
 				"attrs": [],
 				"isMulticolor": false,
-				"grid": 0,
 				"tags": [
 					"people"
-				]
+				],
+				"grid": 0
 			},
 			"attrs": [],
 			"properties": {
@@ -30,7 +30,7 @@
 				"name": "admin"
 			},
 			"setIdx": 0,
-			"setId": 5,
+			"setId": 8,
 			"iconIdx": 0
 		},
 		{
@@ -48,14 +48,14 @@
 			"attrs": [],
 			"properties": {
 				"order": 1,
-				"id": 0,
+				"id": 1,
 				"prevSize": 32,
 				"code": 59664,
 				"name": "statitics-bars"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 0
+			"setIdx": 0,
+			"setId": 8,
+			"iconIdx": 1
 		},
 		{
 			"icon": {
@@ -72,14 +72,14 @@
 			"attrs": [],
 			"properties": {
 				"order": 2,
-				"id": 1,
+				"id": 2,
 				"prevSize": 32,
 				"code": 59665,
 				"name": "statitics-pie"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 1
+			"setIdx": 0,
+			"setId": 8,
+			"iconIdx": 2
 		},
 		{
 			"icon": {
@@ -99,14 +99,14 @@
 			"attrs": [],
 			"properties": {
 				"order": 3,
-				"id": 2,
+				"id": 3,
 				"prevSize": 32,
 				"code": 59666,
 				"name": "statitics-area"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 2
+			"setIdx": 0,
+			"setId": 8,
+			"iconIdx": 3
 		},
 		{
 			"icon": {
@@ -126,14 +126,14 @@
 			"attrs": [],
 			"properties": {
 				"order": 11,
-				"id": 3,
+				"id": 4,
 				"prevSize": 32,
 				"code": 59660,
 				"name": "check-in"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 3
+			"setIdx": 0,
+			"setId": 8,
+			"iconIdx": 4
 		},
 		{
 			"icon": {
@@ -152,14 +152,14 @@
 			"attrs": [],
 			"properties": {
 				"order": 8,
-				"id": 4,
+				"id": 5,
 				"prevSize": 32,
 				"code": 59656,
 				"name": "children"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 4
+			"setIdx": 0,
+			"setId": 8,
+			"iconIdx": 5
 		},
 		{
 			"icon": {
@@ -179,14 +179,14 @@
 			"attrs": [],
 			"properties": {
 				"order": 7,
-				"id": 5,
+				"id": 6,
 				"prevSize": 32,
 				"code": 59657,
 				"name": "family"
 			},
-			"setIdx": 1,
-			"setId": 4,
-			"iconIdx": 5
+			"setIdx": 0,
+			"setId": 8,
+			"iconIdx": 6
 		},
 		{
 			"icon": {
@@ -208,8 +208,8 @@
 				"code": 59648,
 				"name": "timeline"
 			},
-			"setIdx": 2,
-			"setId": 3,
+			"setIdx": 1,
+			"setId": 7,
 			"iconIdx": 0
 		},
 		{
@@ -232,8 +232,8 @@
 				"code": 59663,
 				"name": "back"
 			},
-			"setIdx": 3,
-			"setId": 2,
+			"setIdx": 2,
+			"setId": 6,
 			"iconIdx": 0
 		},
 		{
@@ -256,8 +256,8 @@
 				"code": 59655,
 				"name": "question"
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 0
 		},
 		{
@@ -284,8 +284,8 @@
 				"id": 1,
 				"code": 59649
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 1
 		},
 		{
@@ -313,8 +313,8 @@
 				"id": 2,
 				"code": 59650
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 2
 		},
 		{
@@ -341,8 +341,8 @@
 				"id": 3,
 				"code": 59651
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 3
 		},
 		{
@@ -369,8 +369,8 @@
 				"id": 4,
 				"code": 59652
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 4
 		},
 		{
@@ -402,8 +402,8 @@
 				"id": 5,
 				"code": 59653
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 5
 		},
 		{
@@ -431,8 +431,8 @@
 				"id": 6,
 				"code": 59654
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 6
 		},
 		{
@@ -458,8 +458,8 @@
 				"id": 7,
 				"code": 59658
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 7
 		},
 		{
@@ -487,8 +487,8 @@
 				"id": 8,
 				"code": 59659
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 8
 		},
 		{
@@ -516,8 +516,8 @@
 				"id": 9,
 				"code": 59662
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 9
 		},
 		{
@@ -545,8 +545,8 @@
 				"id": 10,
 				"code": 59661
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 10
 		},
 		{
@@ -574,8 +574,8 @@
 				"id": 11,
 				"code": 59667
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 11
 		},
 		{
@@ -603,9 +603,38 @@
 				"id": 12,
 				"code": 59668
 			},
-			"setIdx": 4,
-			"setId": 1,
+			"setIdx": 3,
+			"setId": 5,
 			"iconIdx": 12
+		},
+		{
+			"icon": {
+				"paths": [
+					"M576 706.612v-52.78c70.498-39.728 128-138.772 128-237.832 0-159.058 0-288-192-288s-192 128.942-192 288c0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h896c0-128.968-166.898-235.64-384-253.388z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"user",
+					"profile",
+					"avatar",
+					"person",
+					"member"
+				],
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"order": 15,
+				"prevSize": 32,
+				"ligatures": "user, profile2",
+				"name": "user",
+				"id": 114,
+				"code": 59670
+			},
+			"setIdx": 8,
+			"setId": 0,
+			"iconIdx": 113
 		}
 	],
 	"height": 1024,

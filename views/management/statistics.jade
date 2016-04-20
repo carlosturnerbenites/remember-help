@@ -15,17 +15,17 @@ block modal
 block content
 	section.statistics
 		article.statistic.statisticToday(data-statistic='today')
-			h2 #[span.icon-statitics-list] Hoy
+			h2 Hoy
 
 			p Listado de las actividades completadas de un niñ@ en el dia actual.
 			include ../templatesStatistics/today.jade
 		article.statistic.statisticEvolution(data-statistic='evolution')
-			h2 #[span.icon-statitics-area] Evolución
+			h2 Evolución
 
 			p Grafica de Area. Relacion  de Actidades completadas/incompletadas en un rango de fecha determinado.
 			include ../templatesStatistics/evolution.jade
 		article.statistic.statisticRangeDates(data-statistic='rangeDate')
-			h2 #[span.icon-statitics-bars] Rango De Fechas
+			h2 Rango De Fechas
 			p Grafica de Barras comparativa. Actidades completadas/incompletadas en un rango de fecha determinado.
 			include ../templatesStatistics/rangeDates.jade
 

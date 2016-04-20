@@ -1,0 +1,51 @@
+extends ../templates/templateApp.jade
+block title
+	title #{user.username}
+
+block titleSection
+	p Perfil #{user.username}
+
+block content
+	form#dataAssociated.form.formOnlyInput(action='' method='POST')
+		fieldset
+			legend Mi Informacion
+
+			article.inputContainer
+				p #{associated.name}
+			p Hijos
+			ul
+				for children in associated.children
+					li #{children.name}
+		fieldset
+			legend Usuarios
+			p #{associated.user.username}
+			p #{associated.user.password}
+
+	form#changePassword.form.formOnlyInput(action='/user/changePassword' method='POST')
+		fieldset
+			legend Cambiar Contraseña
+			input(type="hidden" name='user' value='#{user._id}')
+			article.inputContainer
+				input(type='password', name='newPassword', placeholder='Nueva Contraseña', autofocus required)
+			article.inputContainer
+				input(type='password', name='confirmNewPassword', placeholder='Repetir Contraseña', autofocus required)
+			article.inputContainer.alignItemsCenter
+				button.btn.btnSuccess(type='submit')
+					span Cambiar
+	form#changePasswordChildren.form.formOnlyInput(action='/user/changePassword' method='POST')
+		fieldset
+			legend Cambiar Contraseña niñ@
+			article.inputContainer
+				label.label(for='user') Niñ@
+				select(type='date', name='user' id='user' required)
+					for children in associated.children
+						option(value='#{children.user}') #{children.name}
+			article.inputContainer
+				input(type='password', name='newPassword', placeholder='Nueva Contraseña', autofocus required)
+			article.inputContainer
+				input(type='password', name='confirmNewPassword', placeholder='Repetir Contraseña', autofocus required)
+			article.inputContainer.alignItemsCenter
+				button.btn.btnSuccess(type='submit')
+					span Cambiar
+block scripts
+	script(src="/js/users.js")

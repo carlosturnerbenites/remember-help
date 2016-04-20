@@ -104,6 +104,28 @@ activitySchema.method('getState', function (children){
 	})
 })
 
+userSchema.method('getAssociated', function (children){
+	/*
+		Busca la persona(niñ@ o pariente) asociada a un usuario
+		Retorna una promesa
+	*/
+	return new Promise((resolve, reject) => {
+
+		var data = {}
+		if(this.type == 0) data = {model: 'parent', fields: 'user children'}
+		else if(this.type == 1) data = {model: 'children', fields: 'user parent'}
+		else if(this.type == 776) return {err: {msg:'Este usuario no tiene asociada a ninguna persona'}}
+
+		models[data.model].findOne({user: this._id})
+		.populate(data.fields)
+		.exec((err,associated) => {
+			if(err) reject(err)
+			resolve(associated)
+		})
+	})
+
+})
+
 /* Creacion de los Modelos de la DB*/
 
 const models = {
