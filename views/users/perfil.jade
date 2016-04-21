@@ -8,18 +8,25 @@ block titleSection
 block content
 	form#dataAssociated.form.formOnlyInput(action='' method='POST')
 		fieldset
-			legend Mi Informacion
+			legend Mi Información
 
 			article.inputContainer
-				p #{associated.name}
+				input(type='number' name='idFamily' id='idFamily' value="#{associated.id}" placeholder='Identificación Familiar' required)
+			article.inputContainer
+				input(type='text' name='nameParent' id='nameParent' value="#{associated.name}" placeholder='Nombre Familiar' required)
+			fieldset.fieldset
+				legend.legend Usuario
+				article.inputContainer
+					input(type='text' name='usernameParent' id='usernameParent' value="#{associated.user.username}" placeholder='Usuario' required)
+				//article.inputContainer
+					input(type='file' accept='image/*' name='photoParent' id='photoParent' )
+				article.inputContainer
+					input(type='password' name='passwordParent' id='passwordParent' value="#{associated.user.password}" placeholder='Contraseña' required)
+
 			p Hijos
 			ul
 				for children in associated.children
 					li #{children.name}
-		fieldset
-			legend Usuarios
-			p #{associated.user.username}
-			p #{associated.user.password}
 
 	form#changePassword.form.formOnlyInput(action='/user/changePassword' method='POST')
 		fieldset
@@ -32,6 +39,7 @@ block content
 			article.inputContainer.alignItemsCenter
 				button.btn.btnSuccess(type='submit')
 					span Cambiar
+
 	form#changePasswordChildren.form.formOnlyInput(action='/user/changePassword' method='POST')
 		fieldset
 			legend Cambiar Contraseña niñ@
@@ -47,5 +55,6 @@ block content
 			article.inputContainer.alignItemsCenter
 				button.btn.btnSuccess(type='submit')
 					span Cambiar
+
 block scripts
 	script(src="/js/users.js")

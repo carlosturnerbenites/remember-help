@@ -24,13 +24,15 @@ router.post(
 				id : data.idChildren,
 				password: data.passwordChildren,
 				type: 1,
-				username: data.usernameChildren
+				username: data.usernameChildren,
+				email: data.email
 			},
 			dataNewFamily = {
 				id: data.idFamily,
 				password: data.passwordParent,
 				type: 0,
-				username: data.usernameParent
+				username: data.usernameParent,
+				email: data.email
 			}
 
 		var photoChildren = req.files.find(file => {return file.fieldname == 'photoChildren'}) ,
@@ -48,6 +50,7 @@ router.post(
 			dataNewChildren.age = data.ageChildren
 			dataNewChildren.stateHealth = data.stateHealth
 			dataNewChildren.name = data.nameChildren
+
 
 			models.children.create(dataNewChildren, (err,newChildren) => {
 				if (err) return res.json({err: err})

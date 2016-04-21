@@ -34,9 +34,10 @@ const config = require(urlConfig),
 
 	fs = require('fs'),
 	Log = require('log'),
-	log = new Log('debug', fs.createWriteStream('remember-help.log')),
+	log = new Log('debug', fs.createWriteStream(__dirname + '/logs/remember-help.log')),
 
 	CONCURRENCY = process.env.WEB_CONCURRENCY || 1
+
 mongoose.connect(URIMongo, (err) => {
 	if(err) {
 		log.error(err)

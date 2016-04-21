@@ -1,0 +1,14 @@
+extends ../templates/template.jade
+block title
+	title Recordar Datos
+
+block titleSection
+	p Recordar Datos
+
+block content
+	form#formRememberData.form.formOnlyInput.formRememberData(action='/remember' method='POST')
+			article.inputContainer
+				input(type='email', name='email', placeholder='Correo Electronico', autofocus required)
+			article.inputContainer.alignItemsCenter
+				button#continueAuthenticate.btn.btnSuccess(type='submit')
+					span Continuar
