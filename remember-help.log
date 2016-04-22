@@ -1,0 +1,8 @@
+[Fri Apr 22 2016 00:39:22 GMT-0500 (COT)] INFO Create document in collection : activity, document : { tolerance: 20,
+  _id: 5719b90ad7c82c5930f05a25,
+  img: '/images/activities/1803eef3ef9ff6b37f74fff8cc1cc369',
+  textSpeech: 'q',
+  text: 'q',
+  hour: Thu Dec 31 2015 19:00:00 GMT-0500 (COT),
+  date: Thu Dec 31 2015 19:00:00 GMT-0500 (COT),
+  __v: 0 }. User : admin

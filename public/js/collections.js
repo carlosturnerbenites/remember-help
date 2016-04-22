@@ -5,6 +5,23 @@ var btnAgregate = document.querySelector('#AgregateInCollection'),
 	notification = new NotificationC(),
 	collections
 
+var dataForVisualization = {
+	activity : {
+		form:{
+			'method': 'POST',
+			'enctype' : 'multipart/form-data'
+		},
+		fields:{
+			date :{type:'date', label:'Fecha', required:true},
+			hour :{type:'date', label:'Hora', required:true},
+			img :{type:'file', label:'Imagen', required:true},
+			text :{type:'text', label:'Descripcion', required:true},
+			textSpeech :{type:'text', label:'Texo De Lectura', required:true},
+			tolerance :{type:'number', label:'Tolerancia', default:20, required:true }
+		}
+	}
+}
+
 ajax({
 	type : 'GET',
 	URL : '/api/permissions/',
@@ -36,44 +53,38 @@ function deleteDocumentDB (){
 	}
 }
 
-function renderViewAgregate (schema,selector) {
+function renderViewAgregate (schema,collection,selector) {
 	var template = document.querySelector('template#templateField'),
 		container = document.querySelector(selector)
 	container.innerHTML = ''
 
+	var schemaForVisualization = dataForVisualization[collection],
+		configFields = schemaForVisualization.fields,
+		configForm = schemaForVisualization.form
+
 	var form = document.createElement('form')
 	form.classList.add('form','formLabelInput', 'documentDB')
+	form.enctype = configForm.enctype
+	form.method = configForm.method
+	form.action = '/api/collections/add/' + collection
 
-	for(var field in schema){
+	for(var field in configFields){
 		var clone = document.importNode(template.content, true)
-		var data = schema[field]
+		var data = configFields[field]
 
 		var Tfield = clone.querySelector('#TField')
-		Tfield.querySelector('.label').innerHTML = field
-		Tfield.querySelector('.data').type = data.instance
-		Tfield.querySelector('.data').required = data.isRequired
-		Tfield.querySelector('.data').name = data.path
+		Tfield.querySelector('.label').innerHTML = data.label
+		Tfield.querySelector('.data').type = data.type
+		Tfield.querySelector('.data').value = data.default || ''
+		Tfield.querySelector('.data').required = data.required
+		Tfield.querySelector('.data').name = field
+		Tfield.querySelector('.data').id = field
 
 		form.appendChild(Tfield)
 	}
 	var input = document.createElement('input')
 	input.type = 'submit'
 	form.appendChild(input)
-
-	form.onsubmit = function (e){
-		e.preventDefault()
-
-		var data = this.serialize()
-
-		ajax({
-			type : 'POST',
-			URL : '/api/collections/add/' + collectionSelected.value,
-			contentType : 'application/json',
-			async : true,
-			onSuccess : response => notification.show({msg:response.msg,type: 0}),
-			data : JSON.stringify(data)
-		})
-	}
 
 	container.appendChild(form)
 }
@@ -127,12 +138,12 @@ btnAgregate.onclick =  function (){
 
 	var action = this.dataset.action
 	if(!collections[collectionSelected.value][action]) return notification.show({msg:'No se puede realizar esta accion sobre la Colección',type: 2})
-
+	var collection = collectionSelected.value
 	ajax({
 		type : 'GET',
 		URL : '/api/collections/schemas/' + collectionSelected.value,
 		async : true,
-		onSuccess : schema => renderViewAgregate(schema,'#addDocument'),
+		onSuccess : schema => renderViewAgregate(schema,collection,'#addDocument'),
 		data : null
 	})
 }

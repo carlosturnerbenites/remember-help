@@ -4,7 +4,9 @@ const express = require('express'),
 	mongoose = require('mongoose'),
 	fs = require('fs'),
 	Log = require('log'),
-	log = new Log('debug', fs.createWriteStream('remember-help.log'))
+	log = new Log('debug', fs.createWriteStream('remember-help.log')),
+	multer = require('multer'),
+	uploadActivities = multer({ dest: 'public/images/activities' })
 
 var collections = {
 	parent: {
@@ -42,6 +44,27 @@ var collections = {
 		delete : false,
 		deleteOne : false
 	}
+}
+
+function serialize(req,model) {
+	var data = req.body,
+		paths = model.schema.paths
+
+	for (var nameField in paths){
+		var field = paths[nameField]
+
+		if(field.instance == 'Date'){
+			data[nameField] = new Date(data[nameField])
+		}
+	}
+
+	if(req.files){
+		for (var file of req.files){
+			data[file.fieldname] = file.path.replace(/^public/,'')
+		}
+	}
+
+	return data
 }
 
 router.use(bodyParser.json())
@@ -87,18 +110,22 @@ router.post('/collection/:collection',(req, res) => {
 	})
 })
 
-router.post('/collections/add/:collection',(req, res) => {
-	var collection = req.params.collection,
-		model = mongoose.model(collection),
-		data = req.body,
-		action = 'create'
+router.post('/collections/add/:collection',
+	uploadActivities.any(),
+	(req, res) => {
+		var collection = req.params.collection,
+			model = mongoose.model(collection),
+			data = serialize(req,model),
+			action = 'create'
 
-	model.create(data,(err, document) => {
-		if(err) return res.json({err: err})
-		log.info('Create document in collection : ' + collection + ', document : ' + document + '. User : ' + req.user.username)
-		res.json({msg: 'Se ha creado Correctamente el documento', document: document})
+			//return res.json(data)
+
+		model.create(data,(err, document) => {
+			if(err) return res.json(err);console.log(err)
+			log.info('Create document in collection : ' + collection + ', document : ' + document + '. User : ' + req.user.username)
+			return res.json({msg: 'Se ha creado Correctamente el documento', document: document})
+		})
 	})
-})
 
 router.delete('/collections/empty/:collection',(req, res) => {
 	var collection = req.params.collection,
