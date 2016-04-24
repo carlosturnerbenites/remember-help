@@ -31,6 +31,8 @@ const childrenSchema = new Mongoose.Schema({
 		user :{type:Schema.ObjectId, ref:'user', required:true}
 	}),
 	userSchema = new Mongoose.Schema({
+		/* active : Estado del usuario en el sistema */
+		active:{type:Boolean, required:true, default:true},
 		/* photo : Nombre del imagen del usuario*/
 		photo:{type:String, default: 'unkown.png'},
 		/* password : contraseña del usuario */

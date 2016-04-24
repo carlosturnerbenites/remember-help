@@ -27,6 +27,40 @@ HTMLFormElement.prototype.isValid = function (){
 	return true
 }
 
+HTMLInputElement.prototype.checkSizeImage = function (data,cb){
+
+	if(!this.files.length) return cb(new Error('No Se ha seleccionado ningun archivo'))
+
+	var fr = new FileReader,
+		maxWidth = data.maxWidth,
+		maxHeight = data.maxHeight,
+		response = {
+			valid : true,
+			message : ''
+		}
+
+	fr.onload = function () {
+		var img = new Image
+
+		img.onload = function () {
+			if(img.width > maxWidth){
+				response.valid = false
+				response.type = 2
+				response.message += 'El **ancho** de la imagen **no es aceptado**, el **ancho maximo** permitido es **' + maxWidth + '**\n\n'
+			}
+			if(img.height > maxHeight){
+				response.valid = false
+				response.type = 2
+				response.message += 'El **largo** de la imagen **no es aceptado**, el **largo maximo** permitido es **' + maxHeight + '**'
+			}
+			cb(null, response)
+		}
+
+		img.src = fr.result
+	}
+
+	fr.readAsDataURL(this.files[0])
+}
 HTMLElement.prototype.serialize = function (){
 	var elements = this instanceof HTMLFormElement ? this.elements: this.querySelector('input, select'),
 		exceptions = ['submit','reset']

@@ -27,6 +27,7 @@ router.post('/changePassword',(req,res) => {
 	(err, user) => {
 		if(err) return res.json({err: err})
 		if(!user) return res.json({err : {message: 'El usuario No existe'}})
+		if(user.password != req.body.currentPassword) return res.json({err : {message: 'Contraseña Incorrecta'}})
 		res.redirect('/user/' + req.user.username)
 	})
 

@@ -14,7 +14,7 @@ var dataForVisualization = {
 		fields:{
 			date :{type:'date', label:'Fecha', required:true},
 			hour :{type:'date', label:'Hora', required:true},
-			img :{type:'file', label:'Imagen', required:true},
+			img :{type:'file', label:'Imagen', required:true,accept:'image/*'},
 			text :{type:'text', label:'Descripcion', required:true},
 			textSpeech :{type:'text', label:'Texo De Lectura', required:true},
 			tolerance :{type:'number', label:'Tolerancia', default:20, required:true }
@@ -58,9 +58,8 @@ function renderViewAgregate (schema,collection,selector) {
 		container = document.querySelector(selector)
 	container.innerHTML = ''
 
-	var schemaForVisualization = dataForVisualization[collection],
-		configFields = schemaForVisualization.fields,
-		configForm = schemaForVisualization.form
+	var configFields = schema.fields,
+		configForm = schema.form
 
 	var form = document.createElement('form')
 	form.classList.add('form','formLabelInput', 'documentDB')
@@ -81,21 +80,41 @@ function renderViewAgregate (schema,collection,selector) {
 		Tfield.querySelector('.data').id = field
 
 		form.appendChild(Tfield)
+
+		if(data.type == 'file'){
+			Tfield.querySelector('.data').accept = data.accept
+			if(data.accept == 'image/*'){
+				Tfield.querySelector('.data').onchange = event => {
+					this.checkSizeImage(
+						{maxWidth:1855,maxHeight:892},
+						(err, response) => {
+							if (err) return notification.show({msg: err.message, type: 1})
+							if(!response.valid) this.value = ''
+							return notification.show({msg: response.message, type: response.type})
+						}
+					)
+				}
+			}
+		}
+
 	}
 	var input = document.createElement('input')
 	input.type = 'submit'
+	input.classList.add('btn','btnSuccess')
 	form.appendChild(input)
 
 	container.appendChild(form)
 }
 
-function renderViewFind (documents,selector) {
+function renderViewFind (response,selector) {
 	var template = document.querySelector('template#templateField'),
-		container = document.querySelector(selector)
+		container = document.querySelector(selector),
+		dataFields = response.schema.fields,
+		dataForm = response.schema.form
 
 	container.innerHTML = ''
 
-	documents.forEach(documentDB => {
+	response.documents.forEach(documentDB => {
 		var form = document.createElement('form'),
 			buttonDelete = document.createElement('button')
 
@@ -110,9 +129,18 @@ function renderViewFind (documents,selector) {
 		form.id = documentDB._id
 
 		for(var field in documentDB){
-			var templateField = document.importNode(template.content, true)
-			templateField.querySelector('.label').innerHTML = field
+			var dataField = dataFields[field] || field,
+				templateField = document.importNode(template.content, true)
+
+			templateField.querySelector('.label').innerHTML = dataField.label
 			templateField.querySelector('.data').value = documentDB[field]
+			templateField.querySelector('.data').readOnly = dataField.readOnly
+
+			templateField.querySelector('.data').type = dataField.type
+			templateField.querySelector('.data').required = dataField.required
+			templateField.querySelector('.data').name = field
+			templateField.querySelector('.data').id = field
+
 			form.appendChild(templateField)
 		}
 		form.appendChild(buttonDelete)
@@ -129,7 +157,7 @@ btnFind.addEventListener('click', function (){
 		type : 'GET',
 		URL : '/api/collections/' + collectionSelected.value,
 		async : true,
-		onSuccess : documents => renderViewFind(documents,'#results'),
+		onSuccess : response => renderViewFind(response,'#results'),
 		data : null
 	})
 })
@@ -141,7 +169,7 @@ btnAgregate.onclick =  function (){
 	var collection = collectionSelected.value
 	ajax({
 		type : 'GET',
-		URL : '/api/collections/schemas/' + collectionSelected.value,
+		URL : '/api/collections/dataForm/' + collectionSelected.value,
 		async : true,
 		onSuccess : schema => renderViewAgregate(schema,collection,'#addDocument'),
 		data : null

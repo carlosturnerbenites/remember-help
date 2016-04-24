@@ -6,7 +6,9 @@ const express = require('express'),
 	Log = require('log'),
 	log = new Log('debug', fs.createWriteStream('remember-help.log')),
 	multer = require('multer'),
-	uploadActivities = multer({ dest: 'public/images/activities' })
+	uploadActivities = multer({ dest: 'public/images/activities' }),
+	formsView = require('./../utils/forms.js')
+
 
 var collections = {
 	parent: {
@@ -80,17 +82,22 @@ router.get('/collections/schemas/:collection',(req, res) => {
 	delete paths.__v
 	res.json(paths)
 })
+router.get('/collections/dataForm/:collection',(req, res) => {
+	var collection = req.params.collection
+	res.json(formsView[collection])
+})
 
 router.get('/collections/:collection',(req, res) => {
 	var collection = req.params.collection,
-		model = mongoose.model(collection)
+		model = mongoose.model(collection),
+		formschema = formsView[collection]
 
 	model.find({},{__v : 0})
 	.populate('activity children')
 	.exec((err,documents) => {
 		if (err) return res.json({err:err})
 
-		res.json(documents)
+		res.json({documents: documents,schema: formschema})
 	})
 })
 

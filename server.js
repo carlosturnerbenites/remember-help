@@ -5,6 +5,7 @@ else process.exit()
 
 const config = require(urlConfig),
 	nameProject = 'Remember Help',
+
 	express = require('express'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
@@ -72,6 +73,7 @@ passport.use(new LocalStrategy((username, password, done) => {
 	models.user.findOne({username : username},(err,user) => {
 		if(err) return done(null, false, { message: err})
 		if (!user) return done(null, false, { message: 'Unknown user'})
+		if (!user.active) return done(null, false, { message: 'User Inactive'})
 		if(user.password == password) return done(null,user)
 		done(null, false, { message: 'Unknown password'})
 	})
