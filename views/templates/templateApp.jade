@@ -17,10 +17,10 @@ block template
 						include ../partials/menuChildren.jade
 					if user.type == 776
 						include ../partials/menuAdmin.jade
+					if user.type == 777
+						include ../partials/menuDev.jade
 					a#btnLogout.item(href='/logout')
 						span.icon-logout(tooltip='Cerrar Sesion')
-					a.item(href='/user/#{user.username}')
-						span.icon-user(tooltip='Perfil')
 
 			section.titleSection
 				block titleSection

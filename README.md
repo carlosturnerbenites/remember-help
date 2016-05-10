@@ -14,7 +14,7 @@ La aplicacion cuenta con un modulo dedicado a :
 	1. Manejo de Collecciones de Base de Datos
 	2. Manejo de Usuarios
 
-La aplicación cuenta con soporte para al `Web Speech API`. Reconocimiento de Voz y Lectura de texto.
+La aplicación cuenta con soporte para el `Web Speech API`. Reconocimiento de Voz y Lectura de texto.
 
 Proyecto relacionado [Not Down, Yes Up](https://github.com/esperanzaturnerbenites/not-down-yes-up)
 
@@ -32,4 +32,4 @@ Instalación de la aplicación
 1. `git clone https://github.com/carlosturnerbenites/rememberHelp.git`
 2. `cd rememberHelp`
 3. `sudo npm install`
-4. Correr Servidor de Desarrollo `npm run dev`
+4. Correr servidor de desarrollo `npm run dev`

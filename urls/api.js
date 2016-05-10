@@ -2,53 +2,18 @@ const express = require('express'),
 	router = express.Router(),
 	bodyParser = require('body-parser'),
 	mongoose = require('mongoose'),
-	fs = require('fs'),
-	Log = require('log'),
-	log = new Log('debug', fs.createWriteStream('remember-help.log')),
 	multer = require('multer'),
 	uploadActivities = multer({ dest: 'public/images/activities' }),
-	formsView = require('./../utils/forms.js')
+	formsView = require('./../utils/forms.js'),
+	utils = require('./../utils/'),
+	models = require('./../models/'),
+	Q = require('q')
 
+var permissions = utils.permissionsCollection
 
-var collections = {
-	parent: {
-		edit : true,
-		find : true,
-		create : false,
-		delete : true,
-		deleteOne : false
-	},
-	children: {
-		edit : true,
-		find : true,
-		create : false,
-		delete : true,
-		deleteOne : true
-	},
-	user: {
-		edit : true,
-		find : true,
-		create : false,
-		delete : true,
-		deleteOne : false
-	},
-	activity: {
-		edit : true,
-		find : true,
-		create : true,
-		delete : true,
-		deleteOne : true
-	},
-	history: {
-		edit : true,
-		find : true,
-		create : false,
-		delete : false,
-		deleteOne : false
-	}
-}
+router.use(bodyParser.json())
 
-function serialize(req,model) {
+function serialize (req,model) {
 	var data = req.body,
 		paths = model.schema.paths
 
@@ -69,9 +34,7 @@ function serialize(req,model) {
 	return data
 }
 
-router.use(bodyParser.json())
-
-router.get('/permissions',(req, res) => res.json(collections))
+router.get('/permissions',(req, res) => res.json(permissions))
 
 router.get('/collections/schemas/:collection',(req, res) => {
 	var collection = req.params.collection,
@@ -82,9 +45,25 @@ router.get('/collections/schemas/:collection',(req, res) => {
 	delete paths.__v
 	res.json(paths)
 })
+
 router.get('/collections/dataForm/:collection',(req, res) => {
-	var collection = req.params.collection
-	res.json(formsView[collection])
+	var collection = req.params.collection,
+		dataForm = formsView[collection],
+		promises = []
+
+	for(var nameField in dataForm.fields){
+		var field = dataForm.fields[nameField]
+		if(field.type == 'ref'){
+			var query = models[field.ref].find().exec((err,documents) => {
+				field.dataRef = documents
+				res.json(formsView[collection])
+			})
+			promises.push(query)
+		}
+	}
+	Q.all(promises).then(() => {
+		return res.json(formsView[collection])
+	})
 })
 
 router.get('/collections/:collection',(req, res) => {
@@ -92,11 +71,10 @@ router.get('/collections/:collection',(req, res) => {
 		model = mongoose.model(collection),
 		formschema = formsView[collection]
 
-	model.find({},{__v : 0})
-	.populate('activity children')
+	model.find({},{__v: 0})
+	.populate('user parent activity children')
 	.exec((err,documents) => {
 		if (err) return res.json({err:err})
-
 		res.json({documents: documents,schema: formschema})
 	})
 })
@@ -125,11 +103,8 @@ router.post('/collections/add/:collection',
 			data = serialize(req,model),
 			action = 'create'
 
-			//return res.json(data)
-
 		model.create(data,(err, document) => {
-			if(err) return res.json(err);console.log(err)
-			log.info('Create document in collection : ' + collection + ', document : ' + document + '. User : ' + req.user.username)
+			if(err) return res.json(err)
 			return res.json({msg: 'Se ha creado Correctamente el documento', document: document})
 		})
 	})
@@ -144,7 +119,6 @@ router.delete('/collections/empty/:collection',(req, res) => {
 		if (!count) return res.json({err: {message : 'Collection empty'}})
 		model.remove({},(err, count) => {
 			if (err) return res.json({err:err})
-			log.info('Remove all data of collection ' + collection + '. User : ' + req.user.username)
 			res.json({msg: 'Delete Complete', count: count})
 		})
 	})
@@ -159,9 +133,21 @@ router.delete('/collections/empty/:collection/:id',(req, res) => {
 	model.findById(id, (err, document) => {
 		if (err) return res.json({err: err})
 		document.remove().then((document) => {
-			log.info('Remove of ' + collection + ', document : ' + document + '. User : ' + req.user.username)
 			return res.json({msg: 'El Documento se ha **eliminadro** correctamente', document: document})
 		})
+	})
+})
+
+router.put('/collections/update/:collection/:id',(req, res) => {
+	var collection = req.params.collection,
+		id = req.params.id,
+		model = mongoose.model(collection),
+		action = 'updateOne',
+		data = req.body
+
+	model.findByIdAndUpdate(id, {$set: data},(err, document) => {
+		if (err) return res.json({err: err})
+		return res.json({msg: 'El Documento se ha **Editado** correctamente', document: document})
 	})
 })
 

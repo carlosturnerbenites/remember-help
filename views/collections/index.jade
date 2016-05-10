@@ -6,15 +6,17 @@ block titleSection
 	p Colecciones
 
 block content
+
+	section.instructions
+		p Manipula la informacion de la #[strong Base de Datos]
+		p ¡Ten Cuidado! Rectificar antes de realizar cualquier accion.
+
 	form.form.formLabelInput#formCollections
 		article.inputContainer
 			label.label(for='collection') Coleccion
-			select#collection(name='collection' size='5' required)
-				option(value='parent') Pariente
-				option(value='children') Niños
-				option(value='user') Usuarios
-				option(value='activity') Actividades
-				option(value='history') Historias
+			select#collection(name='collection' size='#{numberOfCollections}' required)
+				for model in models
+					option(value='#{model.modelName}') #{model.collection.collectionName}
 
 		article.alignItemsEnd
 			input.btn.btnInfo(type='button' id='findInCollection' value='Buscar' data-action='find')

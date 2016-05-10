@@ -3,7 +3,6 @@ const express = require('express'),
 	models = require('./../models/')
 
 router.get('/statistics',(req,res) => {
-
 	models.parent.findOne({user: req.user._id})
 	.populate('children')
 	.exec((err, parent) => {

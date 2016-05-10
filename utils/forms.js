@@ -20,6 +20,12 @@ var dataModelsForForms = {
 				label:'Descripcion',
 				required:true
 			},
+			img :{
+				type:'file',
+				label:'Imagen',
+				accept: 'image/*',
+				required:true
+			},
 			textSpeech :{
 				type:'text',
 				label:'Texo De Lectura',
@@ -37,7 +43,7 @@ var dataModelsForForms = {
 	children: {
 		form:{
 			'method': 'POST',
-			'enctype' : ''
+			'enctype' : 'application/x-www-form-urlencoded'
 		},
 		fields:{
 			age:{
@@ -50,7 +56,11 @@ var dataModelsForForms = {
 				type:'ref',
 				label:'Pariente',
 				ref:'parent',
-				readOnly: true
+				readOnly: true,
+				input:{
+					text: 'name',
+					value:'_id'
+				}
 			},
 			id:{
 				type:'number',
@@ -72,14 +82,48 @@ var dataModelsForForms = {
 				label:'Usuario',
 				ref:'user',
 				readOnly: true,
+				required:true,
+				input:{
+					text: 'username',
+					value:'_id'
+				}
+			}
+		}
+	},
+	administrator: {
+		form:{
+			'method': 'POST',
+			'enctype' : 'application/x-www-form-urlencoded'
+		},
+		fields:{
+			id:{
+				type:'number',
+				label:'identificacion',
+				required:true,
+				unique:true
+			},
+			name:{
+				type:'text',
+				label:'Nombre',
 				required:true
+			},
+			user :{
+				type:'ref',
+				label:'Usuario',
+				ref:'user',
+				readOnly: true,
+				required:true,
+				input:{
+					text: 'username',
+					value:'_id'
+				}
 			}
 		}
 	},
 	parent: {
 		form:{
 			'method': 'POST',
-			'enctype' : ''
+			'enctype' : 'application/x-www-form-urlencoded'
 		},
 		fields:{
 			children:{
@@ -87,7 +131,11 @@ var dataModelsForForms = {
 				label:'Niñ@',
 				ref:'children',
 				readOnly: true,
-				required:true
+				required:true,
+				input:{
+					text: 'name',
+					value:'_id'
+				}
 			},
 			id:{
 				type:'number',
@@ -104,18 +152,22 @@ var dataModelsForForms = {
 				label:'Usuario',
 				ref:'user',
 				readOnly: true,
-				required:true
+				required:true,
+				input:{
+					text: 'username',
+					value:'_id'
+				}
 			}
 		}
 	},
 	user: {
 		form:{
 			'method': 'POST',
-			'enctype' : ''
+			'enctype' : 'application/x-www-form-urlencoded'
 		},
 		fields:{
 			active:{
-				type:Boolean,
+				type:'checkbox',
 				label:'Activo',
 				required:true,
 				default:true
@@ -152,14 +204,18 @@ var dataModelsForForms = {
 	history: {
 		form:{
 			'method': 'POST',
-			'enctype' : ''
+			'enctype' : 'application/x-www-form-urlencoded'
 		},
 		fields:{
 			activity:{
 				type:'ref',label:'Actividad',
 				ref:'activity',
 				readOnly: true,
-				required:true
+				required:true,
+				input:{
+					text: 'text',
+					value:'_id'
+				}
 			},
 			children:{
 				type:'ref',label:'Niñ2',

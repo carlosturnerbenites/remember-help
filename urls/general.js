@@ -3,7 +3,8 @@ const express = require('express'),
 	models = require('./../models/'),
 	bodyParser = require('body-parser'),
 	nodemailer = require('nodemailer'),
-	markdown = require('nodemailer-markdown').markdown
+	jade = require('jade'),
+	utils = require('./../utils')
 
 router.use(bodyParser.json())
 
@@ -25,17 +26,19 @@ router.post('/remember', (req,res) => {
 		if (!user) return res.json({msg: 'El correo no se encuentra registrado'})
 
 		user.getAssociated().then(associated => {
+			var fn = jade.compileFile('views/mails/remember.jade', {})
+			var html = fn({
+				associated: associated,
+				classcss: utils.stylesPage.getRandom()
+			})
+
 			var transporter = nodemailer.createTransport('smtps://apprememberhelp%40gmail.com:remember-help@smtp.gmail.com')
-			transporter.use('compile', markdown({}))
 
 			var mailOptions = {
 				from: '"Remember Help " <apprememberhelp@gmail.com>',
 				to: email,
-				subject: 'Recordar Datos Remember Help',
-				markdown: '# Hola ' + associated.name +'\
-					\n\nPediste que te recordamaos tus **datos**\
-					\n\n**Usuario**:'+ user.username +'\
-					\n\n**COntraseña**:'+ user.password
+				subject: 'Remember Help - Datos De Sesion',
+				html: html
 			}
 
 			transporter.sendMail(mailOptions, function (err, info){
@@ -44,7 +47,6 @@ router.post('/remember', (req,res) => {
 			})
 		})
 	})
-
 })
 
 module.exports = router

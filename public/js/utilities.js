@@ -36,6 +36,7 @@ HTMLInputElement.prototype.checkSizeImage = function (data,cb){
 		maxHeight = data.maxHeight,
 		response = {
 			valid : true,
+			type: 0,
 			message : ''
 		}
 
@@ -61,6 +62,7 @@ HTMLInputElement.prototype.checkSizeImage = function (data,cb){
 
 	fr.readAsDataURL(this.files[0])
 }
+
 HTMLElement.prototype.serialize = function (){
 	var elements = this instanceof HTMLFormElement ? this.elements: this.querySelector('input, select'),
 		exceptions = ['submit','reset']
@@ -233,7 +235,6 @@ function NotificationC (){
 	var contenedorPrincipal = document.body
 
 	var createMessage = function (data){
-		console.log(data)
 		var contenedorMSG = document.createElement('article')
 		contenedorMSG.classList.add('contenedorMensaje')
 		var mensaje = document.createElement('p')
@@ -288,5 +289,4 @@ function ajax (config){
 		var response = responseJSON ? JSON.parse(xhr.responseText) : xhr.responseText
 		config.onSuccess(response)
 	}
-
 }

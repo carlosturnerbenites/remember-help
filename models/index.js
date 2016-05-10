@@ -20,6 +20,14 @@ const childrenSchema = new Mongoose.Schema({
 		/* user : Referencia al usuario del/de la niñ@ */
 		user :{type:Schema.ObjectId, ref:'user', required:true}
 	}),
+	administratorSchema = new Mongoose.Schema({
+		/* id : identificacion del pariente */
+		id:{type:Number, required:true, unique:true},
+		/* name : nombre del pariente */
+		name:{type:String, required:true},
+		/* user : Referencia al usuario del pariente*/
+		user :{type:Schema.ObjectId, ref:'user', required:true}
+	}),
 	parentSchema = new Mongoose.Schema({
 		/* children : Referencia a el/la (los/las) niñ@ asosiados al pariente*/
 		children:[{ type:Schema.ObjectId, ref:'children', required:'true' }],
@@ -108,7 +116,7 @@ activitySchema.method('getState', function (children){
 	})
 })
 
-userSchema.method('getAssociated', function (children){
+userSchema.method('getAssociated', function (){
 	/*
 		Busca la persona(niñ@ o pariente) asociada a un usuario
 		Retorna una promesa
@@ -118,16 +126,17 @@ userSchema.method('getAssociated', function (children){
 		var data = {}
 		if(this.type == 0) data = {model: 'parent', fields: 'user children'}
 		else if(this.type == 1) data = {model: 'children', fields: 'user parent'}
-		else if(this.type == 776) return {err: {msg:'Este usuario no tiene asociada a ninguna persona'}}
+		else if(this.type == 776) data = {model: 'administrator', fields: 'user'}
+		else return {err: {msg:'Este usuario no tiene asociada a ninguna persona'}}
 
 		models[data.model].findOne({user: this._id})
 		.populate(data.fields)
 		.exec((err,associated) => {
+			console.log(data)
 			if(err) reject(err)
 			resolve(associated)
 		})
 	})
-
 })
 
 /* Creacion de los Modelos de la DB*/
@@ -140,6 +149,7 @@ const models = {
 	activity :Mongoose.model('activity', activitySchema),
 	children :Mongoose.model('children', childrenSchema),
 	parent :Mongoose.model('parent', parentSchema),
+	administrator :Mongoose.model('administrator', administratorSchema),
 	history :Mongoose.model('history', historySchema),
 	user :Mongoose.model('user', userSchema)
 }
@@ -177,7 +187,6 @@ childrenSchema.post('remove', function (children) {
 					if(err) return log.error(err)
 				})
 		}
-
 	})
 	models.user.findById(children.user,(err, user) => {
 		user.remove()

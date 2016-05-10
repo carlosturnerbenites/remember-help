@@ -5,23 +5,6 @@ var btnAgregate = document.querySelector('#AgregateInCollection'),
 	notification = new NotificationC(),
 	collections
 
-var dataForVisualization = {
-	activity : {
-		form:{
-			'method': 'POST',
-			'enctype' : 'multipart/form-data'
-		},
-		fields:{
-			date :{type:'date', label:'Fecha', required:true},
-			hour :{type:'date', label:'Hora', required:true},
-			img :{type:'file', label:'Imagen', required:true,accept:'image/*'},
-			text :{type:'text', label:'Descripcion', required:true},
-			textSpeech :{type:'text', label:'Texo De Lectura', required:true},
-			tolerance :{type:'number', label:'Tolerancia', default:20, required:true }
-		}
-	}
-}
-
 ajax({
 	type : 'GET',
 	URL : '/api/permissions/',
@@ -29,6 +12,39 @@ ajax({
 	onSuccess : response => collections = response,
 	data : null
 })
+
+var checkImageSize = (event) => {
+	event.target.checkSizeImage(
+		{maxWidth:1855,maxHeight:892},
+		(err, response) => {
+			if (err) return notification.show({msg: err.message, type: 1})
+			if(!response.valid) event.target.value = ''
+			return notification.show({msg: response.message, type: response.type})
+		}
+	)
+}
+
+function updateDocumentDB (event){
+	event.preventDefault()
+	var action = this.querySelector('[type=submit]').dataset.action
+
+	if(!collections[collectionSelected.value][action]){
+		event.preventDefault()
+		return notification.show({msg:'No se puede realizar esta accion sobre la Colección',type: 2})
+	}
+	if(!confirm('Desea Editar este documento ')) return event.preventDefault()
+
+	ajax({
+		type : 'PUT',
+		URL : '/api/collections/update/' + collectionSelected.value + '/' + this.dataset.ref,
+		async : true,
+		onSuccess : response => {
+			if(response.err) return notification.show({msg:response.err.message,type:1})
+			notification.show({msg:response.msg,type:0})
+		},
+		data : null
+	})
+}
 
 function deleteDocumentDB (){
 
@@ -53,7 +69,7 @@ function deleteDocumentDB (){
 	}
 }
 
-function renderViewAgregate (schema,collection,selector) {
+function renderViewAgregate (schema,collection,selector){
 	var template = document.querySelector('template#templateField'),
 		container = document.querySelector(selector)
 	container.innerHTML = ''
@@ -71,30 +87,41 @@ function renderViewAgregate (schema,collection,selector) {
 		var clone = document.importNode(template.content, true)
 		var data = configFields[field]
 
-		var Tfield = clone.querySelector('#TField')
-		Tfield.querySelector('.label').innerHTML = data.label
-		Tfield.querySelector('.data').type = data.type
-		Tfield.querySelector('.data').value = data.default || ''
-		Tfield.querySelector('.data').required = data.required
-		Tfield.querySelector('.data').name = field
-		Tfield.querySelector('.data').id = field
+		var Tfield = clone.querySelector('#TField'),
+			tfData = Tfield.querySelector('.data'),
+			tfLabel = Tfield.querySelector('.label')
+
+		tfLabel.innerHTML = data.label
+		tfData.type = data.type
+		tfData.value = data.default || ''
+		tfData.required = data.required
+		tfData.name = field
+		tfData.id = field
 
 		form.appendChild(Tfield)
 
 		if(data.type == 'file'){
-			Tfield.querySelector('.data').accept = data.accept
+			tfData.accept = data.accept
 			if(data.accept == 'image/*'){
-				Tfield.querySelector('.data').onchange = event => {
-					this.checkSizeImage(
-						{maxWidth:1855,maxHeight:892},
-						(err, response) => {
-							if (err) return notification.show({msg: err.message, type: 1})
-							if(!response.valid) this.value = ''
-							return notification.show({msg: response.message, type: response.type})
-						}
-					)
-				}
+				tfData.addEventListener('change',checkImageSize)
 			}
+		}
+		if(data.type == 'checkbox'){}
+		if(data.type == 'ref'){
+			var select = document.createElement('select')
+
+			select.name = field
+
+			for(var nameFieldData in data.dataRef){
+				var fieldData = data.dataRef[nameFieldData],
+					option = document.createElement('option')
+
+				option.text = fieldData[data.input.text]
+				option.value = fieldData[data.input.value]
+				select.appendChild(option)
+			}
+
+			Tfield.replaceChild(select, tfData)
 		}
 
 	}
@@ -116,7 +143,8 @@ function renderViewFind (response,selector) {
 
 	response.documents.forEach(documentDB => {
 		var form = document.createElement('form'),
-			buttonDelete = document.createElement('button')
+			buttonDelete = document.createElement('button'),
+			buttonUpdate = document.createElement('button')
 
 		buttonDelete.type = 'button'
 		buttonDelete.classList.add('btn','btnError')
@@ -125,31 +153,52 @@ function renderViewFind (response,selector) {
 		buttonDelete.dataset.ref = documentDB._id
 		buttonDelete.dataset.action = 'deleteOne'
 
+		buttonUpdate.type = 'submit'
+		buttonUpdate.classList.add('btn','btnInfo')
+		buttonUpdate.innerHTML = 'Editar'
+		buttonUpdate.dataset.ref = documentDB._id
+		buttonUpdate.dataset.action = 'updateOne'
+
 		form.classList.add('form','formLabelInput','documentDB')
 		form.id = documentDB._id
+		form.dataset.ref = documentDB._id
+		form.enctype = dataForm.enctype
+		form.method = dataForm.method
+		form.action = '/api/collections/update/' + collectionSelected.value + '/' + documentDB._id
 
+		form.addEventListener('submit', updateDocumentDB)
 		for(var field in documentDB){
+
 			var dataField = dataFields[field] || field,
-				templateField = document.importNode(template.content, true)
+				templateField = document.importNode(template.content, true),
+				tfData = templateField.querySelector('.data'),
+				tfLabel = templateField.querySelector('.label')
 
-			templateField.querySelector('.label').innerHTML = dataField.label
-			templateField.querySelector('.data').value = documentDB[field]
-			templateField.querySelector('.data').readOnly = dataField.readOnly
+			if(documentDB[field] instanceof Array){
+				tfData.value = 'Array'
+			}else if(documentDB[field] instanceof Object){
+				tfData.value = 'Object'
+			}else{
+				tfData.value = documentDB[field]
+			}
 
-			templateField.querySelector('.data').type = dataField.type
-			templateField.querySelector('.data').required = dataField.required
-			templateField.querySelector('.data').name = field
-			templateField.querySelector('.data').id = field
+			tfLabel.innerHTML = dataField.label
+			tfData.readOnly = dataField.readOnly
+
+			tfData.type = dataField.type
+			tfData.required = dataField.required
+			tfData.name = field
+			tfData.id = field
 
 			form.appendChild(templateField)
 		}
 		form.appendChild(buttonDelete)
+		form.appendChild(buttonUpdate)
 		container.appendChild(form)
 	})
 }
 
 btnFind.addEventListener('click', function (){
-
 	var action = this.dataset.action
 	if(!collections[collectionSelected.value][action]) return notification.show({msg:'No se puede realizar esta accion sobre la Colección',type: 2})
 
@@ -163,7 +212,6 @@ btnFind.addEventListener('click', function (){
 })
 
 btnAgregate.onclick =  function (){
-
 	var action = this.dataset.action
 	if(!collections[collectionSelected.value][action]) return notification.show({msg:'No se puede realizar esta accion sobre la Colección',type: 2})
 	var collection = collectionSelected.value
@@ -177,7 +225,6 @@ btnAgregate.onclick =  function (){
 }
 
 btnEmpty.onclick =  function (){
-
 	var action = this.dataset.action
 	if(!collections[collectionSelected.value][action]) return notification.show({msg:'No se puede realizar esta accion sobre la Colección',type: 2})
 

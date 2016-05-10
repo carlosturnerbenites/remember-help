@@ -6,6 +6,9 @@ block titleSection
 	p Registro
 
 block content
+	section.instructions
+		p Agrega Niñ@s y pariente con sus respectivos Usuarios
+
 	form#formCheckIn.form.formOnlyInput(enctype='multipart/form-data' action='/admin/check-in' method='POST')
 		fieldset.fieldset#dataChildren
 			legend.legend Niñ@

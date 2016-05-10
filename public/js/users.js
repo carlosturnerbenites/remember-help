@@ -5,7 +5,7 @@ validator.config([
 	{
 		fn : 'equals',
 		params : 'newPassword confirmNewPassword',
-		messageError : 'La contraseña no **coincide**'
+		messageError : 'Las contraseñas no **coinciden**.'
 	}
 ])
 

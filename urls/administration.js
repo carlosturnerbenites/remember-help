@@ -9,7 +9,7 @@ const express = require('express'),
 router.use(bodyParser.json())
 
 router.get('/collections',(req,res) => {
-	res.render('collections/index')
+	res.render('collections/index',{models: utils.models,numberOfCollections: Object.keys(utils.models).length})
 })
 
 router.get('/check-in', (req, res) => res.render('users/checkIn',{statesHealth : utils.statesHealth}))
@@ -18,7 +18,6 @@ router.post(
 	'/check-in',
 	upload.any(),
 	(req, res) => {
-
 		var data = req.body,
 			dataNewChildren = {
 				id : data.idChildren,
@@ -50,7 +49,6 @@ router.post(
 			dataNewChildren.age = data.ageChildren
 			dataNewChildren.stateHealth = data.stateHealth
 			dataNewChildren.name = data.nameChildren
-
 
 			models.children.create(dataNewChildren, (err,newChildren) => {
 				if (err) return res.json({err: err})

@@ -802,6 +802,11 @@ header .titleSection > * {
   cursor: pointer;
 }
 /*Estadisticas*/
+/*Instrucciones de Uso*/
+.instructions {
+  text-align: center;
+}
+/*Instrucciones de Uso*/
 .errors {
   background-color: #ea4235;
   color: #fff;

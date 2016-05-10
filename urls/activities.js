@@ -21,9 +21,7 @@ router.post('/valid-activity',(req, res) => {
 
 				if(state.code == 1) return res.json({err : 'Ya has completado esta actividad.'})
 
-				var response = {
-					id : activity._id
-				}
+				var response = {id : activity._id}
 
 				models.history.create({
 					children: children._id,

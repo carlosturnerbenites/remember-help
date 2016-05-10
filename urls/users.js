@@ -21,9 +21,7 @@ router.post('/changePassword',(req,res) => {
 	var data = req.body
 	models.user.findOneAndUpdate(
 		{_id: data.user},
-		{
-			$set: {password: req.body.newPassword}
-		},
+		{$set: {password: data.newPassword}},
 	(err, user) => {
 		if(err) return res.json({err: err})
 		if(!user) return res.json({err : {message: 'El usuario No existe'}})

@@ -11,6 +11,7 @@ const config = require(urlConfig),
 	bodyParser = require('body-parser'),
 	expressSession = require('express-session'),
 	favicon = require('express-favicon'),
+	flash = require('connect-flash'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 
@@ -33,15 +34,18 @@ const config = require(urlConfig),
 
 	utils = require('./utils'),
 
-	fs = require('fs'),
-	Log = require('log'),
-	log = new Log('debug', fs.createWriteStream(__dirname + '/logs/remember-help.log')),
+	winston = require('winston'),
 
 	CONCURRENCY = process.env.WEB_CONCURRENCY || 1
 
+winston.add(winston.transports.File, {
+	filename: 'logs/remember-help' + new Date().getFullYear() + ' - ' + new Date().getMonth() + '.log'
+})
+winston.remove(winston.transports.Console)
+
 mongoose.connect(URIMongo, (err) => {
 	if(err) {
-		log.error(err)
+		winston.error(err)
 		throw new Error(err)
 	}
 })
@@ -68,13 +72,13 @@ app.use(expressSession({
 
 app.use(passport.initialize())
 app.use(passport.session())
-
+app.use(flash())
 passport.use(new LocalStrategy((username, password, done) => {
 	models.user.findOne({username : username},(err,user) => {
 		if(err) return done(null, false, { message: err})
 		if (!user) return done(null, false, { message: 'Unknown user'})
 		if (!user.active) return done(null, false, { message: 'User Inactive'})
-		if(user.password == password) return done(null,user)
+		if(user.password == password) return done(null,user,{message:'wellcome'})
 		done(null, false, { message: 'Unknown password'})
 	})
 }))
@@ -83,12 +87,13 @@ passport.serializeUser((user, done) => done(null, user))
 
 passport.deserializeUser((user, done) => {
 	models.user.findById(user._id,(err,user) => {
-		log.info('Logout ' + user.username + ' _id ' + user._id)
 		done(err, user)
 	})
 })
 
 app.use((req, res, next) => {
+	var error = req.flash("error")
+	var success = req.flash("success")
 	res.locals.user = req.user
 	res.locals.classcss = utils.stylesPage.getRandom()
 	res.locals.nameProject = nameProject
@@ -104,15 +109,22 @@ app.use('/statistics', requiredType([0]), urlStatistics)
 app.use('/user', requiredType([777,776,0]), urlUsers)
 app.use('/api',urlApi)
 
-app.post('/authenticate',
-	passport.authenticate('local',{failureRedirect: '/authenticate'}),
-	(req, res) => {
-		log.info('Login ' + req.user.username + ' _id ' + req.user._id)
+app.post(
+	'/authenticate',
+	passport.authenticate(
+		'local',
+		{
+			failureFlash : true,
+			successFlash : true,
+			failureRedirect: '/authenticate'
+		}
+	), (req, res) => {
+		winston.info('Login User: ' + req.user.username + '. id: ' + req.user._id)
 		if (req.user.type == 0) return res.redirect('/management/statistics')
 		if (req.user.type == 1) return res.redirect('/children/activities')
 		if (req.user.type == 776) return res.redirect('/admin/collections')
-	}
-)
+		if (req.user.type == 777) return res.redirect('/admin/collections')
+	})
 
 function requiredType (type){
 	return function ensureAuth (req, res, next) {

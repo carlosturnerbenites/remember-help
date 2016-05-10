@@ -6,6 +6,9 @@ block titleSection
 	p Perfil #{user.username}
 
 block content
+	section.instructions
+		p Visualiza y Edita tu informacion personal
+
 	form#dataAssociated.form.formOnlyInput(action='' method='POST')
 		fieldset.fieldset
 			legend.legend Mi Información
@@ -20,11 +23,11 @@ block content
 					input(type='text' name='usernameParent' id='usernameParent' value="#{associated.user.username}" placeholder='Usuario' required)
 				article.inputContainer
 					input(type='password' name='passwordParent' id='passwordParent' value="#{associated.user.password}" placeholder='Contraseña' required)
-
-			p Hijos
-			ul
-				for children in associated.children
-					li #{children.name}
+			if associated.children
+				p Hijos
+				ul
+					for children in associated.children
+						li #{children.name}
 
 	form#changePassword.form.formOnlyInput(action='/user/changePassword' method='POST')
 		fieldset.fieldset
@@ -40,23 +43,25 @@ block content
 				button.btn.btnSuccess(type='submit')
 					span Cambiar
 
-	form#changePasswordChildren.form.formOnlyInput(action='/user/changePassword' method='POST')
-		fieldset.fieldset
-			legend.legend Cambiar Contraseña niñ@
-			article.inputContainer
-				label.label(for='user') Niñ@
-				select(type='date', name='user' id='user' required)
-					for children in associated.children
-						option(value='#{children.user}') #{children.name}
-			article.inputContainer
-				input(type='password', name='currentPassword', placeholder='Contraseña Actual', autofocus required)
-			article.inputContainer
-				input(type='password', name='newPassword', placeholder='Nueva Contraseña', required)
-			article.inputContainer
-				input(type='password', name='confirmNewPassword', placeholder='Repetir Contraseña', autofocus required)
-			article.inputContainer.alignItemsCenter
-				button.btn.btnSuccess(type='submit')
-					span Cambiar
+	if associated.children
+
+		form#changePasswordChildren.form.formOnlyInput(action='/user/changePassword' method='POST')
+			fieldset.fieldset
+				legend.legend Cambiar Contraseña niñ@
+				article.inputContainer
+					label.label(for='user') Niñ@
+					select(type='date', name='user' id='user' required)
+						for children in associated.children
+							option(value='#{children.user}') #{children.name}
+				article.inputContainer
+					input(type='password', name='currentPassword', placeholder='Contraseña Actual', autofocus required)
+				article.inputContainer
+					input(type='password', name='newPassword', placeholder='Nueva Contraseña', required)
+				article.inputContainer
+					input(type='password', name='confirmNewPassword', placeholder='Repetir Contraseña', autofocus required)
+				article.inputContainer.alignItemsCenter
+					button.btn.btnSuccess(type='submit')
+						span Cambiar
 
 block scripts
 	script(src="/js/users.js")

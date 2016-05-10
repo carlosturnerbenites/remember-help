@@ -6,6 +6,10 @@ block titleSection
 	p Recordar Datos
 
 block content
+
+	section.instructions
+		p ¿Olvidate tus datos?. Escribe el correo que registrarse al ingresar a #[strong #{nameProject}] y te ayudamos a recordar.
+
 	form#formRememberData.form.formOnlyInput.formRememberData(action='/remember' method='POST')
 			article.inputContainer
 				input(type='email', name='email', placeholder='Correo Electronico', autofocus required)

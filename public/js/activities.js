@@ -27,7 +27,6 @@ function RangeTolerance (options){
 }
 
 activities.forEach((activity) => {
-
 	var date = new Date(activity.dataset.date),
 		dataDate = date.getHours() > 6 && date.getHours() < 18 ? {classcss:'morning'} : {classcss:'nigth'}
 
@@ -56,10 +55,9 @@ function confirmActivity () {
 }
 
 function registerActivity (){
-	text.toVoice(this.dataset.speech)
-
 	detailActivityActive = this.dataset
 
+	text.toVoice(this.dataset.speech)
 	var template = document.querySelector('#templateConfirmActivityWindow'),
 		clone = document.importNode(template.content,true)
 
