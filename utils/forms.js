@@ -163,27 +163,27 @@ var dataModelsForForms = {
 	user: {
 		form:{
 			'method': 'POST',
-			'enctype' : 'application/x-www-form-urlencoded'
+			'enctype' : 'multipart/form-data'
 		},
 		fields:{
 			active:{
 				type:'checkbox',
 				label:'Activo',
-				required:true,
 				default:true
 			},
-			photo:{
-				type:'text',
+			photo :{
+				type:'file',
 				label:'Foto',
-				default: 'unkown.png'
+				accept: 'image/*',
+				required:true
 			},
 			password:{
-				type:'text',
+				type:'password',
 				label:'Contraseña',
 				required:true
 			},
 			email:{
-				type:'text',
+				type:'email',
 				label:'Correo Electronico',
 				required:true
 			},

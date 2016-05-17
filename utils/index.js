@@ -54,9 +54,9 @@ var permissionsCollection = {
 	user: {
 		edit: true,
 		find: true,
-		create: false,
+		create: true,
 		delete: true,
-		deleteOne: false,
+		deleteOne: true,
 		updateOne: true
 	},
 	activity: {
@@ -73,7 +73,7 @@ var permissionsCollection = {
 		create: false,
 		delete: false,
 		deleteOne: false,
-		updateOne: true
+		updateOne: false
 	}
 }
 

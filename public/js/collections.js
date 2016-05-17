@@ -25,7 +25,9 @@ var checkImageSize = (event) => {
 }
 
 function updateDocumentDB (event){
-	event.preventDefault()
+	this.action = '/api/collections/update/' + collectionSelected.value + '/' + this.dataset.ref;
+	this.method = 'POST'
+
 	var action = this.querySelector('[type=submit]').dataset.action
 
 	if(!collections[collectionSelected.value][action]){
@@ -33,17 +35,6 @@ function updateDocumentDB (event){
 		return notification.show({msg:'No se puede realizar esta accion sobre la Colección',type: 2})
 	}
 	if(!confirm('Desea Editar este documento ')) return event.preventDefault()
-
-	ajax({
-		type : 'PUT',
-		URL : '/api/collections/update/' + collectionSelected.value + '/' + this.dataset.ref,
-		async : true,
-		onSuccess : response => {
-			if(response.err) return notification.show({msg:response.err.message,type:1})
-			notification.show({msg:response.msg,type:0})
-		},
-		data : null
-	})
 }
 
 function deleteDocumentDB (){
@@ -162,9 +153,9 @@ function renderViewFind (response,selector) {
 		form.classList.add('form','formLabelInput','documentDB')
 		form.id = documentDB._id
 		form.dataset.ref = documentDB._id
-		form.enctype = dataForm.enctype
-		form.method = dataForm.method
-		form.action = '/api/collections/update/' + collectionSelected.value + '/' + documentDB._id
+		//form.enctype = dataForm.enctype
+		//form.method = dataForm.method
+		//form.action = '/api/collections/update/' + collectionSelected.value + '/' + documentDB._id
 
 		form.addEventListener('submit', updateDocumentDB)
 		for(var field in documentDB){
@@ -177,7 +168,7 @@ function renderViewFind (response,selector) {
 			if(documentDB[field] instanceof Array){
 				tfData.value = 'Array'
 			}else if(documentDB[field] instanceof Object){
-				tfData.value = 'Object'
+				tfData.value = documentDB[field].name
 			}else{
 				tfData.value = documentDB[field]
 			}
@@ -219,7 +210,7 @@ btnAgregate.onclick =  function (){
 		type : 'GET',
 		URL : '/api/collections/dataForm/' + collectionSelected.value,
 		async : true,
-		onSuccess : schema => renderViewAgregate(schema,collection,'#addDocument'),
+		onSuccess : schema => renderViewAgregate(schema,collection,'#results'),
 		data : null
 	})
 }

@@ -11,6 +11,7 @@ const express = require('express'),
 
 var permissions = utils.permissionsCollection
 
+router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
 function serialize (req,model) {
@@ -22,6 +23,11 @@ function serialize (req,model) {
 
 		if(field.instance == 'Date'){
 			data[nameField] = new Date(data[nameField])
+		}
+
+		if(field.instance == 'Boolean'){
+			console.log(data[nameField])
+			data[nameField] = data[nameField] | false
 		}
 	}
 
@@ -138,17 +144,20 @@ router.delete('/collections/empty/:collection/:id',(req, res) => {
 	})
 })
 
-router.put('/collections/update/:collection/:id',(req, res) => {
-	var collection = req.params.collection,
-		id = req.params.id,
-		model = mongoose.model(collection),
-		action = 'updateOne',
-		data = req.body
+router.post('/collections/update/:collection/:id',
+	uploadActivities.any(),(req, res) => {
+		var collection = req.params.collection,
+			id = req.params.id,
+			model = mongoose.model(collection),
+			action = 'updateOne',
+			data = req.body
 
-	model.findByIdAndUpdate(id, {$set: data},(err, document) => {
-		if (err) return res.json({err: err})
-		return res.json({msg: 'El Documento se ha **Editado** correctamente', document: document})
+			console.log(data)
+
+		model.findByIdAndUpdate(id, {$set: data},(err, document) => {
+			if (err) return res.json({err: err})
+			return res.json({msg: 'El Documento se ha **Editado** correctamente', document: document})
+		})
 	})
-})
 
 module.exports = router
