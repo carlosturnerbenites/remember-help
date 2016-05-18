@@ -5,6 +5,8 @@ var btnAgregate = document.querySelector('#AgregateInCollection'),
 	notification = new NotificationC(),
 	collections
 
+collectionSelected.querySelector('option').selected = true
+
 ajax({
 	type : 'GET',
 	URL : '/api/permissions/',
@@ -97,7 +99,9 @@ function renderViewAgregate (schema,collection,selector){
 				tfData.addEventListener('change',checkImageSize)
 			}
 		}
-		if(data.type == 'checkbox'){}
+		if(data.type == 'checkbox'){
+
+		}
 		if(data.type == 'ref'){
 			var select = document.createElement('select')
 
@@ -127,10 +131,12 @@ function renderViewAgregate (schema,collection,selector){
 function renderViewFind (response,selector) {
 	var template = document.querySelector('template#templateField'),
 		container = document.querySelector(selector),
-		dataFields = response.schema.fields,
-		dataForm = response.schema.form
+		configFields = response.schema.fields,
+		configForm = response.schema.form
 
 	container.innerHTML = ''
+
+	if(!response.documents.length) return notification.show({msg:'No se **encontraron** Resultados.',type: 2})
 
 	response.documents.forEach(documentDB => {
 		var form = document.createElement('form'),
@@ -153,21 +159,25 @@ function renderViewFind (response,selector) {
 		form.classList.add('form','formLabelInput','documentDB')
 		form.id = documentDB._id
 		form.dataset.ref = documentDB._id
-		//form.enctype = dataForm.enctype
-		//form.method = dataForm.method
-		//form.action = '/api/collections/update/' + collectionSelected.value + '/' + documentDB._id
 
 		form.addEventListener('submit', updateDocumentDB)
 		for(var field in documentDB){
+			console.log(field)
+			var data = configFields[field]
 
-			var dataField = dataFields[field] || field,
+			var dataField = configFields[field] || field,
 				templateField = document.importNode(template.content, true),
 				tfData = templateField.querySelector('.data'),
 				tfLabel = templateField.querySelector('.label')
 
+
 			if(documentDB[field] instanceof Array){
 				tfData.value = 'Array'
+				for(var item of documentDB[field]){
+					console.log(item)
+				}
 			}else if(documentDB[field] instanceof Object){
+				console.log(documentDB[field].name)
 				tfData.value = documentDB[field].name
 			}else{
 				tfData.value = documentDB[field]
@@ -181,6 +191,9 @@ function renderViewFind (response,selector) {
 			tfData.name = field
 			tfData.id = field
 
+			if(data.type == 'checkbox'){
+				tfData.checked = documentDB[field]
+			}
 			form.appendChild(templateField)
 		}
 		form.appendChild(buttonDelete)
@@ -208,9 +221,9 @@ btnAgregate.onclick =  function (){
 	var collection = collectionSelected.value
 	ajax({
 		type : 'GET',
-		URL : '/api/collections/dataForm/' + collectionSelected.value,
+		URL : '/api/collections/' + collectionSelected.value,
 		async : true,
-		onSuccess : schema => renderViewAgregate(schema,collection,'#results'),
+		onSuccess : response => renderViewAgregate(response.schema,collection,'#results'),
 		data : null
 	})
 }

@@ -11,7 +11,7 @@ const config = require(urlConfig),
 	bodyParser = require('body-parser'),
 	expressSession = require('express-session'),
 	favicon = require('express-favicon'),
-	flash = require('connect-flash'),
+	flash = require('express-flash'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 
@@ -92,8 +92,6 @@ passport.deserializeUser((user, done) => {
 })
 
 app.use((req, res, next) => {
-	var error = req.flash("error")
-	var success = req.flash("success")
 	res.locals.user = req.user
 	res.locals.classcss = utils.stylesPage.getRandom()
 	res.locals.nameProject = nameProject

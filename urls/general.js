@@ -23,7 +23,10 @@ router.post('/remember', (req,res) => {
 
 	models.user.findOne({email: email},(err,user) => {
 		if (err) return res.json({err: err})
-		if (!user) return res.json({msg: 'El correo no se encuentra registrado'})
+		if (!user) {
+			req.flash('error','El correo no se encuentra registrado')
+			return res.redirect(req.get('referer'))
+		}
 
 		user.getAssociated().then(associated => {
 			var fn = jade.compileFile('views/mails/remember.jade', {})
@@ -43,6 +46,7 @@ router.post('/remember', (req,res) => {
 
 			transporter.sendMail(mailOptions, function (err, info){
 				if(err) return res.json({err:{message: err}})
+				req.flash('success','El correo se envio correctamente a ' + info.accepted)
 				res.redirect('/authenticate')
 			})
 		})

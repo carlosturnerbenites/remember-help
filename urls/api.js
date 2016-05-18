@@ -52,8 +52,9 @@ router.get('/collections/schemas/:collection',(req, res) => {
 	res.json(paths)
 })
 
-router.get('/collections/dataForm/:collection',(req, res) => {
+router.get('/collections/:collection',(req, res) => {
 	var collection = req.params.collection,
+		model = mongoose.model(collection),
 		dataForm = formsView[collection],
 		promises = []
 
@@ -62,27 +63,19 @@ router.get('/collections/dataForm/:collection',(req, res) => {
 		if(field.type == 'ref'){
 			var query = models[field.ref].find().exec((err,documents) => {
 				field.dataRef = documents
-				res.json(formsView[collection])
 			})
 			promises.push(query)
 		}
 	}
 	Q.all(promises).then(() => {
-		return res.json(formsView[collection])
+		model.find({},{__v: 0})
+		.populate('user parent activity children')
+		.exec((err,documents) => {
+			if (err) return res.json({err:err})
+			res.json({documents: documents,schema: dataForm})
+		})
 	})
-})
 
-router.get('/collections/:collection',(req, res) => {
-	var collection = req.params.collection,
-		model = mongoose.model(collection),
-		formschema = formsView[collection]
-
-	model.find({},{__v: 0})
-	.populate('user parent activity children')
-	.exec((err,documents) => {
-		if (err) return res.json({err:err})
-		res.json({documents: documents,schema: formschema})
-	})
 })
 
 router.post('/collection/:collection',(req, res) => {
@@ -111,7 +104,8 @@ router.post('/collections/add/:collection',
 
 		model.create(data,(err, document) => {
 			if(err) return res.json(err)
-			return res.json({msg: 'Se ha creado Correctamente el documento', document: document})
+			req.flash('success','Se ha creado Correctamente el documento')
+			res.redirect(req.get('referer'))
 		})
 	})
 
@@ -150,13 +144,24 @@ router.post('/collections/update/:collection/:id',
 			id = req.params.id,
 			model = mongoose.model(collection),
 			action = 'updateOne',
-			data = req.body
+			data = req.body,
 
-			console.log(data)
+			configFields = formsView[collection].fields
+
+		for(var field in configFields){
+			var dataField = configFields[field]
+
+			if(dataField.type == 'checkbox'){
+				console.log(dataField)
+				console.log(data[field] = data[field] || false)
+			}
+
+		}
 
 		model.findByIdAndUpdate(id, {$set: data},(err, document) => {
 			if (err) return res.json({err: err})
-			return res.json({msg: 'El Documento se ha **Editado** correctamente', document: document})
+			req.flash('success','El Documento se ha Editado correctamente.')
+			res.redirect(req.get('referer'))
 		})
 	})
 

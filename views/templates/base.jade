@@ -7,5 +7,14 @@ html(lang='es')
 		link(rel='stylesheet', href='/css/styles.css')
 	body
 		block template
+		-var typesMessages = ['warning','success','info','error']
+		for typeMessages in typesMessages
+			if messages[typeMessages]
+				for message in messages[typeMessages]
+					p(class="#{typeMessages}").message #{message}
+						button(type="button" class="close" )
+							span ×
+		script(src='/js/main.js')
+
 
 

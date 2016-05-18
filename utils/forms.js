@@ -5,6 +5,10 @@ var dataModelsForForms = {
 			'enctype' : 'multipart/form-data'
 		},
 		fields:{
+			_id:{
+				type:'hidden',
+				label:''
+			},
 			date :{
 				type:'date',
 				label:'Fecha',
@@ -46,6 +50,10 @@ var dataModelsForForms = {
 			'enctype' : 'application/x-www-form-urlencoded'
 		},
 		fields:{
+			_id:{
+				type:'hidden',
+				label:''
+			},
 			age:{
 				type:'number',
 				label:'Edad',
@@ -96,6 +104,10 @@ var dataModelsForForms = {
 			'enctype' : 'application/x-www-form-urlencoded'
 		},
 		fields:{
+			_id:{
+				type:'hidden',
+				label:''
+			},
 			id:{
 				type:'number',
 				label:'identificacion',
@@ -126,6 +138,10 @@ var dataModelsForForms = {
 			'enctype' : 'application/x-www-form-urlencoded'
 		},
 		fields:{
+			_id:{
+				type:'hidden',
+				label:''
+			},
 			children:{
 				type:'ref',
 				label:'Niñ@',
@@ -166,6 +182,10 @@ var dataModelsForForms = {
 			'enctype' : 'multipart/form-data'
 		},
 		fields:{
+			_id:{
+				type:'hidden',
+				label:''
+			},
 			active:{
 				type:'checkbox',
 				label:'Activo',
@@ -207,6 +227,10 @@ var dataModelsForForms = {
 			'enctype' : 'application/x-www-form-urlencoded'
 		},
 		fields:{
+			_id:{
+				type:'hidden',
+				label:''
+			},
 			activity:{
 				type:'ref',label:'Actividad',
 				ref:'activity',

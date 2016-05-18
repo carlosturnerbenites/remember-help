@@ -189,7 +189,8 @@ childrenSchema.post('remove', function (children) {
 		}
 	})
 	models.user.findById(children.user,(err, user) => {
-		user.remove()
+		if(err) return log.error(err)
+		if(user) user.remove()
 	})
 })
 
