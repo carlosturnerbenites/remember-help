@@ -183,16 +183,24 @@ function renderViewFind (response,selector) {
 				tfData.checked = documentDB[field]
 			}else if(data.type == 'file'){
 				if(documentDB[field]) tfData.required = false
+			}else if(data.type == 'ref'){
+
+				var schemasRef = response.schemas[data.ref]
+				console.log(data)
+				console.log(schemasRef)
+				console.log(documentDB[field])
+				tfData.value = documentDB[field][schemasRef.fieldTextRef]
+				tfData.name = ''
+
+				var input = document.createElement('input')
+				input.type = 'hidden'
+				input.value = documentDB[field][schemasRef.fieldValueRef]
+				input.name = field
+				input.id = field
+				templateField.appendChild(input)
+
 			}else{
-				if(documentDB[field] instanceof Array){
-					tfData.value = 'Array'
-					for(var item of documentDB[field]){
-					}
-				}else if(documentDB[field] instanceof Object){
-					tfData.value = documentDB[field].name
-				}else{
-					tfData.value = documentDB[field]
-				}
+				tfData.value = documentDB[field]
 			}
 
 			form.appendChild(templateField)

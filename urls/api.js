@@ -3,13 +3,24 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	mongoose = require('mongoose'),
 	multer = require('multer'),
-	uploadActivities = multer({ dest: 'public/images/activities' }),
 	formsView = require('./../utils/forms.js'),
 	utils = require('./../utils/'),
 	models = require('./../models/'),
 	Q = require('q')
 
 var permissions = utils.permissionsCollection
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		var path = 'public/images/'
+		if(req.params.collection) {
+			var model = mongoose.model(req.params.collection)
+			path += model.collection.name
+		}
+		cb(null, path)
+	}
+})
+
+var upload = multer({ storage: storage })
 
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
@@ -26,14 +37,13 @@ function serialize (req,model) {
 		}
 
 		if(field.instance == 'Boolean'){
-			console.log(data[nameField])
-			data[nameField] = data[nameField] | false
+			data[nameField] = data[nameField] == 'on'?true : false
 		}
 	}
 
 	if(req.files){
 		for (var file of req.files){
-			data[file.fieldname] = file.path.replace(/^public/,'')
+			data[file.fieldname] = file.filename
 		}
 	}
 
@@ -72,7 +82,7 @@ router.get('/collections/:collection',(req, res) => {
 		.populate('user parent activity children')
 		.exec((err,documents) => {
 			if (err) return res.json({err:err})
-			res.json({documents: documents,schema: dataForm})
+			res.json({documents: documents,schema: dataForm,schemas:formsView})
 		})
 	})
 
@@ -95,12 +105,14 @@ router.post('/collection/:collection',(req, res) => {
 })
 
 router.post('/collections/add/:collection',
-	uploadActivities.any(),
+	upload.any(),
 	(req, res) => {
 		var collection = req.params.collection,
 			model = mongoose.model(collection),
 			data = serialize(req,model),
 			action = 'create'
+
+		delete data._id
 
 		model.create(data,(err, document) => {
 			if(err) return res.json(err)
@@ -139,12 +151,13 @@ router.delete('/collections/empty/:collection/:id',(req, res) => {
 })
 
 router.post('/collections/update/:collection/:id',
-	uploadActivities.any(),(req, res) => {
+	upload.any()
+	,(req, res) => {
 		var collection = req.params.collection,
 			id = req.params.id,
 			model = mongoose.model(collection),
 			action = 'updateOne',
-			data = req.body,
+			data = serialize(req,model),
 
 			configFields = formsView[collection].fields
 

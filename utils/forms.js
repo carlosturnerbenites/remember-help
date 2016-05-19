@@ -1,5 +1,7 @@
 var dataModelsForForms = {
 	activity : {
+		fieldTextRef :'text',
+		fieldValueRef :'_id',
 		form:{
 			'method': 'POST',
 			'enctype' : 'multipart/form-data'
@@ -45,6 +47,8 @@ var dataModelsForForms = {
 		}
 	},
 	children: {
+		fieldTextRef :'name',
+		fieldValueRef :'_id',
 		form:{
 			'method': 'POST',
 			'enctype' : 'application/x-www-form-urlencoded'
@@ -99,6 +103,8 @@ var dataModelsForForms = {
 		}
 	},
 	administrator: {
+		fieldTextRef :'name',
+		fieldValueRef :'_id',
 		form:{
 			'method': 'POST',
 			'enctype' : 'application/x-www-form-urlencoded'
@@ -133,6 +139,8 @@ var dataModelsForForms = {
 		}
 	},
 	parent: {
+		fieldTextRef :'name',
+		fieldValueRef :'_id',
 		form:{
 			'method': 'POST',
 			'enctype' : 'application/x-www-form-urlencoded'
@@ -177,6 +185,8 @@ var dataModelsForForms = {
 		}
 	},
 	user: {
+		fieldTextRef :'username',
+		fieldValueRef :'_id',
 		form:{
 			'method': 'POST',
 			'enctype' : 'multipart/form-data'
@@ -222,6 +232,8 @@ var dataModelsForForms = {
 		}
 	},
 	history: {
+		fieldTextRef :'_id',
+		fieldValueRef :'_id',
 		form:{
 			'method': 'POST',
 			'enctype' : 'application/x-www-form-urlencoded'
