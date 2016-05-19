@@ -76,10 +76,10 @@ app.use(flash())
 passport.use(new LocalStrategy((username, password, done) => {
 	models.user.findOne({username : username},(err,user) => {
 		if(err) return done(null, false, { message: err})
-		if (!user) return done(null, false, { message: 'Unknown user'})
-		if (!user.active) return done(null, false, { message: 'User Inactive'})
-		if(user.password == password) return done(null,user,{message:'wellcome'})
-		done(null, false, { message: 'Unknown password'})
+		if (!user) return done(null, false, { message: 'El usuario no se encuentra Registrado.'})
+		if (!user.active) return done(null, false, { message: 'EL usuario se encuentra Inactivo'})
+		if(user.password == password) return done(null,user,{message:'Bienvenido ' + user.username})
+		done(null, false, { message: 'La contraseña es incorrecta.'})
 	})
 }))
 
