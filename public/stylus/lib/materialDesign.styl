@@ -1,0 +1,141 @@
+@import "nib"
+@import "nib/vendor"
+
+vendor-prefixes = o ms webkit moz official
+
+button, input
+	outline none
+
+input[type=radio]
+input[type=checkbox]
+	appearance none
+	width 20px
+	height 20px
+	border 2px solid rgba(170, 57, 57,.5)
+	display flex
+	align-items center
+	justify-content center
+	&:before
+		background-color rgba(170, 57, 57,.1)
+		content " "
+		width 5px
+		height 5px
+	&:checked
+		border 2px solid rgba(170, 57, 57,1)
+		&:before
+			background-color rgb(170, 57, 57) !important
+			content " "
+			transition 0.5s all linear
+			animation 0.3s shadow 1 linear
+			width 10px
+			height 10px
+input[type=radio]
+	border-radius 50%
+	&:before
+		border-radius 50%
+
+input[type=checkbox]
+	border-radius 3px
+	&:before
+		border-radius 3px
+
+[data-aux-effect]
+	display inline-block
+	.effect-onda
+		background-color rgba(0,0,0,0.3) !important
+	input:valid ~ .effect-onda
+		background-color rgb(165, 218, 145) !important
+	input:invalid ~ .effect-onda
+		background-color rgb(255, 170, 170) !important
+input
+	padding 3px
+
+select
+	background-color transparent
+	border-radius 3px
+	padding 3px
+	width 100px
+
+.btn
+	appearance none
+	border none
+	color white
+	margin 0 2px
+	box-shadow 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+	padding 10px
+	font-weight bold
+	border-radius 3px
+	cursor pointer
+	&-default
+		background-color #70B45A
+		color white
+	&-normal
+		background-color transparent
+		color black
+		box-shadow none
+		.effect-onda
+			background-color rgba(112, 180, 90,0.9)
+		&:hover
+			box-shadow none !important
+	&:active
+		box-shadow 0px 0px transparent
+		transition .1s box-shadow
+	&Error
+		background-color baseRed !important
+	&Help
+		background-color baseYellow !important
+		cursor help
+		margin-top 0 !important
+	&Info
+		background-color baseBlue !important
+	&Success
+		background-color baseGreen !important
+	&Round
+		border-radius 50%
+		height 300px !important
+		width 300px !important
+	&:disabled
+		background-color colorBtnDiabledBackground !important
+		cursor not-allowed
+
+	&:hover
+		box-shadow 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15)
+.effect
+	overflow hidden
+	position relative
+
+.effect-onda
+	width 20px
+	height 20px
+	position absolute
+	border-radius 50%
+	transition 0.5s all linear
+	animation 0.5s expandir 1 linear
+	background-color white
+	opacity 0.3
+	display inline-block
+	pointer-events none
+
+@keyframes expandir
+	0%
+		transform scale(1)
+	25%
+		transform scale(2)
+	50%
+		transform scale(5)
+	75%
+		transform scale(7)
+	100%
+		transform scale(9)
+
+@keyframes shadow
+	0%
+		box-shadow 0 0px 0px 2px rgba(170, 57, 57,.5)
+	25%
+		box-shadow 0 0px 0px 5px rgba(170, 57, 57,.5)
+	50%
+		box-shadow 0 0px 0px 8px rgba(170, 57, 57,.5)
+	75%
+		box-shadow 0 0px 0px 13px rgba(170, 57, 57,.5)
+	100%
+		box-shadow 0 0px 0px 15px rgba(170, 57, 57,.5)

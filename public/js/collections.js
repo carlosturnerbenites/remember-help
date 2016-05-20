@@ -3,6 +3,7 @@ var btnAgregate = document.querySelector('#AgregateInCollection'),
 	btnEmpty = document.querySelector('#emptyCollection'),
 	collectionSelected = document.querySelector('#collection'),
 	notification = new NotificationC(),
+	commonElement = new CommonElement(),
 	collections
 
 collectionSelected.querySelector('option').selected = true
@@ -117,13 +118,14 @@ function renderViewAgregate (schema,collection,selector){
 				select.appendChild(option)
 			}
 
-			Tfield.replaceChild(select, tfData)
+			tfData.parentNode.replaceChild(select, tfData)
 		}
 
 	}
-	var input = document.createElement('input')
+	var input = document.createElement('button')
 	input.type = 'submit'
-	input.classList.add('btn','btnSuccess')
+	input.innerHTML = 'Guardar'
+	input.classList.add('btn','btnSuccess','effect')
 	form.appendChild(input)
 
 	container.appendChild(form)
@@ -140,20 +142,14 @@ function renderViewFind (response,selector) {
 	if(!response.documents.length) return notification.show({msg:'No se **encontraron** Resultados.',type: 2})
 
 	response.documents.forEach(documentDB => {
-		var form = document.createElement('form'),
-			buttonDelete = document.createElement('button'),
-			buttonUpdate = document.createElement('button')
+		var form = document.createElement('form')
 
-		buttonDelete.type = 'button'
-		buttonDelete.classList.add('btn','btnError')
-		buttonDelete.innerHTML = 'Borrar'
+		var buttonDelete = commonElement.get('button',{html:'Borrar', css:['effect','btnError']})
 		buttonDelete.addEventListener('click', deleteDocumentDB)
 		buttonDelete.dataset.ref = documentDB._id
 		buttonDelete.dataset.action = 'deleteOne'
 
-		buttonUpdate.type = 'submit'
-		buttonUpdate.classList.add('btn','btnInfo')
-		buttonUpdate.innerHTML = 'Editar'
+		var buttonUpdate = commonElement.get('button',{html:'Editar', css:['effect','btnInfo'],general:{type:'submit'}})
 		buttonUpdate.dataset.ref = documentDB._id
 		buttonUpdate.dataset.action = 'updateOne'
 
@@ -163,7 +159,6 @@ function renderViewFind (response,selector) {
 
 		form.addEventListener('submit', updateDocumentDB)
 		for(var field in documentDB){
-			console.log(field)
 			var data = configFields[field]
 
 			var dataField = configFields[field] || field,
@@ -184,21 +179,29 @@ function renderViewFind (response,selector) {
 			}else if(data.type == 'file'){
 				if(documentDB[field]) tfData.required = false
 			}else if(data.type == 'ref'){
-
 				var schemasRef = response.schemas[data.ref]
-				console.log(data)
-				console.log(schemasRef)
-				console.log(documentDB[field])
-				tfData.value = documentDB[field][schemasRef.fieldTextRef]
-				tfData.name = ''
+				if(documentDB[field] instanceof Array){
+					var fieldset = document.createElement('fieldset')
+					for (var item of documentDB[field]){
+						var clone = tfData.cloneNode(true)
+						clone.value = item[schemasRef.fieldValueRef]
+						clone.name = field
+						clone.type = schemasRef.fields[schemasRef.fieldTextRef].type
+						fieldset.appendChild(clone)
+					}
+					tfData.parentNode.replaceChild(fieldset,tfData)
+				}else{
 
-				var input = document.createElement('input')
-				input.type = 'hidden'
-				input.value = documentDB[field][schemasRef.fieldValueRef]
-				input.name = field
-				input.id = field
-				templateField.appendChild(input)
+					tfData.value = documentDB[field][schemasRef.fieldTextRef]
+					tfData.name = ''
 
+					var input = document.createElement('input')
+					input.type = 'hidden'
+					input.value = documentDB[field][schemasRef.fieldValueRef]
+					input.name = field
+					input.id = field
+					templateField.appendChild(input)
+				}
 			}else{
 				tfData.value = documentDB[field]
 			}

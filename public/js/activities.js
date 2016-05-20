@@ -46,8 +46,9 @@ function confirmActivity () {
 		date: new Date(this.dataset.date),
 		tolerance: parseInt(this.dataset.tolerance),
 		onBefore : () => {
-			text.toVoice('Vas un poco tarde.')
-			registerActivity.bind(this)()
+			text.toVoice('Vas un poco tarde, Intenta Mañana.')
+			//text.toVoice('Vas un poco tarde.')
+			//registerActivity.bind(this)()
 		},
 		onDuring : registerActivity.bind(this),
 		onAfter : () => text.toVoice('Aun no es hora de realizar esta actividad.')

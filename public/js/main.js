@@ -1,3 +1,14 @@
+function effect(evento){
+	var span = document.createElement('span')
+	this.appendChild(span)
+	span.style.top = evento.offsetY + 'px'
+	span.style.left = evento.offsetX + 'px'
+	span.classList.add('effect-onda')
+	window.setTimeout(() => {
+		this.removeChild(span)
+	},500)
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 	var btnLogout = document.querySelector('#btnLogout')
 	if(btnLogout){
@@ -9,4 +20,17 @@ document.addEventListener('DOMContentLoaded', function () {
 	if(btnCloseMessage.length){
 		btnCloseMessage.forEach(button => {button.onclick = function (e) {this.parentNode.remove()}})
 	}
+	var btnEffect = Array.from(document.querySelectorAll('.effect'))
+
+	btnEffect.forEach(function (element, index) {
+		element.onmousedown = effect
+	})
+
+	document.addEventListener('DOMNodeInserted', function (ev) {
+		var btnEffect = Array.from(document.querySelectorAll('.effect'))
+		btnEffect.forEach(function (element, index) {
+			element.onmousedown = effect
+		})
+	}, false)
+
 }, false)

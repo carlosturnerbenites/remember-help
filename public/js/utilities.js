@@ -90,6 +90,13 @@ HTMLElement.prototype.disabeldInputs = function (valueDisabled, selector, except
 	}
 	return this
 }
+HTMLElement.prototype.readOnlyInputs = function (valueReadOnly, selector, exceptions){
+	var elements = this.querySelectorAll(selector)
+	for (var element of Array.from(elements)){
+		if (exceptions.indexOf(element.name) < 0) element.readOnly = valueReadOnly
+	}
+	return this
+}
 
 HTMLElement.prototype.emptyInputs = function (selector,exceptions){
 	/*
@@ -101,6 +108,29 @@ HTMLElement.prototype.emptyInputs = function (selector,exceptions){
 		if (exceptions.indexOf(element.name) < 0) element.value = ''
 	}
 	return this
+}
+
+function CommonElement (){
+	this.init = () => {
+		this.template = document.querySelector('#commonElements')
+		this.cloneTemplate = document.importNode(this.template.content, true)
+	}
+	this.get = function (name,data){
+		this.init()
+		var element = this.cloneTemplate.querySelector(name),
+			cloneElement = element.cloneNode(true)
+		cloneElement.innerHTML = data.html
+
+		if(data.css){
+			data.css.forEach(classCss => {
+				cloneElement.classList.add(classCss)
+			})
+		}
+		if(data.general){
+			for(var key in data.general){cloneElement.setAttribute(key,data.general[key])}
+		}
+		return cloneElement
+	}
 }
 
 function Validator (form){

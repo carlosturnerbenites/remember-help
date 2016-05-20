@@ -12,7 +12,7 @@ block modal
 			article.titleModal
 			article.bodyModal
 			article.footerModal
-				button.btn.btnError(data-closeModal='#modal' data-rol-modal='close' data-referenceModal='#modal') Volver
+				button.btn.btnError.effect(data-closeModal='#modal' data-rol-modal='close' data-referenceModal='#modal') Volver
 
 block content
 	section.activities
@@ -40,9 +40,9 @@ block content
 				button.btn.btnSuccess.btnRound#buttonCaptureVoice
 					span.icon-voice
 			else if (children.stateHealth == 2)
-				button.btn.btnSuccess.btnRound(onclick='response("si")') Si
+				button.btn.btnSuccess.btnRound.effect(onclick='response("si")') Si
 					span.icon-
-				button.btn.btnError.btnRound(onclick='response("no")') No
+				button.btn.btnError.btnRound.effect(onclick='response("no")') No
 					span.icon-
 		script(src='/js/confirmActivity.js')
 

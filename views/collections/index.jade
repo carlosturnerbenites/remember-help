@@ -19,9 +19,9 @@ block content
 					option(value='#{model.modelName}' ) #{model.collection.collectionName}
 
 		article.alignItemsEnd
-			input.btn.btnInfo(type='button' id='findInCollection' value='Buscar' data-action='find')
-			input.btn.btnSuccess(type='button' id='AgregateInCollection' value='Agregar' data-action='create')
-			input.btn.btnError(type='button' id='emptyCollection' value='Vaciar' data-action='delete')
+			button.btn.effect.btnInfo(type='button' id='findInCollection' data-action='find') Buscar
+			button.btn.effect.btnSuccess(type='button' id='AgregateInCollection' data-action='create') Agregar
+			button.btn.effect.btnError(type='button' id='emptyCollection' data-action='delete') Vaciar
 
 	section.documents#results
 	section#addDocument

@@ -15,7 +15,7 @@ block content
 			article.inputContainer
 				input(type='text', name='username', placeholder='Usuario', autofocus required)
 			article.inputContainer.alignItemsCenter
-				button#continueAuthenticate.btn.btnSuccess(type='button')
+				button#continueAuthenticate.btn.btnSuccess.effect(type='button')
 					span Continuar
 		section#sectionAuth(data-hidden="true")
 			article.inputContainer.alignItemsCenter
@@ -23,7 +23,7 @@ block content
 			article.inputContainer
 				input(type='password', name='password', placeholder='Contraseña', required)
 			article.inputContainer.alignItemsCenter
-				button.btn.btnSuccess(type='submit')
+				button.btn.btnSuccess.effect(type='submit')
 					span Ingresar
 		a(href="/remember") Has Olvidado algo?
 	script(src='/js/lib/markdown.min.js')

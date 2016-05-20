@@ -59,8 +59,10 @@ router.post(
 					if(family) {
 						family.update({ $push : {children: newChildren}}, (err) => {
 							if (err) return res.json({err: err})
+							models.children.findOneAndUpdate({_id : newChildren._id}, {$set : { parent : family._id}}).exec()
 							return res.redirect('/admin/check-in')
 						})
+
 					}else {
 						models.user.create(dataNewFamily, (err, user) => {
 							if (err) return res.json({err: err})

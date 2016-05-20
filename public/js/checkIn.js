@@ -75,14 +75,17 @@ formCheckIn.idFamily.onchange = function (e){
 				if (response.document){
 					var documentDB = response.document
 
-					container.disabeldInputs(true, 'input, select',['idFamily'])
+					container.readOnlyInputs(true, 'input, select',['idFamily'])
 					container.querySelector('#nameParent').value = documentDB.name
+					container.querySelector('#email').value = documentDB.user.email
+
+					console.log(documentDB)
 
 					notification.show({msg: 'Este numero de identificacion ya se encuentra registrado.', type: 2})
 
 				}else {
 					container
-						.disabeldInputs(false, 'input, select',['idFamily'])
+						.readOnlyInputs(false, 'input, select',['idFamily'])
 						.emptyInputs('input, select',['idFamily'])
 				}
 			},

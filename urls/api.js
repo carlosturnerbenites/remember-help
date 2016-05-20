@@ -98,10 +98,12 @@ router.post('/collection/:collection',(req, res) => {
 	projection._id = 0
 	projection.__v = 0
 
-	model.findOne(query,projection,(err,document) => {
-		if (err) return res.json({err:err})
-		return res.json({document : document})
-	})
+	model.findOne(query,projection)
+		.populate('user parent activity children')
+		.exec((err,document) => {
+			if (err) return res.json({err:err})
+			return res.json({document : document})
+		})
 })
 
 router.post('/collections/add/:collection',
