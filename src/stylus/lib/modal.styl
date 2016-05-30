@@ -1,0 +1,53 @@
+.modal
+	height 100%
+	opacity 0
+	position fixed
+	right 0
+	transition 1s all linear
+	width 0%
+	z-index 10
+	&[modalActive]
+		display flex
+		justify-content flex-end
+		//overflow-x hidden
+	.contentModal
+		display flex
+		flex-wrap wrap
+		height calc(100% - 20px)
+		overflow auto
+		padding 20px
+		transition all 2s linear
+		width 100%
+		z-index 100
+		.titleModal
+			border-bottom 1px solid gray
+			height 80px
+			text-align right
+			width 100%
+			box-sizing border-box
+		.bodyModal
+			border none
+			height calc(100% - 160px)
+			overflow: auto;
+			padding 0 10px
+			width 100%
+		.footerModal
+			height 80px
+			width 100%
+			.backPage
+				cursor pointer
+				font-size 50px
+
+.sectionInactive
+	opacity 0 !important
+	overflow hidden
+	pointer-events none
+
+.effectHideModal
+	opacity 0
+	width 50%
+
+.effectShowModal
+	opacity 1
+	width 100%
+

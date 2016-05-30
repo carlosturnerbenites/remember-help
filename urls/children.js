@@ -34,8 +34,4 @@ router.get('/activities',(req,res) => {
 	})
 })
 
-router.get('/treasure',(req,res) => {
-	res.render('children/treasure',{})
-})
-
 module.exports = router

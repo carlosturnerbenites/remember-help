@@ -1,0 +1,46 @@
+baseBlue = #4285F4
+baseGreen = #34A853
+baseOscure = #455A64
+basePurple = #9C27b0
+baseRed = #EA4235
+baseYellow = #FBBC05
+
+[data-hidden="true"]
+	display none !important
+
+[data-hidden="false"]
+	display block !important
+
+.contentWidth
+	transition 1s all linear
+
+.alignItemsEnd
+	display flex
+	justify-content flex-end
+
+.alignItemsCenter
+	display flex
+	justify-content center
+
+.overflowHidden
+	overflow hidden
+
+[tooltip]
+	position relative
+
+[tooltip]:hover:after
+	background-color #000
+	bottom -23px
+	color #fff
+	content attr(tooltip)
+	display block
+	font-size 1rem
+	left 0
+	padding 3px
+	position absolute
+	white-space nowrap
+
+a
+	color baseGreen
+	text-decoration none
+

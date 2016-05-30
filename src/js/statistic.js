@@ -40,7 +40,7 @@ function getDimensionsChart (){
 function BuildStatistic (){
 	this.today = function (histories){
 		var container = document.createElement('section')
-		if(!histories.length) return notification.show({msg: '**No** se han **completado** Actividades **Hoy**', type: 2})
+
 		for (var history of histories){
 			var clone = Stoday.querySelector('.resultStatistics'),
 				template = document.importNode(clone.content, true),
@@ -85,6 +85,8 @@ var FStatistics = {
 				async : true,
 				contentType : 'application/json',
 				onSuccess : response => {
+					if(!response.histories.length) return notification.show({msg: '**No** se han **completado** actividades **hoy**', type: 2})
+
 					var node = buildSatistic.today(response.histories)
 
 					statisticsWindow
@@ -114,7 +116,7 @@ var FStatistics = {
 					async : true,
 					contentType : 'application/json',
 					onSuccess : response => {
-						if(!response.length) return notification.show({msg: '**No** Hay **datos** para este intervalo de **fecha**', type: 2})
+						if(!response.length) return notification.show({msg: '**No** hay **datos** para generar la **estadistica**.', type: 2})
 
 						var node = buildSatistic.rangeDate(),
 							rows = []
@@ -185,7 +187,7 @@ var FStatistics = {
 					async : true,
 					contentType : 'application/json',
 					onSuccess : response => {
-						if(!response.length) return notification.show({msg: '**No** Hay **datos** para este intervalo de **fecha**', type: 2})
+						if(!response.length) return notification.show({msg: '**No** hay **datos** para generar la **estadistica**.', type: 2})
 
 						var node = buildSatistic.rangeDate(),
 							rows = []

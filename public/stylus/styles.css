@@ -587,6 +587,8 @@ select {
 }
 .btnRound {
   border-radius: 50%;
+  height: 300px !important;
+  width: 300px !important;
 }
 .btn:disabled {
   background-color: colorBtnDiabledBackground !important;
@@ -747,24 +749,13 @@ select {
     box-shadow: 0 0px 0px 15px rgba(170,57,57,0.5);
   }
 }
-.containerLoader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  background: rgba(0,0,0,0.3);
-}
-.containerLoader .loader {
+.loader {
   border: 16px solid #f3f3f3;
   border-top: 16px solid #3498db;
   border-radius: 50%;
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;
-}
-[data-reference-loader] {
-  position: relative;
 }
 @-moz-keyframes spin {
   0% {
@@ -1058,14 +1049,12 @@ header .titleSection > * {
 .templateConfirmActivityWindow {
   align-items: center;
   display: flex;
-  font-size: 8rem;
+  font-size: 10rem;
   justify-content: space-around;
   flex-wrap: wrap;
-  height: 100%;
 }
 .templateConfirmActivityWindow .btn {
-  height: 200px !important;
-  width: 200px !important;
+  width: 40%;
 }
 /*Collections */
 .documents .documentDB {

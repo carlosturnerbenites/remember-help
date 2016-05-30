@@ -1,10 +1,14 @@
 {
 	"statics" : "public",
 	"URIMongo" : "mongodb://localhost/rememberHelp",
+	"browserify":{
+		"src": "src/js/**/*.js",
+		"dest" :"public/js"
+	},
 	"gulp":{
-		"srcStyle": "public/stylus/styles.styl",
-		"srcStylus": "public/stylus/**/*.styl",
-		"dest": "public/css/",
+		"srcStyle": "src/stylus/styles.styl",
+		"srcStylus": "src/stylus/**/*.styl",
+		"dest": "public/css",
 		"env" : "Developed"
 	}
 }

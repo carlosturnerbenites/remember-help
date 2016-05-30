@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+
+<style>
+	.controls{
+	}
+
+	.row{
+		display: flex;
+	}
+
+	.row .item{
+		width: 25%;
+		text-align: center;
+		cursor: pointer;
+		margin:0;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 40px;
+	}
+	.row .item:before{
+		content: ' ';
+		display: block;
+		height: 100%;
+		width: 2px;
+		background-color: rgba(0,0,0,0.2);
+		margin: 0 auto;
+		position: absolute;
+		top: 0;
+		left: 50%;
+		margin-left: -1px;
+	}
+
+	.row .item .point{
+		width: 5px;
+		height: 5px;
+		background-color: rgba(0,0,0,0.5);
+		display: inline-block;
+		border-radius: 50%;
+		transition: 1s all linear;
+	}
+
+	.item.active .point{
+		width: 25px;
+		height: 25px;
+	}
+</style>
+
+<body>
+	<section class="game">
+	</section>
+
+	<section class="controls">
+		<article class="row">
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+		</article>
+		<article class="row">
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+		</article>
+		<article class="row">
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+		</article>
+		<article class="row">
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+			<p class="item">
+				<span class="point"></span>
+			</p>
+		</article>
+	</section>
+
+	<script>
+		var points = document.querySelectorAll('.item')
+
+		for (point of Array.from(points)){
+			point.addEventListener('click', function (event) {
+				this.classList.toggle('active')
+			})
+		}
+	</script>
+</body>
+</html>
