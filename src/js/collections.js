@@ -1,3 +1,5 @@
+import {NotificationC,CommonElement,ajax} from './utilities'
+
 var btnAgregate = document.querySelector('#AgregateInCollection'),
 	btnFind = document.querySelector('#findInCollection'),
 	btnEmpty = document.querySelector('#emptyCollection'),

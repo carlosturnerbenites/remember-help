@@ -1,3 +1,5 @@
+import {markdown} from './lib/markdown'
+
 Date.prototype.toHour12 = function () {
 	/*
 		Formatea un Object Date en Time (12 horas)
@@ -343,3 +345,5 @@ function ajax (config){
 		config.onSuccess(response)
 	}
 }
+
+export {CommonElement,Loader,Validator,getValueInput,Modal,NotificationC,ajax}

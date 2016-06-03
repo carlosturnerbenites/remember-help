@@ -1,3 +1,5 @@
+import {Validator} from './utilities'
+
 var formChangePassword = document.querySelector('#changePassword'),
 	validator = new Validator(formChangePassword)
 

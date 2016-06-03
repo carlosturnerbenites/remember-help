@@ -1,3 +1,5 @@
+import {NotificationC,ajax} from './utilities'
+
 var formAuthenticate = document.querySelector('#formAuthenticate'),
 	continueAuthenticate = document.querySelector('#continueAuthenticate'),
 	notification = new NotificationC(),

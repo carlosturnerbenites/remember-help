@@ -1,3 +1,5 @@
+import {NotificationC,Validator,ajax} from './utilities'
+
 var formCheckIn = document.querySelector('#formCheckIn'),
 	validator = new Validator(formCheckIn),
 	notification = new NotificationC()

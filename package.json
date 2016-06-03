@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint  ./public/**/*.js ./*.js ./**/*.js",
+    "eslint": "eslint ./src/**/*.js !./public/**/*.js ./*.js ./**/*.js",
     "start": "node server",
     "dev": "npm run eslint && NODE_ENV=dev supervisor server"
   },

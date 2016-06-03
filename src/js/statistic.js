@@ -1,3 +1,5 @@
+import {Validator,Modal,NotificationC,ajax} from './utilities'
+
 google.charts.load('current', {'packages':['corechart']})
 
 var Stoday = document.querySelector('.statisticToday'),

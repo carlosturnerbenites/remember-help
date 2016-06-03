@@ -1738,3 +1738,5 @@
   window.markdown = {};
   return window.markdown;
 }());
+export {markdown}
+

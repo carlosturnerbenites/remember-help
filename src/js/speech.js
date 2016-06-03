@@ -59,3 +59,5 @@ function Voice (cb){
 		}
 	}
 }
+
+export {Text,Voice}

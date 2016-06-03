@@ -2,8 +2,9 @@
 	"statics" : "public",
 	"URIMongo" : "mongodb://localhost/rememberHelp",
 	"browserify":{
-		"src": "src/js/**/*.js",
-		"dest" :"public/js"
+		"path": "./src/js/",
+		"src": "./src/js/**/*.js",
+		"dest" :"./public/js/"
 	},
 	"gulp":{
 		"srcStyle": "src/stylus/styles.styl",

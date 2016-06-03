@@ -1,3 +1,6 @@
+import {Modal} from './utilities'
+import {Text} from './speech'
+
 var text = new Text(),
 	detailActivityActive = null
 

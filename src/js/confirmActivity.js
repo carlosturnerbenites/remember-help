@@ -1,3 +1,5 @@
+import {Voice,Text,ajax} from './speech'
+
 var buttonCaptureVoice = document.querySelector('#buttonCaptureVoice'),
 	voice = new Voice(response),
 	text = new Text()

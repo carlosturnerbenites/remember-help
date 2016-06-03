@@ -1,3 +1,5 @@
+import {Loader} from './utilities'
+
 function effect(evento){
 	var span = document.createElement('span')
 	this.appendChild(span)
