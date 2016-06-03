@@ -37,7 +37,7 @@ function serialize (req,model) {
 		}
 
 		if(field.instance == 'Boolean'){
-			data[nameField] = data[nameField] == 'on'?true : false
+			data[nameField] = data[nameField] == 'on' ? true : false
 		}
 	}
 
@@ -62,11 +62,14 @@ router.get('/collections/schemas/:collection',(req, res) => {
 	res.json(paths)
 })
 
-router.get('/collections/:collection',(req, res) => {
+router.post('/collections/:collection',(req, res) => {
 	var collection = req.params.collection,
 		model = mongoose.model(collection),
 		dataForm = formsView[collection],
-		promises = []
+		promises = [],
+		querySearch = req.body ? serialize(req,model) : {}
+
+		console.log(querySearch)
 
 	for(var nameField in dataForm.fields){
 		var field = dataForm.fields[nameField]
@@ -78,13 +81,20 @@ router.get('/collections/:collection',(req, res) => {
 		}
 	}
 	Q.all(promises).then(() => {
-		model.find({},{__v: 0})
+		model.find(querySearch,{__v: 0})
 		.populate('user parent activity children')
 		.exec((err,documents) => {
 			if (err) return res.json({err:err})
 			res.json({documents: documents,schema: dataForm,schemas:formsView})
 		})
 	})
+
+})
+router.get('/form-view/:collection',(req, res) => {
+	var collection = req.params.collection,
+		formView = formsView[collection]
+
+	res.json(formView)
 
 })
 

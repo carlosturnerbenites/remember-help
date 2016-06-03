@@ -2,6 +2,7 @@ var dataModelsForForms = {
 	activity : {
 		fieldTextRef :'text',
 		fieldValueRef :'_id',
+		fieldsExcludeForSearch : ['_id','img'],
 		form:{
 			'method': 'POST',
 			'enctype' : 'multipart/form-data'
@@ -30,6 +31,7 @@ var dataModelsForForms = {
 				type:'file',
 				label:'Imagen',
 				accept: 'image/*',
+				path : '/images/activities/',
 				required:true
 			},
 			textSpeech :{
@@ -49,6 +51,7 @@ var dataModelsForForms = {
 	children: {
 		fieldTextRef :'name',
 		fieldValueRef :'_id',
+		fieldsExcludeForSearch : ['_id'],
 		form:{
 			'method': 'POST',
 			'enctype' : 'application/x-www-form-urlencoded'
@@ -105,6 +108,7 @@ var dataModelsForForms = {
 	administrator: {
 		fieldTextRef :'name',
 		fieldValueRef :'_id',
+		fieldsExcludeForSearch : ['_id'],
 		form:{
 			'method': 'POST',
 			'enctype' : 'application/x-www-form-urlencoded'
@@ -141,6 +145,7 @@ var dataModelsForForms = {
 	parent: {
 		fieldTextRef :'name',
 		fieldValueRef :'_id',
+		fieldsExcludeForSearch : ['_id'],
 		form:{
 			'method': 'POST',
 			'enctype' : 'application/x-www-form-urlencoded'
@@ -187,6 +192,7 @@ var dataModelsForForms = {
 	user: {
 		fieldTextRef :'username',
 		fieldValueRef :'_id',
+		fieldsExcludeForSearch : ['_id','photo','password'],
 		form:{
 			'method': 'POST',
 			'enctype' : 'multipart/form-data'
@@ -205,6 +211,7 @@ var dataModelsForForms = {
 				type:'file',
 				label:'Foto',
 				accept: 'image/*',
+				path : '/images/users/',
 				required:true
 			},
 			password:{
