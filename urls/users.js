@@ -1,7 +1,8 @@
 const express = require('express'),
 	router = express.Router(),
 	models = require('./../models/'),
-	bodyParser = require('body-parser')
+	bodyParser = require('body-parser'),
+	log = require('./../utils/log')
 
 router.use(bodyParser.json())
 

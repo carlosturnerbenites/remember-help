@@ -1,9 +1,18 @@
 extends ../templates/templateApp.jade
+
 block title
 	title Colecciones
 
 block titleSection
 	p Colecciones
+
+block modal
+	section#modalActions.modal.modal-hide(data-rol-modal='modal' data-contentModal data-referenceModal='#modal')
+		section.contentModal
+			article.titleModal
+			article.bodyModal
+			article.footerModal
+				button.btn.btnError.effect(data-closeModal='#modal' data-rol-modal='close' data-referenceModal='#modal') Volver
 
 block content
 
@@ -18,14 +27,15 @@ block content
 				for model in models
 					option(value='#{model.modelName}' ) #{model.collection.collectionName}
 
+		section#filterSearch.form.formLabelInput
+
 		article.alignItemsEnd
 			button.btn.effect.btnInfo(type='button' id='findInCollection' data-action='find') Buscar
 			button.btn.effect.btnSuccess(type='button' id='AgregateInCollection' data-action='create') Agregar
 			button.btn.effect.btnError(type='button' id='emptyCollection' data-action='delete') Vaciar
 
-	form#filterSearch.form.formLabelInput
-	section.documents#results
-	section#addDocument
+	//section.documents#results
+	//section#addDocument
 
 	template#templateField
 		article.inputContainer#TField

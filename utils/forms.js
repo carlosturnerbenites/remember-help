@@ -241,6 +241,7 @@ var dataModelsForForms = {
 	history: {
 		fieldTextRef :'_id',
 		fieldValueRef :'_id',
+		fieldsExcludeForSearch : ['_id'],
 		form:{
 			'method': 'POST',
 			'enctype' : 'application/x-www-form-urlencoded'

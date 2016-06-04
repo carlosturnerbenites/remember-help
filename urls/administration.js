@@ -4,7 +4,8 @@ const express = require('express'),
 	utils = require('./../utils/'),
 	multer = require('multer'),
 	bodyParser = require('body-parser'),
-	upload = multer({ dest: 'public/images/users' })
+	upload = multer({ dest: 'public/images/users' }),
+	log = require('./../utils/log')
 
 router.use(bodyParser.json())
 

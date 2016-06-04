@@ -34,18 +34,13 @@ const config = require(urlConfig),
 
 	utils = require('./utils'),
 
-	winston = require('winston'),
+	log = require('./utils/log'),
 
 	CONCURRENCY = process.env.WEB_CONCURRENCY || 1
 
-winston.add(winston.transports.File, {
-	filename: 'logs/remember-help' + new Date().getFullYear() + ' - ' + new Date().getMonth() + '.log'
-})
-winston.remove(winston.transports.Console)
-
 mongoose.connect(URIMongo, (err) => {
 	if(err) {
-		winston.error(err)
+		log.error(err)
 		throw new Error(err)
 	}
 })
@@ -117,7 +112,7 @@ app.post(
 			failureRedirect: '/authenticate'
 		}
 	), (req, res) => {
-		winston.info('Login User: ' + req.user.username + '. id: ' + req.user._id)
+		log.info('Login User: ' + req.user.username + '. id: ' + req.user._id)
 		if (req.user.type == 0) return res.redirect('/management/statistics')
 		if (req.user.type == 1) return res.redirect('/children/activities')
 		if (req.user.type == 776) return res.redirect('/admin/collections')

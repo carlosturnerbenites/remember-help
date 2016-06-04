@@ -6,7 +6,8 @@ const express = require('express'),
 	formsView = require('./../utils/forms.js'),
 	utils = require('./../utils/'),
 	models = require('./../models/'),
-	Q = require('q')
+	Q = require('q'),
+	log = require('./../utils/log')
 
 var permissions = utils.permissionsCollection
 var storage = multer.diskStorage({
@@ -88,14 +89,13 @@ router.post('/collections/:collection',(req, res) => {
 			res.json({documents: documents,schema: dataForm,schemas:formsView})
 		})
 	})
-
 })
+
 router.get('/form-view/:collection',(req, res) => {
 	var collection = req.params.collection,
 		formView = formsView[collection]
 
 	res.json(formView)
-
 })
 
 router.post('/collection/:collection',(req, res) => {
@@ -128,10 +128,14 @@ router.post('/collections/add/:collection',
 
 		model.create(data,(err, document) => {
 			if(err) return res.json(err)
+
+			log.info('created document ' + document._id+ ' of  collection ' + collection + ' User: ' + req.user.username + '. id: ' + req.user._id)
+
 			req.flash('success','Se ha creado Correctamente el documento')
 			res.redirect(req.get('referer'))
 		})
-	})
+	}
+)
 
 router.delete('/collections/empty/:collection',(req, res) => {
 	var collection = req.params.collection,
@@ -142,6 +146,7 @@ router.delete('/collections/empty/:collection',(req, res) => {
 		if (err) return res.json({err: err})
 		if (!count) return res.json({err: {message : 'Collection empty'}})
 		model.remove({},(err, count) => {
+			log.info('Delete all data of collection ' + collection + ' User: ' + req.user.username + '. id: ' + req.user._id)
 			if (err) return res.json({err:err})
 			res.json({msg: 'Delete Complete', count: count})
 		})
@@ -157,6 +162,7 @@ router.delete('/collections/empty/:collection/:id',(req, res) => {
 	model.findById(id, (err, document) => {
 		if (err) return res.json({err: err})
 		document.remove().then((document) => {
+			log.info('Delete document ' + id + ' of collection ' + collection + ' User: ' + req.user.username + '. id: ' + req.user._id)
 			return res.json({msg: 'El Documento se ha **eliminadro** correctamente', document: document})
 		})
 	})
@@ -185,9 +191,11 @@ router.post('/collections/update/:collection/:id',
 
 		model.findByIdAndUpdate(id, {$set: data},(err, document) => {
 			if (err) return res.json({err: err})
+			log.info('Update document ' + id + ' of collection ' + collection + ' User: ' + req.user.username + '. id: ' + req.user._id)
 			req.flash('success','El Documento se ha Editado correctamente.')
 			res.redirect(req.get('referer'))
 		})
-	})
+	}
+)
 
 module.exports = router

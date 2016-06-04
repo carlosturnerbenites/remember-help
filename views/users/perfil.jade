@@ -24,10 +24,11 @@ block content
 				article.inputContainer
 					input(type='password' name='passwordParent' id='passwordParent' value="#{associated.user.password}" placeholder='Contraseña' required)
 			if associated.children
-				p Hijos
-				ul
-					for children in associated.children
-						li #{children.name}
+				fieldset.fieldset
+					legend.legend Hijos
+					ul
+						for children in associated.children
+							li #{children.name}
 
 	form#changePassword.form.formOnlyInput(action='/user/changePassword' method='POST')
 		fieldset.fieldset

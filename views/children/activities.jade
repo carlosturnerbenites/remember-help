@@ -19,7 +19,7 @@ block content
 		each activity in activities
 			article.activity(data-date='#{activity.hour}' data-speech='#{activity.textSpeech}' data-id='#{activity._id}' data-text='#{activity.text}' data-tolerance = '#{activity.tolerance}')
 				p.titleActivity #{activity.text}
-				img.imgActivity(src='#{activity.img}', alt='')
+				img.imgActivity(src='/images/activities/#{activity.img}', alt='')
 
 				- if (activity.state.codeText == 'complete')
 					- if (activity.state.detail.aClock)
@@ -28,12 +28,14 @@ block content
 						- var state = 'warning'
 				- else
 					- var state = 'inprocess'
+
 				article.reminder(data-statereminder = '#{state}')
 					article.titleReminder
 						p
 					article.date
 						span(rol='time')
 						span.meridiem
+
 	template#templateConfirmActivityWindow
 		section.templateConfirmActivityWindow
 			if (children.stateHealth == 1)

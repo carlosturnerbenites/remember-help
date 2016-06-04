@@ -20,6 +20,9 @@ Date.prototype.getValueInput = function (format){
 	return dateFormat
 }
 
+HTMLElement.prototype.prependChild = function (nodeHTML){
+	this.insertBefore(nodeHTML, this.firstChild)
+}
 HTMLFormElement.prototype.isValid = function (){
 	for (var element of Array.from(this.elements)){
 		if (element.validity.valid == false) return false

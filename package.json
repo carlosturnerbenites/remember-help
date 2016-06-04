@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint ./src/**/*.js !./public/**/*.js ./*.js ./**/*.js",
     "start": "node server",
-    "dev": "npm run eslint && NODE_ENV=dev supervisor server"
+    "dev": "NODE_ENV=dev supervisor server"
   },
   "engines": {
     "node": "4.2.4",

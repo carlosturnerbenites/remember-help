@@ -5,9 +5,10 @@ var btnAgregate = document.querySelector('#AgregateInCollection'),
 	filterSearch = document.querySelector('#filterSearch'),
 	notification = new NotificationC(),
 	commonElement = new CommonElement(),
-	collections
+	collections,
+	modalResults = new Modal('modalActions','.contentWidth')
 
-collectionSelected.onchange = function(){
+collectionSelected.onchange = function (){
 	filterSearch.innerHTML = ''
 	ajax({
 		type : 'GET',
@@ -17,10 +18,7 @@ collectionSelected.onchange = function(){
 			var fields = formView.fields
 			var fieldsExclude = formView.fieldsExcludeForSearch
 			var template = document.querySelector('template#templateField')
-			console.log(fields)
-
-
-
+			var fieldset = document.createElement('fieldset')
 
 			for(var field in fields){
 				if(fieldsExclude.indexOf(field) < 0){
@@ -28,7 +26,6 @@ collectionSelected.onchange = function(){
 						tfData = templateField.querySelector('.data'),
 						tfLabel = templateField.querySelector('.label')
 
-					console.log(field)
 					var data = fields[field]
 					tfData.placeholder = data.label
 					tfData.type = data.type
@@ -37,9 +34,16 @@ collectionSelected.onchange = function(){
 
 					tfLabel.innerHTML = data.label
 					tfLabel.for = field
-				filterSearch.appendChild(templateField)
+					fieldset.appendChild(templateField)
 				}
+
+				filterSearch.appendChild(fieldset)
 			}
+			var legend = document.createElement('legend')
+			legend.innerHTML = 'Filtros de Busqueda'
+			legend.classList.add('legend')
+			fieldset.prependChild(legend)
+			fieldset.classList.add('fieldset')
 		}
 	})
 }
@@ -104,10 +108,7 @@ function deleteDocumentDB (){
 
 function renderViewAgregate (schema,collection,selector){
 	var template = document.querySelector('template#templateField'),
-		container = document.querySelector(selector)
-	container.innerHTML = ''
-
-	var configFields = schema.fields,
+		configFields = schema.fields,
 		configForm = schema.form
 
 	var form = document.createElement('form')
@@ -166,16 +167,17 @@ function renderViewAgregate (schema,collection,selector){
 	input.classList.add('btn','btnSuccess','effect')
 	form.appendChild(input)
 
-	container.appendChild(form)
+	modalResults
+		.setTitle('Agregar')
+		.addContent(form)
+		.show()
 }
 
 function renderViewFind (response,selector) {
 	var template = document.querySelector('template#templateField'),
-		container = document.querySelector(selector),
 		configFields = response.schema.fields,
-		configForm = response.schema.form
-
-	container.innerHTML = ''
+		configForm = response.schema.form,
+		forms = document.createElement('section')
 
 	if(!response.documents.length) return notification.show({msg:'No se **encontraron** Resultados.',type: 2})
 
@@ -272,8 +274,15 @@ function renderViewFind (response,selector) {
 		}
 		form.appendChild(buttonDelete)
 		form.appendChild(buttonUpdate)
-		container.appendChild(form)
-	})
+
+		forms.appendChild(form)
+
+	}
+	)
+	modalResults
+		.setTitle('Resultados De La Busqueda')
+		.addContent(forms)
+		.show()
 }
 
 btnFind.addEventListener('click', function (){
