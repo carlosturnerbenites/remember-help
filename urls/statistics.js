@@ -28,15 +28,8 @@ router.post(
 	['/rangeDate','/line-evolution'],
 	(req,res) => {
 		var data = req.body,
-			dateInit = new Date(data.dateInit),
-			dateEnd = new Date(data.dateEnd)
-
-		dateInit.setHours(0,0,0,0)
-		dateInit.setDate(dateInit.getDate()+1)
-		dateEnd.setHours(0,0,0,0)
-		dateEnd.setDate(dateEnd.getDate()+1)
-
-		var datesQuery = dateInit.getDatesUntil(dateEnd)
+			dateInit = new Date(data.dateInit.split('-')),
+			dateEnd = new Date(data.dateEnd.split('-'))
 
 		models.children.findOne({id: data.children},(err,children) => {
 			if (err) return res.json({err: err})
@@ -44,7 +37,7 @@ router.post(
 			models.history.aggregate([
 				{
 					$match: {
-						'children' : children._id, date : {$in : datesQuery}
+						'children' : children._id, date : {$gte : dateInit,$lte : dateEnd}
 					}
 				},
 				{
@@ -60,7 +53,13 @@ router.post(
 					if (err) return res.json({err: err})
 
 					documents = documents.map(document => {
+						document.data = []
 						document.incomplete = count - document.complete
+
+						document.data.push(document._id.day + '/' + document._id.month + '/' + document._id.year)
+						document.data.push(document.complete)
+						document.data.push(document.incomplete)
+
 						return document
 					})
 

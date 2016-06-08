@@ -53,9 +53,9 @@ const childrenSchema = new Mongoose.Schema({
 		username:{type:String, required:true, unique:true}
 	}),
 	activitySchema = new Mongoose.Schema({
-		/* date : Fecha en la cual se completo la actividad*/
-		date :{type:Date, required:true},
-		/* hour : Hora a la cual se completo la actividad*/
+		/* date : Fecha en la cual se debe completo la actividad*/
+		date :{type:Date},
+		/* hour : Hora a la cual se debe completo la actividad*/
 		hour :{type:Date, required:true},
 		/* img : imagen de la actividad*/
 		img :{type:String, required:true},

@@ -45,6 +45,11 @@ mongoose.connect(URIMongo, (err) => {
 	}
 })
 
+process.env.BASE_DATE = new Date('1970 01 01')
+var baseDate = process.env.BASE_DATE
+
+console.log(baseDate)
+
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 app.use(express.static(config.statics))
