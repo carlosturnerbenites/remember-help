@@ -1,3 +1,7 @@
+process.env.BASE_DATE = new Date('1970 01 01')
+process.env.BASE_PATH_LOG = 'logs/'
+process.env.BASE_NAME_LOG = 'remember-help-year-month.log'
+
 var urlConfig
 if(!process.env.NODE_ENV) urlConfig = './config/configProd.json'
 else if(process.env.NODE_ENV == 'dev') urlConfig = './config/configDev.json'
@@ -23,6 +27,7 @@ const config = require(urlConfig),
 	port = process.env.PORT || 8000,
 	app = express(),
 
+	urlLogger = require('./urls/logger'),
 	urlActivities = require('./urls/activities'),
 	urlChildren = require('./urls/children'),
 	urlAdministration = require('./urls/administration'),
@@ -45,10 +50,6 @@ mongoose.connect(URIMongo, (err) => {
 	}
 })
 
-process.env.BASE_DATE = new Date('1970 01 01')
-var baseDate = process.env.BASE_DATE
-
-console.log(baseDate)
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
@@ -102,6 +103,7 @@ app.use('',urlGeneral)
 app.use('/children', requiredType([1]), urlChildren)
 app.use('/activities', requiredType([1]), urlActivities)
 app.use('/admin', requiredType([777,776]), urlAdministration)
+app.use('/logger', requiredType([777,776]), urlLogger)
 app.use('/management', requiredType([0]), urlManagement)
 app.use('/statistics', requiredType([0]), urlStatistics)
 app.use('/user', requiredType([777,776,0]), urlUsers)

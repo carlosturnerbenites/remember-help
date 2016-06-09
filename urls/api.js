@@ -34,7 +34,7 @@ function serialize (req,model) {
 		var field = paths[nameField]
 
 		if(field.instance == 'Date'){
-			data[nameField] = new Date(data[nameField])
+			if(data[nameField]) data[nameField] = new Date(data[nameField])
 		}
 
 		if(field.instance == 'Boolean'){
@@ -70,7 +70,7 @@ router.post('/collections/:collection',(req, res) => {
 		promises = [],
 		querySearch = req.body ? serialize(req,model) : {}
 
-		console.log(querySearch)
+	console.log(querySearch)
 
 	for(var nameField in dataForm.fields){
 		var field = dataForm.fields[nameField]
@@ -107,6 +107,7 @@ router.post('/collection/:collection',(req, res) => {
 
 	projection._id = 0
 	projection.__v = 0
+
 
 	model.findOne(query,projection)
 		.populate('user parent activity children')
@@ -183,8 +184,6 @@ router.post('/collections/update/:collection/:id',
 			var dataField = configFields[field]
 
 			if(dataField.type == 'checkbox'){
-				console.log(dataField)
-				console.log(data[field] = data[field] || false)
 			}
 
 		}

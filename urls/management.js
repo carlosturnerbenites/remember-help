@@ -6,7 +6,10 @@ router.get('/statistics',(req,res) => {
 	models.parent.findOne({user: req.user._id})
 	.populate('children')
 	.exec((err, parent) => {
-		if (err) return res.json({err: err})
+		if (err) {
+			req.flash('error',err)
+			return res.redirect(req.get('referer'))
+		}
 		res.render('management/statistics',{parent: parent})
 	})
 })

@@ -30,7 +30,10 @@ router.get('/activities',(req,res) => {
 			}
 		],
 		(err,data) => {
-			if (err) return res.json({err: err})
+			if (err) {
+				req.flash('error',err)
+				return res.redirect(req.get('referer'))
+			}
 			var idActivities = data.map(element => {return {_id:element._id}})
 
 			models.activity.find({_id: {$in :idActivities}})
@@ -38,7 +41,10 @@ router.get('/activities',(req,res) => {
 			.exec((err,activitiesDB) => {
 
 				models.children.findOne({user: req.user._id},(err, children) => {
-					if (err) return res.json({err: err})
+					if (err) {
+						req.flash('error',err)
+						return res.redirect(req.get('referer'))
+					}
 
 					var promises = [],
 						activities = []

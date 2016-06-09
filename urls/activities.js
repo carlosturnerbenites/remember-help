@@ -13,7 +13,10 @@ router.post('/valid-activity',(req, res) => {
 	dateCurrent.setHours(0,0,0,0)
 
 	models.children.findOne({user: req.user._id},(err, children) => {
-		if (err) return res.json({err : err})
+		if (err) {
+			req.flash('error',err)
+			return res.redirect(req.get('referer'))
+		}
 
 		models.activity.findById(data.id, (err, activity) => {
 

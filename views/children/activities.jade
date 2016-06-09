@@ -38,10 +38,10 @@ block content
 
 	template#templateConfirmActivityWindow
 		section.templateConfirmActivityWindow
-			if (children.stateHealth == 1)
+			if (children.stateHealth == 0)
 				button.btn.btnSuccess.btnRound#buttonCaptureVoice
 					span.icon-voice
-			else if (children.stateHealth == 2)
+			else if (children.stateHealth == 1 || children.stateHealth == 2)
 				button.btn.btnSuccess.btnRound.effect(onclick='response("si")') Si
 					span.icon-
 				button.btn.btnError.btnRound.effect(onclick='response("no")') No

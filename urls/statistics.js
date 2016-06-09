@@ -13,12 +13,18 @@ router.post('/today',(req,res) => {
 	dateCurrent.setHours(0,0,0,0)
 
 	models.children.findOne({id: data.children}, (err, children) => {
-		if (err) return res.json({err: err})
+		if (err) {
+			req.flash('error',err)
+			return res.redirect(req.get('referer'))
+		}
 
 		models.history.find({children : children._id, date: dateCurrent.toISOString()})
 		.populate('activity children')
 		.exec((err, histories) => {
-			if (err) return res.json({err: err})
+			if (err) {
+				req.flash('error',err)
+				return res.redirect(req.get('referer'))
+			}
 			res.json({histories: histories})
 		})
 	})
@@ -32,7 +38,10 @@ router.post(
 			dateEnd = new Date(data.dateEnd.split('-'))
 
 		models.children.findOne({id: data.children},(err,children) => {
-			if (err) return res.json({err: err})
+			if (err) {
+				req.flash('error',err)
+				return res.redirect(req.get('referer'))
+			}
 
 			models.history.aggregate([
 				{
@@ -47,10 +56,16 @@ router.post(
 					}
 				}
 			], (err, documents) => {
-				if (err) return res.json({err: err})
+				if (err) {
+					req.flash('error',err)
+					return res.redirect(req.get('referer'))
+				}
 
 				models.activity.count({},(err,count) => {
-					if (err) return res.json({err: err})
+					if (err) {
+						req.flash('error',err)
+						return res.redirect(req.get('referer'))
+					}
 
 					documents = documents.map(document => {
 						document.data = []

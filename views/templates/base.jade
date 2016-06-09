@@ -11,13 +11,18 @@ html(lang='es')
 		for typeMessages in typesMessages
 			if messages[typeMessages]
 				for message in messages[typeMessages]
-					p(class="#{typeMessages}").message #{message}
+					-var messageText = message
+					if message.name == "MongoError"
+						-var messageText = "Error Interno."
+					p(class="#{typeMessages}").message #{messageText}
 						button(type="button" class="close" )
 							span ×
 		template#commonElements
 			button.btn.effectspan(type="button")
 
 		script(src='/js/main.js')
+		script.
+			console.log(!{JSON.stringify(messages)})
 
 
 

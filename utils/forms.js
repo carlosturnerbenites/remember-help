@@ -24,7 +24,7 @@ var dataModelsForForms = {
 			},
 			text :{
 				type:'text',
-				label:'Descripcion',
+				label:'Descripción',
 				required:true
 			},
 			img :{
@@ -79,7 +79,7 @@ var dataModelsForForms = {
 			},
 			id:{
 				type:'number',
-				label:'Identificacion',
+				label:'Identificación',
 				required:true, unique:true
 			},
 			name:{
@@ -120,7 +120,7 @@ var dataModelsForForms = {
 			},
 			id:{
 				type:'number',
-				label:'identificacion',
+				label:'Identificación',
 				required:true,
 				unique:true
 			},
@@ -168,7 +168,7 @@ var dataModelsForForms = {
 			},
 			id:{
 				type:'number',
-				label:'identificacion',
+				label:'Identificación',
 				required:true, unique:true
 			},
 			name:{
@@ -252,7 +252,8 @@ var dataModelsForForms = {
 				label:''
 			},
 			activity:{
-				type:'ref',label:'Actividad',
+				type:'ref',
+				label:'Actividad',
 				ref:'activity',
 				readOnly: true,
 				required:true,
@@ -262,7 +263,7 @@ var dataModelsForForms = {
 				}
 			},
 			children:{
-				type:'ref',label:'Niñ2',
+				type:'ref',label:'Niñ@',
 				ref:'children',
 				readOnly: true,
 				required:true

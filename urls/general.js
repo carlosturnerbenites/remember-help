@@ -22,7 +22,10 @@ router.post('/remember', (req,res) => {
 	var email = req.body.email
 
 	models.user.findOne({email: email},(err,user) => {
-		if (err) return res.json({err: err})
+		if (err) {
+			req.flash('error',err)
+			return res.redirect(req.get('referer'))
+		}
 		if (!user) {
 			req.flash('error','El correo no se encuentra registrado')
 			return res.redirect(req.get('referer'))
@@ -45,7 +48,10 @@ router.post('/remember', (req,res) => {
 			}
 
 			transporter.sendMail(mailOptions, function (err, info){
-				if(err) return res.json({err:{message: err}})
+				if (err) {
+					req.flash('error',err)
+					return res.redirect(req.get('referer'))
+				}
 				req.flash('success','El correo se envio correctamente a ' + info.accepted)
 				res.redirect('/authenticate')
 			})

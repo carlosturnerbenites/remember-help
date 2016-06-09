@@ -44,7 +44,10 @@ router.post(
 		if (dataNewChildren.username == dataNewFamily.username) return {err : {msg: 'User Duplicate'}}
 
 		models.user.create(dataNewChildren, (err, userChildren) => {
-			if (err) return res.json({err: err})
+			if (err) {
+				req.flash('error',err)
+				return res.redirect(req.get('referer'))
+			}
 
 			dataNewChildren.user = userChildren._id
 			dataNewChildren.age = data.ageChildren
@@ -52,28 +55,43 @@ router.post(
 			dataNewChildren.name = data.nameChildren
 
 			models.children.create(dataNewChildren, (err,newChildren) => {
-				if (err) return res.json({err: err})
+				if (err) {
+					req.flash('error',err)
+					return res.redirect(req.get('referer'))
+				}
 
 				models.parent.findOne({id : data.idFamily},(err,family) => {
-					if (err) return res.json({err: err})
+					if (err) {
+						req.flash('error',err)
+						return res.redirect(req.get('referer'))
+					}
 
 					if(family) {
 						family.update({ $push : {children: newChildren}}, (err) => {
-							if (err) return res.json({err: err})
+							if (err) {
+								req.flash('error',err)
+								return res.redirect(req.get('referer'))
+							}
 							models.children.findOneAndUpdate({_id : newChildren._id}, {$set : { parent : family._id}}).exec()
 							return res.redirect('/admin/check-in')
 						})
 
 					}else {
 						models.user.create(dataNewFamily, (err, user) => {
-							if (err) return res.json({err: err})
+							if (err) {
+								req.flash('error',err)
+								return res.redirect(req.get('referer'))
+							}
 
 							dataNewFamily.user = user._id
 							dataNewFamily.children = [newChildren]
 							dataNewFamily.name = data.nameParent
 
 							models.parent.create(dataNewFamily, (err,parent) => {
-								if (err) return res.json({err: err})
+								if (err) {
+									req.flash('error',err)
+									return res.redirect(req.get('referer'))
+								}
 								models.children.findOneAndUpdate({_id : newChildren._id}, {$set : { parent : parent._id}}).exec()
 								return res.redirect('/admin/check-in')
 							})

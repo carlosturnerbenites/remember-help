@@ -1,0 +1,23 @@
+extends ../templates/template.jade
+block title
+	title Logger
+
+block titleSection
+	p Logger
+
+block content
+	section.instructions
+		p Revisa el Log de #[strong #{nameProject}]
+
+	form#formLogger.form.formOnlyInput
+		fieldset.fieldset
+			legend.legend Logger
+			article.inputContainer
+				input(type='password', name='confirmNewPassword', placeholder='Repetir Contraseña')
+			article.inputContainer.alignItemsCenter
+				button.btn.btnSuccess.effect(type='submit')
+					span Cambiar
+	script(src='/js/utilities.js')
+	script(src='/js/lib/json-formatter.js')
+	script(src='/js/logger.js')
+
