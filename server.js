@@ -39,9 +39,7 @@ const config = require( urlConfig ),
 
 	utils = require( './utils' ),
 
-	log = require( './utils/log' ),
-
-	CONCURRENCY = process.env.WEB_CONCURRENCY || 1
+	log = require( './utils/log' )
 
 mongoose.connect( URIMongo, ( error ) => {
 	if( error ) {
@@ -64,7 +62,7 @@ app.use( favicon( __dirname + '/public/images/favicon.ico' ) )
 app.use( expressSession( {
 	'secret' : 're)rYq$"4NJ3C@~DGv>7BuL',
 	'resave' : false,
-	'saveUninitialized' : false ,
+	'saveUninitialized' : false,
 	'store' : new MongoStore( {
 		'mongooseConnection' : mongoose.connection
 	} )
@@ -75,7 +73,7 @@ app.use( passport.session() )
 app.use( flash() )
 
 passport.use( new LocalStrategy( ( username, password, done ) => {
-	models.user.findOne( { 'username' : username },( err, user ) => {
+	models.user.findOne( { 'username' : username }, ( err, user ) => {
 		if( err ) return done( null, false, { 'message' : err } )
 		if ( !user ) return done( null, false, { 'message' : 'El usuario no se encuentra Registrado.' } )
 		if ( !user.active ) return done( null, false, { 'message' : 'EL usuario se encuentra Inactivo' } )

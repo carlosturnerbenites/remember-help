@@ -13,6 +13,10 @@ router.use( bodyParser.urlencoded( { 'extended' : false } ) )
 router.get( '/collections', ( req, res ) => {
 	res.render( 'collections/index', { 'models' : utils.models, 'numberOfCollections' : Object.keys( utils.models ).length } )
 } )
+router.get( '/collections/:collection', ( req, res ) => {
+	var collection = req.params.collection
+	res.render( 'collections/collection', { 'collection' : collection } )
+} )
 
 router.get( '/check-in', ( req, res ) => res.render( 'users/checkIn', { 'statesHealth' : utils.statesHealth } ) )
 

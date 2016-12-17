@@ -1,18 +1,16 @@
-var formLogger = document.querySelector( '#formLogger' ),
-	notification = new NotificationC()
+const notification = new NotificationC()
 
-formLogger.onsubmit = function ( event ){
+$( '#formLogger' ).submit( event => {
 	event.preventDefault()
-	ajax( {
+	$.ajax( {
 		'type' : 'POST',
-		'URL' : '/logger/getLog',
-		'async' : true,
+		'url' : '/logger/getLog',
 		'contentType' : 'application/json',
-		'onSuccess' : ( response ) => {
+		'success' : ( response ) => {
 			console.log( response )
 			var formatter = new JSONFormatter.default( response )
 			document.body.appendChild( formatter.render() )
 		},
 		'data' : JSON.stringify( {} )
 	} )
-}
+} )

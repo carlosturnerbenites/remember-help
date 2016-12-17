@@ -1,0 +1,46 @@
+extends ../templates/templateApp.jade
+
+block title
+	title Coleccion
+
+block titleSection
+	p Coleccion
+
+block modal
+	section#modalActions.modal.modal-hide(data-rol-modal='modal' data-contentModal data-referenceModal='#modal')
+		section.contentModal
+			article.titleModal
+			article.bodyModal
+			article.footerModal
+				button.btn.btnError.effect(data-closeModal='#modal' data-rol-modal='close' data-referenceModal='#modal') Volver
+
+block content
+	button.btn.btn-primary.btn-lg(type='button', data-toggle='modal', data-target='#myModal') Launch demo modal
+
+	#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog(role='document')
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+					h4#myModalLabel.modal-title Modal title
+				.modal-body
+					p Hola
+				.modal-footer
+					button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+					button.btn.btn-primary(type='button') Save changes
+
+
+	article.alignItemsEnd
+		button.btn.effect.btnInfo(type='button' id='findInCollection' data-action='find') Buscar
+		button.btn.effect.btnSuccess(type='button' id='AgregateInCollection' data-action='create') Agregar
+		button.btn.effect.btnError(type='button' id='emptyCollection' data-action='delete') Vaciar
+
+block scripts
+
+
+
+
+
+
+
