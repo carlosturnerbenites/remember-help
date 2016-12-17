@@ -4,7 +4,15 @@ html(lang='es')
 		meta(charset='UTF-8')
 		meta(name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0' )
 		block title
+
+		// CSS - Estilos Principales de la Aplicacion
 		link(rel='stylesheet', href='/css/styles.css')
+
+		// CSS - Bootstrap 3.3.7
+		link(rel='stylesheet', href='/css/lib/bootstrap.min.css')
+
+		// CSS - Bootstrap DateTimePicker
+		link(rel='stylesheet', href='/css/lib/bootstrap-datetimepicker.min.css')
 	body
 		block template
 		-var typesMessages = ['warning','success','info','error']
@@ -20,9 +28,38 @@ html(lang='es')
 		template#commonElements
 			button.btn.effectspan(type="button")
 
+		//div.container
+			div.row
+				div.col-sm-6
+					div.form-group
+						div.input-group.date#time
+							input.form-control(type='text')
+							span.input-group-addon
+								span.glyphicon.glyphicon-calendar
+						div.input-group.date#date
+							input.form-control(type='text')
+							span.input-group-addon
+								span.glyphicon.glyphicon-calendar
+
+		// JS - Script Principal de la Aplicacion
 		script(src='/js/main.js')
+
+		// JS - Jquery 3.1.1
+		script(src='/js/lib/jquery-3.1.1.min.js')
+
+		// JS - Bootstrap 3.3.7
+		script(src='/js/lib/bootstrap.min.js')
+
+		// JS - MomentJS 2.17.1
+		script(src='/js/lib/moment-with-locales.min.js')
+
+		// JS - DateTimePicker
+		script(src='/js/lib/bootstrap-datetimepicker.min.js')
+
 		script.
 			console.log(!{JSON.stringify(messages)})
+			//$('#time').datetimepicker({ 'format' : 'hh:mm:ss' });
+			//$('#date').datetimepicker({ 'format' : 'Y-m-d' });
 
 
 
