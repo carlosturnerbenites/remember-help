@@ -4,10 +4,12 @@
   "description": "Aplicación para la estimulación cognitiva de los niños a través del apoyo en el recordatorio de rutinas diarias",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint ./src/**/*.js !./public/**/*.js ./*.js ./**/*.js",
     "start": "node server",
-    "dev": "NODE_ENV=dev supervisor server"
+    "dev": "NODE_ENV=dev supervisor server",
+    "lint": "eslint *.js",
+    "test": "npm run lint && tape 'tests/**/*.js' | tap-spec",
+    "coverage": "istanbul cover tape -- tests/**/*.js"
   },
   "engines": {
     "node": "4.2.4",
@@ -30,8 +32,11 @@
     "mongoose": "^4.4.4",
     "nodemailer-markdown": "^1.0.0",
     "passport": "^0.3.2",
-    "passport-local": "^1.0.0"
-  },
+    "passport-local": "^1.0.0",
+    "istanbul": "^0.4.5",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0"
+  }, 
   "devDependencies": {
     "babelify": "^7.3.0",
     "body-parser": "^1.15.0",
