@@ -3,7 +3,7 @@ function Text (){
 		Abstraccion de la interfaz 'SpeechSynthesisUtterance' de la 'Web Speech API'
 		Convierte texto a voz
 	*/
-	this.toVoice = function (text){
+	this.toVoice = function ( text ){
 		var msg = new SpeechSynthesisUtterance(),
 			voices = window.speechSynthesis.getVoices()
 
@@ -15,11 +15,11 @@ function Text (){
 		msg.text = text
 		msg.lang = 'es-ES'
 
-		speechSynthesis.speak(msg)
+		speechSynthesis.speak( msg )
 	}
 }
 
-function Voice (cb){
+function Voice ( cb ){
 	/*
 		Abstraccion de la interfaz 'webkitSpeechRecognition' de la 'Web Speech API'
 		Convierte voz a texto
@@ -28,11 +28,11 @@ function Voice (cb){
 		text,
 		recognition = new webkitSpeechRecognition()
 
-	this.toText = function (event){
-		for (var i = event.resultIndex; i < event.results.length; i++){
-			if(event.results[i].isFinal){
+	this.toText = function ( event ){
+		for ( var i = event.resultIndex; i < event.results.length; i++ ){
+			if( event.results[i].isFinal ){
 				text = event.results[i][0].transcript
-				cb(text)
+				cb( text )
 			}
 		}
 	}
@@ -50,7 +50,7 @@ function Voice (cb){
 	recognition.onend = function (){recognizing = false}
 
 	this.listen = function (){
-		if (recognizing == false){
+		if ( recognizing == false ){
 			recognition.start()
 			recognizing = true
 		} else {

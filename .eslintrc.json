@@ -6,7 +6,7 @@
 	},
 	"globals" :{},
 	"extends": "eslint:recommended",
-	"rules": {
+	"rules": { 
 		"no-console": 1,
 		"arrow-spacing": 1,
 		"no-multi-spaces": 1,

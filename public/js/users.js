@@ -1,20 +1,20 @@
-var formChangePassword = document.querySelector('#changePassword'),
-	validator = new Validator(formChangePassword)
+var formChangePassword = document.querySelector( '#changePassword' ),
+	validator = new Validator( formChangePassword )
 
-validator.config([
+validator.config( [
 	{
-		fn : 'equals',
-		params : 'newPassword confirmNewPassword',
-		messageError : 'Las contraseñas no **coinciden**.'
+		'fn' : 'equals',
+		'params' : 'newPassword confirmNewPassword',
+		'messageError' : 'Las contraseñas no **coinciden**.'
 	}
-])
+] )
 
-formChangePassword.onsubmit = function (event){
+formChangePassword.onsubmit = function ( event ){
 	var validation = validator.isValid()
-	if(!validation.isValid){
+	if( !validation.isValid ){
 		event.preventDefault()
-		validator.showErrors('.errors')
+		validator.showErrors( '.errors' )
 	}else{
-		if(!confirm('¿Esta seguro de cambiar su contraseña actual?')) return event.preventDefault()
+		if( !confirm( '¿Esta seguro de cambiar su contraseña actual?' ) ) return event.preventDefault()
 	}
 }
