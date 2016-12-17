@@ -33,7 +33,7 @@ block content
 	form#changePassword.form.formOnlyInput(action='/user/changePassword' method='POST')
 		fieldset.fieldset
 			legend.legend Cambiar Contraseña
-			input(type="hidden" name='user' value='#{user._id}')
+			input(type="hidden" name='_id' value='#{user._id}')
 			article.inputContainer
 				input(type='password', name='currentPassword', placeholder='Contraseña Actual', autofocus required)
 			article.inputContainer
@@ -52,7 +52,7 @@ block content
 				legend.legend Cambiar Contraseña niñ@
 				article.inputContainer
 					label.label(for='user') Niñ@
-					select(type='date', name='user' id='user' required)
+					select(type='date', name='_id' id='user' required)
 						for children in associated.children
 							option(value='#{children.user}') #{children.name}
 				article.inputContainer

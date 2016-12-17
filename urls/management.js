@@ -1,17 +1,22 @@
-const express = require('express'),
+const express = require( 'express' ),
 	router = express.Router(),
-	models = require('./../models/')
+	models = require( './../models/' )
 
-router.get('/statistics',(req,res) => {
-	models.parent.findOne({user: req.user._id})
-	.populate('children')
-	.exec((err, parent) => {
-		if (err) {
-			req.flash('error',err)
-			return res.redirect(req.get('referer'))
+const Parent = models.parent
+
+router.get( '/statistics', ( req, res ) => {
+
+	var user = req.user
+
+	Parent.findOne( { 'user' : user._id } )
+	.populate( 'children' )
+	.exec( ( error, oDbParent ) => {
+		if ( error ) {
+			req.flash( 'error', error )
+			return res.redirect( req.get( 'referer' ) )
 		}
-		res.render('management/statistics',{parent: parent})
-	})
-})
+		return res.render( 'management/statistics', { 'parent' : oDbParent } )
+	} )
+} )
 
 module.exports = router

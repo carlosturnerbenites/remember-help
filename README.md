@@ -3,6 +3,7 @@
 `rememberHelp` es una aplicación para la estimulación cognitiva de los niños a través del apoyo en el recordatorio de rutinas diarias.
 
 La aplicacion cuenta con un modulo dedicado a :
+
 	Niños:
 	1. Lista de Actividades
 	2. Lista de Tesoros
