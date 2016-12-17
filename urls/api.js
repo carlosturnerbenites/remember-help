@@ -104,6 +104,7 @@ router.post( '/collection/:collection', ( req, res ) => {
 		data = req.body,
 		query = data.query,
 		projection = data.projection
+	console.log( data )
 
 	projection._id = 0
 	projection.__v = 0

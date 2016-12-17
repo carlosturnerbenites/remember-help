@@ -7,6 +7,7 @@ const express = require( 'express' ),
 const User = models.user
 
 router.use( bodyParser.json() )
+router.use( bodyParser.urlencoded( { 'extended' : false } ) )
 
 function changePassword ( dataUser ) {
 	return new Promise( ( resolve, reject ) => {
@@ -59,5 +60,4 @@ router.post( '/changePassword', ( req, res ) => {
 	} )
 } )
 
-//module.exports = router
-module.exports = changePassword
+module.exports = router

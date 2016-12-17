@@ -8,6 +8,7 @@ const express = require( 'express' ),
 	log = require( './../utils/log' )
 
 router.use( bodyParser.json() )
+router.use( bodyParser.urlencoded( { 'extended' : false } ) )
 
 router.get( '/collections', ( req, res ) => {
 	res.render( 'collections/index', { 'models' : utils.models, 'numberOfCollections' : Object.keys( utils.models ).length } )

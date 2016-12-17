@@ -7,6 +7,7 @@ const express = require( 'express' ),
 	log = require( './../utils/log' )
 
 router.use( bodyParser.json() )
+router.use( bodyParser.urlencoded( { 'extended' : false } ) )
 
 router.get( '/', ( req, res ) => res.render( 'administration/logger' ) )
 

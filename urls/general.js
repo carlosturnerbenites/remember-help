@@ -7,6 +7,7 @@ const express = require( 'express' ),
 	utils = require( './../utils' )
 
 router.use( bodyParser.json() )
+router.use( bodyParser.urlencoded( { 'extended' : false } ) )
 
 router.get( '/', ( req, res ) => res.render( 'index' ) )
 router.get( '/authenticate', ( req, res ) => res.render( 'users/authenticate' ) )
