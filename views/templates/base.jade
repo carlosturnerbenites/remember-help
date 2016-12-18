@@ -13,6 +13,12 @@ html(lang='es')
 
 		// CSS - Bootstrap DateTimePicker
 		link(rel='stylesheet', href='/css/lib/bootstrap-datetimepicker.min.css')
+
+		// CSS - Bootstrap Material Design
+		link(rel='stylesheet', href='/css/lib/bootstrap-material-design.min.css')
+
+		// CSS - Bootstrap Material Design
+		link(rel='stylesheet', href='/css/lib/ripples.min.css')
 	body
 		block template
 		-var typesMessages = ['warning','success','info','error']
@@ -40,8 +46,17 @@ html(lang='es')
 		// JS - MomentJS 2.17.1
 		script(src='/js/lib/moment-with-locales.min.js')
 
-		// JS - DateTimePicker
+		// JS - Bootstrap DateTimePicker
 		script(src='/js/lib/bootstrap-datetimepicker.min.js')
+
+		// JS - Bootstrap Material Design
+		script(src='/js/lib/material.min.js')
+
+		// JS - Bootstrap Material Design
+		script(src='/js/lib/ripples.min.js')
+
+		script.
+			$.material.init()
 
 		block scripts
 
