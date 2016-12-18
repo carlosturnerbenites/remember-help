@@ -15,7 +15,8 @@ router.get( '/collections', ( req, res ) => {
 } )
 router.get( '/collections/:collection', ( req, res ) => {
 	var collection = req.params.collection
-	res.render( 'collections/collection', { 'collection' : collection } )
+	var form = require( '../forms/' + collection + 'Form' )
+	res.render( 'collections/collection', { 'collection' : collection, 'form' : form } )
 } )
 
 router.get( '/check-in', ( req, res ) => res.render( 'users/checkIn', { 'statesHealth' : utils.statesHealth } ) )

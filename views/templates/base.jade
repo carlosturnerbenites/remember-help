@@ -28,19 +28,6 @@ html(lang='es')
 		template#commonElements
 			button.btn.effectspan(type="button")
 
-		//div.container
-			div.row
-				div.col-sm-6
-					div.form-group
-						div.input-group.date#time
-							input.form-control(type='text')
-							span.input-group-addon
-								span.glyphicon.glyphicon-calendar
-						div.input-group.date#date
-							input.form-control(type='text')
-							span.input-group-addon
-								span.glyphicon.glyphicon-calendar
-
 		// JS - Script Principal de la Aplicacion
 		script(src='/js/main.js')
 
@@ -56,10 +43,6 @@ html(lang='es')
 		// JS - DateTimePicker
 		script(src='/js/lib/bootstrap-datetimepicker.min.js')
 
-		script.
-			console.log(!{JSON.stringify(messages)})
-			//$('#time').datetimepicker({ 'format' : 'hh:mm:ss' });
-			//$('#date').datetimepicker({ 'format' : 'Y-m-d' })
-		block script
+		block scripts
 
 

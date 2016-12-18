@@ -24,7 +24,7 @@ function TemplatesStatistics (){
 			var Stoday = document.querySelector( '.statisticToday' ),
 				clone = Stoday.querySelector( '.resultStatistics' ),
 				template = document.importNode( clone.content, true ),
-				dateActivity = new Date( history.activity.hour ),
+				dateActivity = new Date( history.activity.time ),
 				dateHistory = new Date( history.time )
 
 			dateHistory.setDate( dateActivity.getDate() )

@@ -41,6 +41,8 @@ const config = require( urlConfig ),
 
 	log = require( './utils/log' )
 
+mongoose.Promise = global.Promise
+
 mongoose.connect( URIMongo, ( error ) => {
 	if( error ) {
 		log.error( error )

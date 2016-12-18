@@ -15,10 +15,10 @@ const activitySchema = new Mongoose.Schema( {
 		'day' : { 'type' : Number },
 		'year' : { 'type' : Number },
 	},
-	/* hour : Hora a la cual se debe completo la actividad*/
-	'hour' : { 'type' : Date, 'required' : true },
-	/* hourDetail : Detalle de la Hora a la cual se debe completo la actividad*/
-	'hourDetail' : {
+	/* time : Hora a la cual se debe completo la actividad*/
+	'time' : { 'type' : Date, 'required' : true },
+	/* timeDetail : Detalle de la Hora a la cual se debe completo la actividad*/
+	'timeDetail' : {
 		'hours' : { 'type' : Number },
 		'minutes' : { 'type' : Number },
 		'seconds' : { 'type' : Number },
@@ -52,7 +52,7 @@ activitySchema.method( 'getState', function ( children ){
 			if ( history ) {
 
 				var dateHistory = history.time,
-					dateActivity = activity.hour,
+					dateActivity = activity.time,
 					detail = {
 						'aClock' : false,
 						'after' : false
@@ -67,8 +67,12 @@ activitySchema.method( 'getState', function ( children ){
 				if ( dateActivity > lowerLimit && dateActivity < upperLimit ) detail.aClock = true
 				else detail.after = true
 
+				this.state = { 'code' : 1, 'codeText' : 'complete', 'detail' : detail }
 				return resolve( { 'code' : 1, 'codeText' : 'complete', 'detail' : detail } )
-			}else return resolve( { 'code' : 0, 'codeText' : 'inprocess' } )
+			}else {
+				this.state = { 'code' : 0, 'codeText' : 'inprocess' }
+				return resolve( { 'code' : 0, 'codeText' : 'inprocess' } )
+			}
 		} )
 	} )
 } )
@@ -91,11 +95,11 @@ activitySchema.pre( 'save', function ( next ) {
 		'day' : this.date.getUTCDate(),
 		'year' : this.date.getUTCFullYear(),
 	}
-	this.hourDetail = {
-		'hours' : this.hour.getHours(),
-		'minutes' : this.hour.getMinutes(),
-		'seconds' : this.hour.getSeconds(),
-		'milliseconds' : this.hour.getMilliseconds()
+	this.timeDetail = {
+		'hours' : this.time.getHours(),
+		'minutes' : this.time.getMinutes(),
+		'seconds' : this.time.getSeconds(),
+		'milliseconds' : this.time.getMilliseconds()
 	}
 	next()
 } )

@@ -3,6 +3,10 @@ const express = require( 'express' ),
 	models = require( './../models/' ),
 	bodyParser = require( 'body-parser' )
 
+const Children = models.children,
+	Activity = models.activity,
+	History = models.history
+
 router.use( bodyParser.json() )
 
 router.post( '/valid-activity', ( req, res ) => {
@@ -12,27 +16,27 @@ router.post( '/valid-activity', ( req, res ) => {
 		dateCurrent = new Date()
 	dateCurrent.setHours( 0, 0, 0, 0 )
 
-	models.children.findOne( { 'user' : req.user._id }, ( err, children ) => {
+	Children.findOne( { 'user' : req.user._id }, ( err, oDbChildren ) => {
 		if ( err ) {
 			req.flash( 'error', err )
 			return res.redirect( req.get( 'referer' ) )
 		}
 
-		models.activity.findById( data.id, ( err, activity ) => {
+		Activity.findById( data.id, ( err, oDbActivity ) => {
 
-			activity.getState( children ).then( ( state ) => {
+			oDbActivity.getState( oDbChildren ).then( ( state ) => {
 
 				if( state.code == 1 ) return res.json( { 'err' : 'Ya has completado esta actividad.' } )
 
-				var response = { 'id' : activity._id }
+				var response = { 'id' : oDbActivity._id }
 
-				models.history.create( {
-					'children' : children._id,
-					'activity' : activity._id,
+				History.create( {
+					'children' : oDbChildren._id,
+					'activity' : oDbActivity._id,
 					'date' : dateCurrent,
 					'time' : new Date()
 				}, ( err, history ) => {
-					activity.getState( children ).then( ( state ) => {
+					oDbActivity.getState( oDbChildren ).then( ( state ) => {
 						if( state.detail.aClock ){
 							response.message = 'Felicidades, has terminado ha tiempo la actividad',
 							response.classcss = 'complete'

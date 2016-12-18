@@ -6,14 +6,6 @@ block title
 block titleSection
 	p Coleccion
 
-block modal
-	section#modalActions.modal.modal-hide(data-rol-modal='modal' data-contentModal data-referenceModal='#modal')
-		section.contentModal
-			article.titleModal
-			article.bodyModal
-			article.footerModal
-				button.btn.btnError.effect(data-closeModal='#modal' data-rol-modal='close' data-referenceModal='#modal') Volver
-
 block content
 	button.btn.btn-primary.btn-lg(type='button', data-toggle='modal', data-target='#myModal') Launch demo modal
 
@@ -27,16 +19,35 @@ block content
 				.modal-body
 					p Hola
 				.modal-footer
-					button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+					button.btn.btn-danger(type='button', data-dismiss='modal') Close
 					button.btn.btn-primary(type='button') Save changes
 
+	form.form-horizontal
+		for field in form.fields
+			.form-group
+				label.col-sm-2.control-label(for='#{collection}') #{field.label}
+				.col-sm-10
+					if (field.type == 'ref' )
+						select.form-control(type='#{field.type}', name='', id='#{collection}' required="#{field.required}")
+						for option in field.options
+							option(value='#{option[field.input.value]}') #{option[field.input.text]}
+					else
+						input.form-control(type='#{field.type}', name='#{name}', id='#{collection}' placeholder='#{field.placeholder}' required="#{field.required}")
 
-	article.alignItemsEnd
-		button.btn.effect.btnInfo(type='button' id='findInCollection' data-action='find') Buscar
-		button.btn.effect.btnSuccess(type='button' id='AgregateInCollection' data-action='create') Agregar
-		button.btn.effect.btnError(type='button' id='emptyCollection' data-action='delete') Vaciar
+		.text-center
+			.btn-group
+				button.btn.btn-success(type='submit')
+					i.glyphicon.glyphicon-floppy-save Agregar
+				button.btn.btn-info(type='button', )
+					i.fa.fa-plus-square-o Buscar
+				a.btn.btn-danger(type='button')
+					i.fa.fa-list Vaciar
+
 
 block scripts
+	script.
+		$( ' [ name *= time ] ' ).datetimepicker( { 'locale' : 'es', 'format' : 'hh:mm A' } )
+		$( ' [ name *= date ] ' ).datetimepicker( { 'locale' : 'es', 'format' : 'Y/M/d' } )
 
 
 

@@ -4,70 +4,39 @@ const express = require( 'express' ),
 	utils = require( './../utils' ),
 	Q = require( 'q' )
 
+const Activity = models.activity,
+	Children = models.children
+
 router.get( '/activities', ( req, res ) => {
 
-	var dateCurrent = new Date(),
-		monthCurrent = dateCurrent.getMonth() + 1
+	var monthCurrent = new Date().getMonth() + 1
 
-	models.activity.aggregate(
-		[
-			{
-				'$project' : {
-					'eDate' : {
-						'year' : { '$cond' : [ { '$ifNull' : [ '$date', 0 ] }, { '$year' : '$date' }, null ] },
-						'month' : { '$cond' : [ { '$ifNull' : [ '$date', 0 ] }, { '$month' : '$date' }, null ] },
-						'day' : { '$cond' : [ { '$ifNull' : [ '$date', 0 ] }, { '$dayOfMonth' : '$date' }, null ] },
-						'hour' : { '$cond' : [ { '$ifNull' : [ '$date', 0 ] }, { '$hour' : '$date' }, null ] },
-						'minutes' : { '$cond' : [ { '$ifNull' : [ '$date', 0 ] }, { '$minute' : '$date' }, null ] },
-						'seconds' : { '$cond' : [ { '$ifNull' : [ '$date', 0 ] }, { '$second' : '$date' }, null ] }
-					},
-					'date' : '$$ROOT.date',
-					'_id' : '$$ROOT._id'
+	Activity
+	.find( { '$or' : [ { 'date' : null }, { 'dateDetail.month' : monthCurrent } ] } )
+	.sort( { 'time' : -1 } )
+	.exec(
+		( error, oDbActivities ) => {
+
+			Children.findOne( { 'user' : req.user._id }, ( error, oDbChildren ) => {
+				if ( error ) {
+					req.flash( 'error', error )
+					return res.redirect( req.get( 'referer' ) )
 				}
-			},
-			{
-				'$match' : { '$or' : [ { 'date' : null }, { 'eDate.month' : monthCurrent } ] }
-			}
-		],
-		( err, data ) => {
-			if ( err ) {
-				req.flash( 'error', err )
-				return res.redirect( req.get( 'referer' ) )
-			}
-			var idActivities = data.map( element => {return { '_id' : element._id } } )
 
-			models.activity.find( { '_id' : { '$in' : idActivities } } )
-			.sort( { 'hour' : -1 } )
-			.exec( ( err, activitiesDB ) => {
+				var promises = []
 
-				models.children.findOne( { 'user' : req.user._id }, ( err, children ) => {
-					if ( err ) {
-						req.flash( 'error', err )
-						return res.redirect( req.get( 'referer' ) )
-					}
-
-					var promises = [],
-						activities = []
-
-					activitiesDB.forEach( activityDB => {
-						var activity = activityDB.toObject()
-						var promise = activityDB.getState( children ).then( ( state ) => {
-							activity.state = state
-							activities.push( activity )
-						} )
-						promises.push( promise )
-					} )
-					Q.all( promises ).then( () => {
-						res.render( 'children/activities', {
-							'activities' : activities,
-							'children' : children
-						} )
+				oDbActivities.forEach( oDbActivity => {
+					promises.push( oDbActivity.getState( oDbChildren ) )
+				} )
+				Q.all( promises ).then( () => {
+					res.render( 'children/activities', {
+						'activities' : oDbActivities,
+						'children' : oDbChildren
 					} )
 				} )
 			} )
 		}
 	)
-
 } )
 
 module.exports = router

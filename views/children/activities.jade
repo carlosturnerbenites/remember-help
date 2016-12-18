@@ -6,18 +6,10 @@ block title
 block titleSection
 	p Actividades
 
-block modal
-	section#confirmActivityWindow.modal.modal-hide(data-rol-modal='modal' data-contentModal data-referenceModal='#modal')
-		section.contentModal
-			article.titleModal
-			article.bodyModal
-			article.footerModal
-				button.btn.btnError.effect(data-closeModal='#modal' data-rol-modal='close' data-referenceModal='#modal') Volver
-
 block content
 	section.activities
 		each activity in activities
-			article.activity(data-date='#{activity.hour}' data-speech='#{activity.textSpeech}' data-id='#{activity._id}' data-text='#{activity.text}' data-tolerance = '#{activity.tolerance}')
+			article.activity(data-time='#{activity.time}' data-speech='#{activity.textSpeech}' data-id='#{activity._id}' data-text='#{activity.text}' data-tolerance = '#{activity.tolerance}')
 				p.titleActivity #{activity.text}
 				img.imgActivity(src='/images/activities/#{activity.img}', alt='')
 
@@ -36,17 +28,25 @@ block content
 						span(rol='time')
 						span.meridiem
 
-	template#templateConfirmActivityWindow
-		section.templateConfirmActivityWindow
-			if (children.stateHealth == 0)
-				button.btn.btnSuccess.btnRound#buttonCaptureVoice
-					span.icon-voice
-			else if (children.stateHealth == 1 || children.stateHealth == 2)
-				button.btn.btnSuccess.btnRound.effect(onclick='response("si")') Si
-					span.icon-
-				button.btn.btnError.btnRound.effect(onclick='response("no")') No
-					span.icon-
-		script(src='/js/confirmActivity.js')
+	#confirmActivityWindow.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog(role='document')
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+					h4#myModalLabel.modal-title Modal title
+				.modal-body
+					if (children.stateHealth == 0)
+						button.btn.btnSuccess.btnRound#buttonCaptureVoice
+							span.icon-voice
+					else if (children.stateHealth == 1 || children.stateHealth == 2)
+						button.btn.btn-success(onclick='response("si")') Si
+							span.icon-
+						button.btn.btn-danger(onclick='response("no")') No
+							span.icon-
+				.modal-footer
+					button.btn.btn-danger(type='button', data-dismiss='modal') Close
+					button.btn.btn-primary(type='button') Save changes
 
 block scripts
 	script(src='/js/activities.js')

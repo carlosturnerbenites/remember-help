@@ -1,8 +1,49 @@
 var text = new Text(),
-	detailActivityActive = null
+	detailActivityActive = null,
+	voice = new Voice( response ),
+	buttonCaptureVoice = document.querySelector( '#buttonCaptureVoice' )
 
-var activities = Array.from( document.querySelectorAll( '.activity' ) ),
-	confirmActivityWindow = new Modal( 'confirmActivityWindow', '.contentWidth' )
+if ( buttonCaptureVoice ){
+	buttonCaptureVoice.addEventListener( 'mousedown', event => {
+		voice.listen()
+		this.addEventListener( 'mouseup', voice.listen )
+	} )
+}
+
+var answersAffirmation = [ 'si', 'sí', 'ya', 'efectivamente', 'evidentemente', 'sin duda' ],
+	answersNegation = [ 'no', 'nones', 'nanai', 'naranjas', 'quia', 'ca' ],
+	answers = answersAffirmation.concat( answersNegation )
+
+function response ( resultText ){
+	if ( resultText ) {
+		if ( answers.indexOf( resultText ) < 0 ) {
+			text.toVoice( 'No respondiste la pregunta.' )
+		}else{
+			if ( answersAffirmation.indexOf( resultText ) >= 0 ) {
+
+				$.ajax( {
+					'type' : 'POST',
+					'url' : '/activities/valid-activity',
+					'contentType' : 'application/json',
+					'success' : ( response ) => {
+						if( response.err ) return text.toVoice( response.err )
+
+						var selector = '[data-id = "' + response.id +'"]',
+							reminder = $( selector ).find( '.reminder' )
+
+						reminder.attr( 'data-statereminder', response.classcss )
+						text.toVoice( response.message )
+						$( '#confirmActivityWindow' ).modal( 'hide' )
+					},
+					'data' : JSON.stringify( detailActivityActive )
+				} )
+			}else{
+				text.toVoice( 'No olvides hacerlo.' )
+				$( '#confirmActivityWindow' ).modal( 'hide' )
+			}
+		}
+	}else text.toVoice( 'No te entendi.' )
+}
 
 function RangeTolerance ( options ){
 	var developed = options.developed | false
@@ -26,14 +67,15 @@ function RangeTolerance ( options ){
 	}
 }
 
-activities.forEach( ( activity ) => {
-	var date = new Date( activity.dataset.date ),
+$( '.activity' ).toArray().forEach( ( activity ) => {
+	var date = new Date( $( activity ).data( 'time' ) ),
 		dataDate = date.getHours() > 6 && date.getHours() < 18 ? { 'classcss' : 'morning' } : { 'classcss' : 'nigth' }
 
-	activity.querySelector( '[rol=time]' ).innerHTML = date.toHour12()
-	activity.querySelector( '.date' ).classList.add( dataDate.classcss )
-	activity.addEventListener( 'click', confirmActivity )
+	$( activity ).find( '[rol=time]' ).html( date.toHour12() )
+	$( activity ).find( '.date' ).addClass( dataDate.classcss )
+	$( activity ).click( confirmActivity )
 } )
+
 function confirmActivity () {
 
 	var reminder = this.querySelector( '[data-statereminder]' )
@@ -45,7 +87,6 @@ function confirmActivity () {
 		'date' : new Date( this.dataset.date ),
 		'tolerance' : parseInt( this.dataset.tolerance ),
 		'onBefore' : () => {
-			// text.toVoice( 'Vas un poco tarde, Intenta Mañana.' )
 			text.toVoice( 'Vas un poco tarde.' )
 			registerActivity.bind( this )()
 		},
@@ -58,11 +99,5 @@ function registerActivity (){
 	detailActivityActive = this.dataset
 
 	text.toVoice( this.dataset.speech )
-	var template = document.querySelector( '#templateConfirmActivityWindow' ),
-		clone = document.importNode( template.content, true )
-
-	confirmActivityWindow
-	.setTitle( this.dataset.text )
-	.addContent( clone )
-	.show()
+	$( '#confirmActivityWindow' ).modal( 'show' )
 }
