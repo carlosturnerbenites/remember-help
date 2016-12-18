@@ -8,22 +8,25 @@ block titleSection
 block content
 	section.instructions
 		p Inicia Sesion Para utilizar #[strong #{nameProject}]
-	form#formAuthenticate.form.formOnlyInput.formAuthenticate(action='/authenticate' method='POST')
-		img.userPhoto(src="/images/users/unkown.png", alt="")
-		p.userUsername
+	form#formAuthenticate.form.formOnlyInput.formAuthenticate.text-center(action='/authenticate' method='POST')
+		.row
+			h2#userUsername.text-info
+			img#userPhoto.img-responsive.img-circle.img-thumbnail(src="/images/users/unkown.png", alt="" width="70%")
 		section#sectionContinue(data-hidden="false")
-			article.inputContainer
-				input(type='text', name='username', placeholder='Usuario', autofocus required)
-			article.inputContainer.alignItemsCenter
-				button#continueAuthenticate.btn.btnSuccess.effect(type='button')
+			.form.group
+				input.form-control(type='text', name='username', placeholder='Usuario', autofocus required)
+			.form.group.text-center
+				button#continueAuthenticate.btn.btn-success.btn-raised(type='button')
 					span Continuar
+
 		section#sectionAuth(data-hidden="true")
-			article.inputContainer.alignItemsCenter
-				p.backContinue.icon-back
-			article.inputContainer
-				input(type='password', name='password', placeholder='Contraseña', required)
-			article.inputContainer.alignItemsCenter
-				button.btn.btnSuccess.effect(type='submit')
+			.form-group.text-center
+				button.btn.btn-fab.btn-danger.btn-fab-mini.backContinue
+					span.icon-back
+			.form-group
+				input.form-control(type='password', name='password', placeholder='Contraseña', required)
+			.form-group.text-center
+				button.btn.btn-success.btn-raised(type='submit')
 					span Ingresar
 		a(href="/remember") Has Olvidado algo?
 block scripts

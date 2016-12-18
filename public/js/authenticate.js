@@ -5,8 +5,8 @@ $( '.backContinue' ).click( function () {
 	formAuthenticate.reset()
 	$( '#sectionContinue' ).attr( 'data-hidden', 'false' )
 	$( '#sectionAuth' ).attr( 'data-hidden', 'true' )
-	$( '.userPhoto' ).attr( 'src', 'images/users/unkown.png' )
-	$( '.userUsername' ).html( '' )
+	$( '#userPhoto' ).attr( 'src', 'images/users/unkown.png' )
+	$( '#userUsername' ).html( '' )
 } )
 
 $( '#continueAuthenticate' ).click( function (){
@@ -20,8 +20,8 @@ $( '#continueAuthenticate' ).click( function (){
 			if ( response.document ) {
 				var user = response.document
 
-				$( '.userPhoto' ).attr( 'src', 'images/users/' + user.photo )
-				$( '.userUsername' ).html( user.username )
+				$( '#userPhoto' ).attr( 'src', 'images/users/' + user.photo )
+				$( '#userUsername' ).html( user.username )
 
 				$( '#sectionContinue' ).attr( 'data-hidden', 'true' )
 				$( '#sectionAuth' ).attr( 'data-hidden', 'false' )

@@ -7,7 +7,7 @@ block titleSection
 	p Coleccion
 
 block content
-	button.btn.btn-primary.btn-lg(type='button', data-toggle='modal', data-target='#myModal') Launch demo modal
+	button.btn.btn-raised.btn-primary.btn-lg(type='button', data-toggle='modal', data-target='#myModal') Launch demo modal
 
 	#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 		.modal-dialog(role='document')
@@ -19,28 +19,40 @@ block content
 				.modal-body
 					p Hola
 				.modal-footer
-					button.btn.btn-danger(type='button', data-dismiss='modal') Close
-					button.btn.btn-primary(type='button') Save changes
+					button.btn.btn-raised.btn-danger(type='button', data-dismiss='modal') Close
+					button.btn.btn-raised.btn-primary(type='button') Save changes
 
 	form.form-horizontal
 		for field in form.fields
 			.form-group
-				label.col-sm-2.control-label(for='#{collection}') #{field.label}
-				.col-sm-10
-					if (field.type == 'ref' )
+				if (field.type == 'ref' )
+					label.col-sm-2.control-label(for='#{collection}') #{field.label}
+					.col-sm-10
 						select.form-control(type='#{field.type}', name='', id='#{collection}' required="#{field.required}")
 						for option in field.options
 							option(value='#{option[field.input.value]}') #{option[field.input.text]}
-					else
+				else if (field.type == 'checkbox' )
+					.checkbox
+						label
+							input(type="#{field.type}")
+							span #{field.label}
+				else if (field.type == 'file' )
+					label.col-sm-2.control-label(for='#{collection}') #{field.label}
+					.col-sm-10
+						input.form-control(type='#{field.type}', name='#{name}', id='#{collection}' required="#{field.required}")
+						input.form-control(type='text', placeholder='#{field.placeholder}' )
+				else
+					label.col-sm-2.control-label(for='#{collection}') #{field.label}
+					.col-sm-10
 						input.form-control(type='#{field.type}', name='#{name}', id='#{collection}' placeholder='#{field.placeholder}' required="#{field.required}")
 
 		.text-center
 			.btn-group
-				button.btn.btn-success(type='submit')
+				button.btn.btn-raised.btn-success(type='submit')
 					i.glyphicon.glyphicon-floppy-save Agregar
-				button.btn.btn-info(type='button', )
+				button.btn.btn-raised.btn-info(type='button', )
 					i.fa.fa-plus-square-o Buscar
-				a.btn.btn-danger(type='button')
+				a.btn.btn-raised.btn-danger(type='button')
 					i.fa.fa-list Vaciar
 
 

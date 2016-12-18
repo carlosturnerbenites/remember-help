@@ -7,63 +7,72 @@ block titleSection
 
 block content
 	section.instructions
-		p Visualiza y Edita tu informacion personal
+		h1 Visualiza y Edita tu informacion personal
 
-	form#dataAssociated.form.formOnlyInput(action='' method='POST')
-		fieldset.fieldset
-			legend.legend Mi Información
+	.row
+		.col-md-12
+			.well
+				form#dataAssociated.form-horizontal(action='' method='POST')
+					fieldset
+						legend Mi Información
 
-			article.inputContainer
-				input(type='number' name='idFamily' id='idFamily' value="#{associated.id}" placeholder='Identificación Familiar' required)
-			article.inputContainer
-				input(type='text' name='nameParent' id='nameParent' value="#{associated.name}" placeholder='Nombre Familiar' required)
-			fieldset.fieldset
-				legend.legend Usuario
-				article.inputContainer
-					input(type='text' name='usernameParent' id='usernameParent' value="#{associated.user.username}" placeholder='Usuario' required)
-				article.inputContainer
-					input(type='password' name='passwordParent' id='passwordParent' value="#{associated.user.password}" placeholder='Contraseña' required)
-			if associated.children
-				fieldset.fieldset
-					legend.legend Hijos
-					ul
-						for children in associated.children
-							li #{children.name}
+						.form-group.col-md-12
+							input.form-control(type='number' name='idFamily' id='idFamily' value="#{associated.id}" placeholder='Identificación Familiar' required)
+						.form-group.col-md-12
+							input.form-control(type='text' name='nameParent' id='nameParent' value="#{associated.name}" placeholder='Nombre Familiar' required)
+						.well
+							fieldset
+								legend Usuario
+								.form-group.col-md-12
+									input.form-control(type='text' name='usernameParent' id='usernameParent' value="#{associated.user.username}" placeholder='Usuario' required)
+								.form-group.col-md-12
+									input.form-control(type='password' name='passwordParent' id='passwordParent' value="#{associated.user.password}" placeholder='Contraseña' required)
+							if associated.children
+								fieldset
+									legend Hijos
+									ul
+										for children in associated.children
+											li #{children.name}
 
-	form#changePassword.form.formOnlyInput(action='/user/changePassword' method='POST')
-		fieldset.fieldset
-			legend.legend Cambiar Contraseña
-			input(type="hidden" name='_id' value='#{user._id}')
-			article.inputContainer
-				input(type='password', name='currentPassword', placeholder='Contraseña Actual', autofocus required)
-			article.inputContainer
-				input(type='password', name='newPassword', placeholder='Nueva Contraseña', required)
-			article.inputContainer
-				input(type='password', name='confirmNewPassword', placeholder='Repetir Contraseña', autofocus required)
-			article.inputContainer.alignItemsCenter
-				button.btn.btnSuccess.effect(type='submit')
-					span Cambiar
+	.row
+		.col-md-12
+			.well
+				form#changePassword.form-horizontal(action='/user/changePassword' method='POST')
+					fieldset
+						legend Cambiar Contraseña
+						input.form-control(type="hidden" name='_id' value='#{user._id}')
+						.form-group.col-md-12
+							input.form-control(type='password', name='currentPassword', placeholder='Contraseña Actual', autofocus required)
+						.form-group.col-md-12
+							input.form-control(type='password', name='newPassword', placeholder='Nueva Contraseña', required)
+						.form-group.col-md-12
+							input.form-control(type='password', name='confirmNewPassword', placeholder='Repetir Contraseña', autofocus required)
+						.form-group.alignItemsCenter.col-md-12
+							button.btn.btn-success.btn-raised(type='submit')
+								span Cambiar
 
 
 	if associated.children
-
-		form#changePasswordChildren.form.formOnlyInput(action='/user/changePassword' method='POST')
-			fieldset.fieldset
-				legend.legend Cambiar Contraseña niñ@
-				article.inputContainer
-					label.label(for='user') Niñ@
-					select(type='date', name='_id' id='user' required)
-						for children in associated.children
-							option(value='#{children.user}') #{children.name}
-				article.inputContainer
-					input(type='password', name='currentPassword', placeholder='Contraseña Actual', autofocus required)
-				article.inputContainer
-					input(type='password', name='newPassword', placeholder='Nueva Contraseña', required)
-				article.inputContainer
-					input(type='password', name='confirmNewPassword', placeholder='Repetir Contraseña', autofocus required)
-				article.inputContainer.alignItemsCenter
-					button.btn.btnSuccess.effect(type='submit')
-						span Cambiar
+		.row
+			.col-md-12
+				.well
+					form#changePasswordChildren.form-horizontal(action='/user/changePassword' method='POST')
+						fieldset
+							legend Cambiar Contraseña niñ@
+							.form-group.col-md-12
+								label(for='user') Niñ@
+								select.form-control(type='date', name='_id' id='user' required)
+									for children in associated.children
+										option(value='#{children.user}') #{children.name}
+							.form-group.col-md-12
+								input.form-control(type='password', name='currentPassword', placeholder='Contraseña Actual', autofocus required)
+							.form-group.col-md-12
+								input.form-control(type='password', name='newPassword', placeholder='Nueva Contraseña', required)
+							.form-group.col-md-12
+								input.form-control(type='password', name='confirmNewPassword', placeholder='Repetir Contraseña', autofocus required)
+							.form-group.alignItemsCenter.col-md-12
+								button.btn.btn-success.btn-raised(type='submit')
+									span Cambiar
 
 block scripts
 	script(src="/js/users.js")

@@ -38,13 +38,13 @@ block content
 				.modal-body
 					.text-center
 						if (children.stateHealth == 0)
-							button.btn.btn-success
+							button.btn.btn-success.btn.btn-fab
 								span.icon-voice
 
 						else if (children.stateHealth == 1 || children.stateHealth == 2)
-							button.btn.btn-success(onclick='response("si")') Si
+							button.btn.btn-success.btn.btn-fab(onclick='response("si")') Si
 								span.icon-
-							button.btn.btn-danger(onclick='response("no")') No
+							button.btn.btn-danger.btn.btn-fab(onclick='response("no")') No
 								span.icon-
 				.modal-footer
 					button.btn.btn-danger(type='button', data-dismiss='modal') Volver

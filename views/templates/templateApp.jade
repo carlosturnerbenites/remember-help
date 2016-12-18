@@ -1,29 +1,29 @@
 extends base.jade
 block template
 	block modal
-	section.contentWidth
-		header(class='#{classcss}')
-			h3.nameApp
-				a(href = '/') #{nameProject}
-			article.wellcome
-				p Hola
-				img.photoUser(src='/images/users/#{user.photo}')
-				p #[strong #{user.username}]
-			nav
-				article.itemsNavs
-					if user.type == 0
-						include ../partials/menuParents.jade
-					if user.type == 1
-						include ../partials/menuChildren.jade
-					if user.type == 776
-						include ../partials/menuAdmin.jade
-					if user.type == 777
-						include ../partials/menuDev.jade
-					a#btnLogout.item(href='/logout')
-						span.icon-logout(tooltip='Cerrar Sesion')
+	header(class='#{classcss}')
+		h3.nameApp
+			a(href = '/') #{nameProject}
+		article.wellcome
+			p Hola
+			img.img-responsive.img-circle.img-thumbnail(src='/images/users/#{user.photo}' width="200px")
+			p #[strong #{user.username}]
+		nav
+			article.itemsNavs
+				if user.type == 0
+					include ../partials/menuParents.jade
+				if user.type == 1
+					include ../partials/menuChildren.jade
+				if user.type == 776
+					include ../partials/menuAdmin.jade
+				if user.type == 777
+					include ../partials/menuDev.jade
+				a#btnLogout.item(href='/logout')
+					span.icon-logout(tooltip='Cerrar Sesion')
 
-			section.titleSection
-				block titleSection
+		section.titleSection
+			block titleSection
+	section.container
 		block content
 	script(src='/js/utilities.js')
 	script(src='/js/lib/markdown.js')

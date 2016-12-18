@@ -1,27 +1,27 @@
 extends base.jade
 block template
 	block modal
-	section.contentWidth
-		header(class='#{classcss}')
-			h3.nameApp
-				a(href = '/') #{nameProject}
-			nav
-				article.itemsNavs
-					if user
-						a.item(href='/children/activities')
-							span.icon-children(tooltip='Niños')
-						a.item(href='/management/statistics')
-							span.icon-family(tooltip='Padres')
-						a.item(href='/admin/collections')
-							span.icon-admin(tooltip='Administradores')
-						a#btnLogout.item(href='/logout')
-							span.icon-logout(tooltip='Cerrar Sesión')
-					else
-						a.item(href='/authenticate')
-							span.icon-login(tooltip='Iniciar Sesión')
-						a.item(href='/recommendations')
-							span.icon-notification(tooltip='Recomendaciones')
-			section.titleSection
-				block titleSection
+	header(class='#{classcss}')
+		h3.nameApp
+			a(href = '/') #{nameProject}
+		nav
+			article.itemsNavs
+				if user
+					a.item(href='/children/activities')
+						span.icon-children(tooltip='Niños')
+					a.item(href='/management/statistics')
+						span.icon-family(tooltip='Padres')
+					a.item(href='/admin/collections')
+						span.icon-admin(tooltip='Administradores')
+					a#btnLogout.item(href='/logout')
+						span.icon-logout(tooltip='Cerrar Sesión')
+				else
+					a.item(href='/authenticate')
+						span.icon-login(tooltip='Iniciar Sesión')
+					a.item(href='/recommendations')
+						span.icon-notification(tooltip='Recomendaciones')
+		section.titleSection
+			block titleSection
+	section.container
 		block content
 
